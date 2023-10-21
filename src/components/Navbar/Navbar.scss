@@ -1,1 +1,59 @@
-// container 
+// container
+
+.navbarContainer.dark  {
+  display: flex;
+  background-color: #011723;
+  flex-wrap: wrap;
+  height: 100%;
+  width: 70px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  transition: width 150ms ease;
+}
+
+// .dark { 
+//     background-color: #011723;
+
+// }
+
+.navbarContainer.light {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #7e7e7e;
+  height: 100%;
+  width: 70px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  transition: width 150ms ease;
+}
+
+.navbarContainer:hover {
+  width: 200px;
+
+  .accountSquareContainer {
+    p {
+      display: flex;
+    }
+  }
+
+  .linkLougoutContent {
+    p {
+      display: flex;
+    }
+  }
+
+  .linkContent {
+    p {
+      display: flex;
+    }
+  }
+
+  .rightArrowContainer {
+    transform: rotate(180deg);
+    box-shadow: -3px -2px 4px rgba(0, 0, 0, 0.434);
+  }
+}

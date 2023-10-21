@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
+import "./Navbar.scss";
 
 type theme = "light" | "dark" | "system";
 interface NavbarProps {
@@ -7,7 +8,6 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
-
   const navbarClasses: {
     container: string;
   } = {

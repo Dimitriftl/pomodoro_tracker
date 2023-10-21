@@ -1,4 +1,4 @@
-import { useState, useContext, createContext } from "react";
+import { useState, useContext,useEffect, createContext } from "react";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 
@@ -10,7 +10,11 @@ function App() {
   // theme context states
   const [themeColor, setThemeColor] = useState<Theme>("dark");
 
-  console.log("Hello world from App.tsx");
+  useEffect(() => {
+    document.body.className = themeColor;
+  }, [themeColor]);
+
+  
   return (
     <>
       <h1>TEST</h1>
