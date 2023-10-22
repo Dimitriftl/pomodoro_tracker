@@ -86,14 +86,12 @@ const Timer: React.FC<TimerProps> = ({
 
     interval = window.setInterval(() => {
       setCountdownTime((countdownTime) => countdownTime - 1);
-    }, 1000);
+    }, 100);
 
     return () => window.clearInterval(interval);
   };
 
   const stopTimer = () => {
-    console.log("stopTimer", interval);
-
     setIsTimerRunning(false);
     clearInterval(interval);
   };
@@ -108,8 +106,10 @@ const Timer: React.FC<TimerProps> = ({
     if (countdownTime < 0) {
       if (timerfocus) {
         setTimerFocus(false);
-        if (numberOfPomodoroDoneGlobaly < 4) {
-          setNumberOfPomodoroDoneGlobaly(numberOfPomodoroDoneGlobaly++);
+        if (numberOfPomodoroDoneGlobaly < 3) {
+          setNumberOfPomodoroDoneGlobaly(
+            (numberOfPomodoroDoneGlobaly) => numberOfPomodoroDoneGlobaly + 1
+          );
           setCountdownTime(minutesSetForBreak);
           setTimerBreak(true);
         } else {
@@ -156,7 +156,7 @@ const Timer: React.FC<TimerProps> = ({
           {timerBreak ? (
             <p>Break time.</p>
           ) : timerLongBreak ? (
-            <p> time for a long break</p>
+            <p> Long break</p>
           ) : (
             <p>Focus time</p>
           )}
@@ -193,7 +193,7 @@ const Timer: React.FC<TimerProps> = ({
         <div
           className="button setting"
           onClick={() => {
-            setOpenModal(true),resultToMinutesTwo(), stopTimer();
+            setOpenModal(true), resultToMinutesTwo(), stopTimer();
           }}>
           <PomodoroSettingsSvg />
         </div>
