@@ -1,6 +1,9 @@
-import { useState, useContext,useEffect, createContext } from "react";
+import { useState, useContext, useEffect, createContext } from "react";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
+import Pomodoro from "../views/pomodoro/Pomodoro.tsx";
+import Agenda from "./agenda/Agenda.tsx";
+import Dashboard from "./dashboard/Dashboard.tsx";
 
 // theme context
 type Theme = "light" | "dark" | "system";
@@ -14,13 +17,15 @@ function App() {
     document.body.className = themeColor;
   }, [themeColor]);
 
-  
   return (
     <>
-      <h1>TEST</h1>
       <ThemeContext.Provider value={themeColor}>
         <Navbar setThemeColor={setThemeColor} themeColor={themeColor} />
-        {/* <Routes></Routes> */}
+        <Routes>
+          <Route path="/" element={<Pomodoro />} />
+          <Route path="/agenda" element={<Agenda />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
       </ThemeContext.Provider>
     </>
   );
