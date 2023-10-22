@@ -1,0 +1,126 @@
+
+.overlay {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    background: rgba(49, 49, 49, 0.625);
+    //  backdrop-filter: blur(1px); 
+  }
+
+  .modalContent {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 1.4;
+    background: #160f27;
+    padding: 14px 28px;
+    max-width: 400px;
+    width: 100%;
+    min-width: 450px;
+    min-height: 300px;
+    border-radius: 10px;
+    color: #fff;
+    //  backdrop-filter: blur(4px); 
+  }
+
+  .modalTitle {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+
+  .inputSettings {
+    display: flex;
+    justify-content: center;
+    /* background-color: #5B35D5; */
+    gap: 20px;
+  }
+  .inputSettings input {
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid transparent;
+    text-align: center;
+    background: #2b2547;
+    color: #fff;
+    width: 100px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .inputSettings input:hover {
+    background: rgb(49, 40, 80);
+  }
+  
+  
+  .inputSettings p {
+    font-size: 20px;
+    font-weight: 600;
+    padding-bottom: 5px;
+  }
+  
+  .firstInput {
+    width: 50%;
+    justify-content: center;
+
+    .firstInput input {
+        justify-content: center;
+      }
+  }
+
+  .autoPlayContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    gap: 5rem;
+    top: 1rem;
+    width: 100%;
+    height: 3rem;
+    /* background-color: aquamarine; */
+  }
+  
+  .autoPlayContainer p { 
+    position: relative;
+    top: 0.1rem;
+  }
+  
+
+  .btnCloseModalContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    top: 3rem;
+    width: 100%;
+    height: 60px;
+    /* background-color: aqua; */
+  }
+  
+  .btn-close-modal {
+    position: absolute;
+    /* margin: 190px 0px 0 137px; */
+    cursor: pointer;
+    width: 7rem;
+    height: 2.7rem;
+    font-size: 16px;
+    color: #fff;
+    border-radius: 5px;
+    background-color: #5B35D5;
+    cursor: pointer;
+    border: none;
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+  }
+  
+  .btn-close-modal:hover {
+    background-color: #633de2;
+  
+  }
+  
