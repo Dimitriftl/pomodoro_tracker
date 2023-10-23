@@ -27,9 +27,6 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
   const [currentLocation, setCurrentLocation] = useState<string>(
     location.pathname
   );
-
-  console.log(currentLocation);
-
   useEffect(() => {
     setCurrentLocation(location.pathname);
   }, [location]);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Timer from "../../components/pomodoro/Timer/Timer";
 import "./pomodoro.scss";
 
@@ -30,11 +30,8 @@ const Pomodoro = () => {
     setCountdownTime(minutesSetForFocus);
   }, [minutesSetForFocus]);
 
- 
-
   return (
     <div className="pomodoroContainer">
-      <h1>{numberOfPomodoroDoneGlobaly}</h1>
       <Timer
         isTimerRunning={isTimerRunning}
         setIsTimerRunning={setIsTimerRunning}

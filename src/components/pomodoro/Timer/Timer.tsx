@@ -1,4 +1,10 @@
-import React, { useState, Dispatch, SetStateAction, useEffect } from "react";
+import React, {
+  useState,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useContext,
+} from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import {
@@ -10,6 +16,7 @@ import {
 } from "../../../assets/svg/svg";
 import "./timer.scss";
 import ModalTimer from "../../../modals/modalTimer/ModalTimer";
+import { AutoStartPomodoroContext } from "../../../views/App";
 interface TimerProps {
   isTimerRunning: boolean;
   setIsTimerRunning: Dispatch<SetStateAction<boolean>>;
@@ -75,6 +82,8 @@ const Timer: React.FC<TimerProps> = ({
   numberOfPomodoroDoneGlobaly,
   setNumberOfPomodoroDoneGlobaly,
 }) => {
+  const { autoStartPomodoro } = useContext(AutoStartPomodoroContext);
+
   // states
   const [openModal, setOpenModal] = useState<boolean>();
 
@@ -104,6 +113,9 @@ const Timer: React.FC<TimerProps> = ({
 
   useEffect(() => {
     if (countdownTime < 0) {
+      if (!autoStartPomodoro) {
+        stopTimer();
+      }
       if (timerfocus) {
         setTimerFocus(false);
         if (numberOfPomodoroDoneGlobaly < 3) {

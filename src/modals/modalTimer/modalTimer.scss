@@ -8,7 +8,6 @@
     bottom: 0;
     position: fixed;
     background: rgba(49, 49, 49, 0.625);
-    //  backdrop-filter: blur(1px); 
   }
 
   .modalContent {
@@ -17,7 +16,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     line-height: 1.4;
-    background: #160f27;
+    background: #011723;
     padding: 14px 28px;
     max-width: 400px;
     width: 100%;
@@ -25,7 +24,6 @@
     min-height: 300px;
     border-radius: 10px;
     color: #fff;
-    //  backdrop-filter: blur(4px); 
   }
 
   .modalTitle {
@@ -39,7 +37,6 @@
   .inputSettings {
     display: flex;
     justify-content: center;
-    /* background-color: #5B35D5; */
     gap: 20px;
   }
   .inputSettings input {
@@ -47,7 +44,7 @@
     border-radius: 5px;
     border: 1px solid transparent;
     text-align: center;
-    background: #2b2547;
+    background: #142429;
     color: #fff;
     width: 100px;
     font-size: 16px;
@@ -55,18 +52,17 @@
   }
 
   .inputSettings input:hover {
-    background: rgb(49, 40, 80);
+    background: #1c3238
   }
   
   
   .inputSettings p {
     font-size: 20px;
-    font-weight: 600;
+    font-weight: 300;
     padding-bottom: 5px;
   }
   
   .firstInput {
-    width: 50%;
     justify-content: center;
 
     .firstInput input {
@@ -83,7 +79,6 @@
     top: 1rem;
     width: 100%;
     height: 3rem;
-    /* background-color: aquamarine; */
   }
   
   .autoPlayContainer p { 
@@ -97,22 +92,20 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    top: 3rem;
+    top: 4.5rem;
     width: 100%;
     height: 60px;
-    /* background-color: aqua; */
   }
   
   .btn-close-modal {
     position: absolute;
-    /* margin: 190px 0px 0 137px; */
     cursor: pointer;
     width: 7rem;
     height: 2.7rem;
     font-size: 16px;
     color: #fff;
     border-radius: 5px;
-    background-color: #5B35D5;
+    background-color: #6E5D2E;
     cursor: pointer;
     border: none;
     background-origin: border-box;
@@ -120,7 +113,7 @@
   }
   
   .btn-close-modal:hover {
-    background-color: #633de2;
+    background-color: #746334;
   
   }
   

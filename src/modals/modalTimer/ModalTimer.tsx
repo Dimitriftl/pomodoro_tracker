@@ -1,5 +1,7 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
 import "./modalTimer.scss";
+import { AutoStartPomodoroContext } from "../../views/App";
+import Switch from "../../components/Switch/Switch";
 
 interface ModalThemeProps {
   setOpenModal: Dispatch<SetStateAction<boolean | undefined>>;
@@ -26,6 +28,10 @@ const ModalTimer: React.FC<ModalThemeProps> = ({
   setMinutesSetForLongBreak,
   setInitinialTimerValue,
 }) => {
+  const { autoStartPomodoro, setAutoStartPomodoro } = useContext(
+    AutoStartPomodoroContext
+  );
+
   const handleChange = (event) => {
     const result = event.target.value.replace(/\D/g, "");
 
@@ -94,8 +100,8 @@ const ModalTimer: React.FC<ModalThemeProps> = ({
                   value={minutesSetForBreak}
                 />
               </div>
-              <div className="secondInput">
-                <p>Break</p>
+              <div className="thirdInput">
+                <p>Long break</p>
                 <input
                   type="string"
                   className="input"
@@ -106,6 +112,10 @@ const ModalTimer: React.FC<ModalThemeProps> = ({
               </div>
             </div>
           </form>
+          <Switch
+            autoStartPomodoro={autoStartPomodoro}
+            setAutoStartPomodoro={setAutoStartPomodoro}
+          />
           {/* <div className="autoPlayContainer">
             <p className="auto-start">Auto start Pomodoros ?</p>
             <Switch
