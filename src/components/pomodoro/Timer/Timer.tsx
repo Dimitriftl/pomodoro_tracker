@@ -13,6 +13,7 @@ import {
   PomodoroSettingsSvg,
   ResetSvg,
   SkipSvg,
+  Blop,
 } from "../../../assets/svg/svg";
 import "./timer.scss";
 import ModalTimer from "../../../modals/modalTimer/ModalTimer";
@@ -152,11 +153,16 @@ const Timer: React.FC<TimerProps> = ({
   return (
     <div
       className="circle"
-      style={{
-        boxShadow: timerfocus
-          ? "0px 0px 200px 1px rgba(0, 217, 255, 0.7)"
-          : "0px 0px 200px 1px rgba(255, 255, 255, 0.40)",
-      }}>
+      // style={{
+      //   boxShadow: timerfocus
+      //     ? "0px 0px 200px 1px rgba(0, 217, 255, 0.7)"
+      //     : "0px 0px 200px 1px rgba(255, 255, 255, 0.40)",
+      // }}
+    >
+      <div className="circleShadow"></div>
+      <div className="blopContainer">
+        <Blop /> 
+      </div>
       <div className="circleContent">
         <div className="time">
           <p>

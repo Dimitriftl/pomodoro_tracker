@@ -303,3 +303,55 @@ export const Moon = () => (
     <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278zM4.858 1.311A7.269 7.269 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.316 7.316 0 0 0 5.205-2.162c-.337.042-.68.063-1.029.063-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286z" />
   </svg>
 );
+
+export const Blop = () => (
+  <svg
+    width="360"
+    height="322"
+    viewBox="0 0 360 322"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <g filter="url(#filter0_d_109_86)">
+      <path
+        d="M280.988 68.6849C307.985 94.7516 326.319 128.808 328.93 165.358C331.481 201.852 318.368 240.895 291.372 263.448C264.375 286.002 223.494 292.178 182.91 291.952C142.267 291.782 101.861 285.208 72.1944 262.655C42.5277 240.045 23.6004 201.455 33.3311 172.158C43.0024 142.805 81.3911 122.802 111.058 96.7349C140.724 70.6682 161.669 38.5382 190.03 31.5682C218.332 24.5416 253.992 42.6182 280.988 68.6849Z"
+        fill="#17414D"
+      />
+    </g>
+    <defs>
+      <filter
+        id="filter0_d_109_86"
+        x="0.757568"
+        y="0.0424805"
+        width="358.485"
+        height="321.915"
+        filterUnits="userSpaceOnUse"
+        color-interpolation-filters="sRGB">
+        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feColorMatrix
+          in="SourceAlpha"
+          type="matrix"
+          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+          result="hardAlpha"
+        />
+        <feOffset />
+        <feGaussianBlur stdDeviation="15" />
+        <feComposite in2="hardAlpha" operator="out" />
+        <feColorMatrix
+          type="matrix"
+          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+        />
+        <feBlend
+          mode="normal"
+          in2="BackgroundImageFix"
+          result="effect1_dropShadow_109_86"
+        />
+        <feBlend
+          mode="normal"
+          in="SourceGraphic"
+          in2="effect1_dropShadow_109_86"
+          result="shape"
+        />
+      </filter>
+    </defs>
+  </svg>
+);
