@@ -17,7 +17,8 @@ import {
 } from "../../../assets/svg/svg";
 import "./timer.scss";
 import ModalTimer from "../../../modals/modalTimer/ModalTimer";
-import { AutoStartPomodoroContext } from "../../../views/App";
+import { AutoStartPomodoroContext } from "../../../context/MyProviders";
+import Button from "../Button/Button";
 interface TimerProps {
   isTimerRunning: boolean;
   setIsTimerRunning: Dispatch<SetStateAction<boolean>>;
@@ -112,6 +113,14 @@ const Timer: React.FC<TimerProps> = ({
     clearInterval(interval);
   };
 
+  const skipTimer = () => {
+    console.log("skipTImer");
+  };
+
+  const handleSetting = () => {
+    setOpenModal(true), resultToMinutesTwo(), stopTimer();
+  };
+
   useEffect(() => {
     if (countdownTime < 0) {
       if (!autoStartPomodoro) {
@@ -161,7 +170,7 @@ const Timer: React.FC<TimerProps> = ({
     >
       <div className="circleShadow"></div>
       <div className="blopContainer">
-        <Blop /> 
+        <Blop />
       </div>
       <div className="circleContent">
         <div className="time">
@@ -180,20 +189,16 @@ const Timer: React.FC<TimerProps> = ({
           )}
         </div>
         {isTimerRunning ? (
-          <div
-            className="button play"
-            onClick={() => {
-              stopTimer();
-            }}>
-            <PauseSvg />
+          <div className="button play">
+            <Button func={stopTimer}>
+              <PauseSvg />
+            </Button>
           </div>
         ) : (
-          <div
-            className="button play"
-            onClick={() => {
-              startTimer();
-            }}>
-            <PlaySvg />
+          <div className="button play">
+            <Button func={startTimer}>
+              <PlaySvg />
+            </Button>
           </div>
         )}
         <div className="pourcentageCircle">
@@ -208,28 +213,22 @@ const Timer: React.FC<TimerProps> = ({
             })}
           />
         </div>
-        <div
-          className="button setting"
-          onClick={() => {
-            setOpenModal(true), resultToMinutesTwo(), stopTimer();
-          }}>
-          <PomodoroSettingsSvg />
+        <div className="button setting">
+          <Button func={handleSetting}>
+            <PomodoroSettingsSvg />
+          </Button>
         </div>
         {timerBreak ? (
-          <div
-            className="button reset"
-            onClick={() => {
-              console.log("passbreak");
-            }}>
-            <SkipSvg />
+          <div className="button reset">
+            <Button func={skipTimer}>
+              <SkipSvg />
+            </Button>
           </div>
         ) : (
-          <div
-            className="button reset"
-            onClick={() => {
-              resetTimer();
-            }}>
-            <ResetSvg />
+          <div className="button reset">
+            <Button func={resetTimer}>
+              <ResetSvg />
+            </Button>
           </div>
         )}
       </div>

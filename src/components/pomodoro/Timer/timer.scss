@@ -1,3 +1,5 @@
+@import "../../../utils/variables.scss";
+
 .circle {
   position: absolute;
   top: 150px;
@@ -51,7 +53,7 @@
     position: absolute;
     top: 33%;
     font-size: 46px;
-    color: #24c8be;
+    color: $dark-thirdary-blue;
     font-weight: 300;
     display: flex;
     justify-content: center;
@@ -79,7 +81,7 @@
     border-radius: 50%;
     border: none;
     cursor: pointer;
-    background: linear-gradient(180deg, #338f8a 0%, #24c8be 100%);
+    background: $dark-bronze;
   }
   .play {
     left: -50px;

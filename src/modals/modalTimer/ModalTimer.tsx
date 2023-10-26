@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useContext } from "react";
 import "./modalTimer.scss";
-import { AutoStartPomodoroContext } from "../../views/App";
+import { AutoStartPomodoroContext } from "../../context/MyProviders";
 import Switch from "../../components/Switch/Switch";
 
 interface ModalThemeProps {

@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inclusive+Sans&family=Poppins:wght@300;500;700;800&display=swap");
+@import "./utils/variables.scss";
 
 *,
 ::before,
@@ -12,15 +13,14 @@
 // make a light and dark theme for the body.
 
 // light theme
-body.light{
+body.light {
   background-color: #f2f2f2;
-  color: #1d1d1d;
+  color: $dark-backgroud;
 }
 
-body.dark{
-  background-color: #001E31;
+body.dark {
+  background-color: #001e31;
   color: #f2f2f2;
 }
 
 // dark theme
-
