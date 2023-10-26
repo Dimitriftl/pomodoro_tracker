@@ -6,14 +6,14 @@ type MyProvidersProps = {
   setThemeColor?: Dispatch<SetStateAction<Theme>>;
 };
 
-// theme context
+// theme context -------------------------------------
 // Types
 type Theme = "light" | "dark" | "system";
 
 // context creation
 const ThemeContext = createContext<Theme | undefined>(undefined);
 
-// auto start pomodoro context
+// auto start pomodoro context -------------------------------------
 // Types
 type AutoStartPomodoroContextType = {
   autoStartPomodoro: boolean;
@@ -24,24 +24,38 @@ const AutoStartPomodoroContext = createContext<
   AutoStartPomodoroContextType | boolean
 >(false);
 
+// tasks Context -------------------------------------
+// Types
+type TasksContextType = {
+  tasks: [];
+  setTasks: (tasks: []) => void;
+};
+
+// context creation
+const TasksContext = createContext<TasksContextType | undefined>(undefined);
+
 const MyProviders: React.FC<MyProvidersProps> = ({ children, themeColor }) => {
   // auto start pomodoro context states
   const [autoStartPomodoro, setAutoStartPomodoro] =
     useState<AutoStartPomodoroContextType["autoStartPomodoro"]>(false);
 
+  // tasks context states
+  const [tasks, setTasks] = useState<TasksContextType["tasks"]>([]);
+
   return (
     <ThemeContext.Provider value={themeColor}>
-      <AutoStartPomodoroContext.Provider
-        value={{
-          autoStartPomodoro,
-          setAutoStartPomodoro,
-        }}>
-        {children}
-      </AutoStartPomodoroContext.Provider>
+      <TasksContext.Provider value={{ tasks, setTasks }}>
+        <AutoStartPomodoroContext.Provider
+          value={{
+            autoStartPomodoro,
+            setAutoStartPomodoro,
+          }}>
+          {children}
+        </AutoStartPomodoroContext.Provider>
+      </TasksContext.Provider>
     </ThemeContext.Provider>
   );
 };
 
 export default MyProviders;
-export { AutoStartPomodoroContext };
-export { ThemeContext };
+export { AutoStartPomodoroContext, ThemeContext, TasksContext };
