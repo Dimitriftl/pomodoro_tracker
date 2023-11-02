@@ -90,9 +90,6 @@ const Timer: React.FC<TimerProps> = ({
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   const startTimer = () => {
-    setTimerBreak(false);
-    setTimerLongBreak(false);
-    setTimerFocus(true);
     setIsTimerRunning(true);
 
     interval = window.setInterval(() => {
@@ -116,6 +113,7 @@ const Timer: React.FC<TimerProps> = ({
   const skipTimer = () => {
     clearInterval(interval);
     setIsTimerRunning(false);
+    setTimerFocus(true);
     setTimerBreak(false);
     setCountdownTime(minutesSetForFocus);
     startTimer();
