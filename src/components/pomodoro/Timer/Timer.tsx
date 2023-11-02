@@ -87,7 +87,7 @@ const Timer: React.FC<TimerProps> = ({
   const { autoStartPomodoro } = useContext(AutoStartPomodoroContext);
 
   // states
-  const [openModal, setOpenModal] = useState<boolean>();
+  const [openModal, setOpenModal] = useState<boolean>(false);
 
   const startTimer = () => {
     setTimerBreak(false);
@@ -108,17 +108,21 @@ const Timer: React.FC<TimerProps> = ({
   };
 
   const resetTimer = () => {
-    setCountdownTime(1500);
+    setCountdownTime(minutesSetForFocus);
     setIsTimerRunning(false);
     clearInterval(interval);
   };
 
   const skipTimer = () => {
-    console.log("skipTImer");
+    clearInterval(interval);
+    setIsTimerRunning(false);
+    setTimerBreak(false);
+    setCountdownTime(minutesSetForFocus);
+    startTimer();
   };
 
   const handleSetting = () => {
-    setOpenModal(true), resultToMinutesTwo(), stopTimer();
+    setOpenModal(true), resultToMinutes(), stopTimer();
   };
 
   useEffect(() => {
@@ -151,7 +155,7 @@ const Timer: React.FC<TimerProps> = ({
     }
   }, [countdownTime]);
 
-  function resultToMinutesTwo() {
+  function resultToMinutes() {
     setMinutesSetForFocus(minutesSetForFocus / 60);
     setMinutesSetForBreak(minutesSetForBreak / 60);
     setMinutesSetForLongBreak(minutesSetForLongBreak / 60);
