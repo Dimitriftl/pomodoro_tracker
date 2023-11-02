@@ -4,7 +4,7 @@
 
 .navbarContainer.dark {
   display: flex;
-  background-color: $dark-Secodary-blue;
+  background-color: $dark-lighter-grey;
   flex-wrap: wrap;
   height: 100%;
   width: 70px;
@@ -53,7 +53,7 @@
     width: 25px;
     height: 25px;
     border-radius: 50%;
-    background-color: $dark-bronze;
+    background-color: $dark-blue;
     box-shadow: 3px 2px 4px rgba(0, 0, 0, 0.434);
     transition: 300ms ease;
   }
@@ -79,7 +79,7 @@
     p {
       position: relative;
       left: 35px;
-      color: $dark-primary-text;
+      color: $dark-white;
       font-size: 16px;
       font-weight: 500;
       display: none;
@@ -89,19 +89,24 @@
 
   .linkContainer {
     position: absolute;
-    top: 40%;
+    top: 30%;
     width: 100%;
     height: 255px;
     display: flex;
-    gap: 44px;
+    gap: 40px;
     justify-content: space-around;
     // align-items: center;
     flex-wrap: wrap;
   }
 
+  .linkContentActive {
+    background-color: $dark-hightlight-blue;
+  }
+
   .linkContent.dark {
     position: relative;
     width: 100%;
+    height: 56px;
     align-items: center;
     display: flex;
     padding-left: 25px;
@@ -122,8 +127,8 @@
     }
 
     .active {
-      background-color: $dark-thirdary-blue;
-      box-shadow: 0px 0px 10px 0px rgba(255, 255, 255, 1);
+      background-color: $dark-blue;
+      box-shadow: 0px 0px 10px 0px $dark-blue;
     }
 
     p {
@@ -132,7 +137,6 @@
       font-size: 16px;
       font-weight: 500;
       color: #d8d8d8;
-
       display: none;
       transition: width 300ms ease;
     }
@@ -140,15 +144,15 @@
 
   .logout {
     position: relative;
-    top: 20%;
+    top: 50%;
     width: 100%;
     height: 60px;
     padding-left: 22px;
     cursor: pointer;
-    background-color: $dark-fourthary-blue;
+    // background-color: $dark-fourthary-blue;
 
     p {
-      color: $dark-secondary-text !important;
+      color: $dark-white !important;
     }
 
     .svg {

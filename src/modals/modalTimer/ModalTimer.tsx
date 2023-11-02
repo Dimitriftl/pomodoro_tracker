@@ -76,10 +76,16 @@ const ModalTimer: React.FC<ModalThemeProps> = ({
       <div className="overlay">
         <div className="modalContent">
           <div className="modalTitle">
-            <h3 className="settingTitle">Settings</h3>
+            <h3 className="settingTitle">Pomodoro settings</h3>
           </div>
-          <form>
-            <div className="inputSettings">
+
+          <div className="inputSettings">
+            <div className="inputsTitle">
+              <p>
+                Time <span>(minutes)</span>
+              </p>
+            </div>
+            <div className="inputContainer">
               <div className="firstInput">
                 <p>Focus</p>
                 <input
@@ -111,25 +117,21 @@ const ModalTimer: React.FC<ModalThemeProps> = ({
                 />
               </div>
             </div>
-          </form>
-          <Switch
-            autoStartPomodoro={autoStartPomodoro}
-            setAutoStartPomodoro={setAutoStartPomodoro}
-          />
-          {/* <div className="autoPlayContainer">
-            <p className="auto-start">Auto start Pomodoros ?</p>
+          </div>
+          <div className="autoPlayContainer">
+            <p className="auto-start">Auto start Pomodoros</p>
             <Switch
-              autoPlayTimer={autoPlayTimer}
-              setAutoPlayTimer={setAutoPlayTimer}
+              autoStartPomodoro={autoStartPomodoro}
+              setAutoStartPomodoro={setAutoStartPomodoro}
             />
-          </div> */}
+          </div>
           <div className="btnCloseModalContainer">
             <button
               className="btn-close-modal"
               onClick={() => {
                 setOpenModal(false), resultToMinutes();
               }}>
-              <p>Ok</p>
+              <p>Valider</p>
             </button>
           </div>
         </div>

@@ -160,76 +160,53 @@ const Timer: React.FC<TimerProps> = ({
   const percentage = Math.round((minutesWithoutZero / countdownTime) * 100);
 
   return (
-    <div
-      className="circle"
-      // style={{
-      //   boxShadow: timerfocus
-      //     ? "0px 0px 200px 1px rgba(0, 217, 255, 0.7)"
-      //     : "0px 0px 200px 1px rgba(255, 255, 255, 0.40)",
-      // }}
-    >
-      <div className="circleShadow"></div>
-      <div className="blopContainer">
-        <Blop />
+    <>
+      <div className="circle">
+        <div className="circleContent">
+          <div className="time">
+            <p>
+              {" "}
+              {minutes} : {seconds}
+            </p>
+          </div>
+          <div className="session">
+            {timerBreak ? (
+              <p>Break time.</p>
+            ) : timerLongBreak ? (
+              <p> Long break</p>
+            ) : (
+              <p>Focus time</p>
+            )}
+          </div>
+        </div>
       </div>
-      <div className="circleContent">
-        <div className="time">
-          <p>
-            {" "}
-            {minutes} : {seconds}
-          </p>
-        </div>
-        <div className="session">
-          {timerBreak ? (
-            <p>Break time.</p>
-          ) : timerLongBreak ? (
-            <p> Long break</p>
-          ) : (
-            <p>Focus time</p>
-          )}
-        </div>
+      <div className="buttonsContainer">
         {isTimerRunning ? (
-          <div className="button play">
+          <div className="button">
             <Button func={stopTimer}>
               <PauseSvg />
             </Button>
           </div>
         ) : (
-          <div className="button play">
+          <div className="button">
             <Button func={startTimer}>
               <PlaySvg />
             </Button>
           </div>
         )}
-        <div className="pourcentageCircle">
-          <CircularProgressbar
-            className="inPourcentageCircle"
-            value={100}
-            strokeWidth={2}
-            counterClockwise={true}
-            styles={buildStyles({
-              pathColor: timerfocus ? "#24c8be" : "#fff",
-              trailColor: timerfocus ? "#1e2d33" : "#37373e",
-            })}
-          />
-        </div>
-        <div className="button setting">
-          <Button func={handleSetting}>
-            <PomodoroSettingsSvg />
-          </Button>
-        </div>
+
+        <Button func={handleSetting}>
+          <PomodoroSettingsSvg />
+        </Button>
+
         {timerBreak ? (
-          <div className="button reset">
-            <Button func={skipTimer}>
-              <SkipSvg />
-            </Button>
-          </div>
+          <Button func={skipTimer}>
+            <SkipSvg />
+          </Button>
         ) : (
-          <div className="button reset">
-            <Button func={resetTimer}>
-              <ResetSvg />
-            </Button>
-          </div>
+          <Button func={resetTimer}>
+            <ResetSvg />
+          </Button>
         )}
       </div>
       {openModal && (
@@ -244,7 +221,7 @@ const Timer: React.FC<TimerProps> = ({
           setMinutesSetForLongBreak={setMinutesSetForLongBreak}
         />
       )}
-    </div>
+    </>
   );
 };
 

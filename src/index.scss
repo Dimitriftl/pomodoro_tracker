@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inclusive+Sans&family=Poppins:wght@300;500;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inclusive+Sans&family=Poppins:wght@300;400;500;700;800&display=swap");
 @import "./utils/variables.scss";
 
 *,
@@ -16,10 +16,14 @@
 body.light {
   background-color: #f2f2f2;
   color: $dark-backgroud;
+
+  p { 
+    font-weight: 300;
+  }
 }
 
 body.dark {
-  background-color: #001e31;
+  background-color: $dark-backgroud;
   color: #f2f2f2;
 }
 

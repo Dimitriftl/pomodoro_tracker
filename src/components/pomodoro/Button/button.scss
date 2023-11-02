@@ -1,16 +1,15 @@
 @import "../../../utils/variables.scss";
 
-
 .timerButton {
-    // position: absolute;
-    // top: 120%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    background: $dark-bronze;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 50px;
+  border: none;
+  cursor: pointer;
+  background: $dark-darker-grey;
+  background: #272830;
+  box-shadow: 6px 6px 14px 0px #17171d, -6px -6px 14px 0px #2b2c36;
+  border-radius: 9px;
+}

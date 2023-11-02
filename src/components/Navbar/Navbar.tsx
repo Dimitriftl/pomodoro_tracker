@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 // svgs imports
 import {
+  AccountSvg,
   CalendarSvg,
   DashboardSvg,
   LogOutSvg,
@@ -51,9 +52,9 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
   return (
     <div className={navbarClasses.container}>
       <div className="navbarContent">
-        <div className="Logo">
+        {/* <div className="Logo">
           <PtLogo />
-        </div>
+        </div> */}
         <div
           className={navbarClasses.switchThemeContainer}
           onClick={() =>
@@ -66,12 +67,33 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
         <div className={navbarClasses.rightArrowContainer}>
           <RightArrowSvg />
         </div>
-        <Link className={navbarClasses.accountSquareContainer} to="/account">
-          <img src={userAccountPlaceholder} alt="" />
-          <p>Account</p>
-        </Link>
+
         <div className="linkContainer">
-          <Link className={navbarClasses.linkContent} to="/dashboard">
+          <Link
+            className={
+              currentLocation === "/account"
+                ? `${navbarClasses.linkContent} linkContentActive`
+                : navbarClasses.linkContent
+            }
+            to="/account">
+            <div
+              className={
+                currentLocation === "/account"
+                  ? "selectedPage active"
+                  : "selectedPage"
+              }></div>
+            <div className="svg">
+              <AccountSvg />
+            </div>
+            <p>Account</p>
+          </Link>
+          <Link
+            className={
+              currentLocation === "/dashboard"
+                ? `${navbarClasses.linkContent} linkContentActive`
+                : navbarClasses.linkContent
+            }
+            to="/dashboard">
             <div
               className={
                 currentLocation === "/dashboard"
@@ -84,7 +106,13 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
             <p>Dashboard</p>
           </Link>
 
-          <Link className={navbarClasses.linkContent} to="/calendar">
+          <Link
+            className={
+              currentLocation === "/calendar"
+                ? `${navbarClasses.linkContent} linkContentActive`
+                : navbarClasses.linkContent
+            }
+            to="/calendar">
             <div
               className={
                 currentLocation === "/calendar"
@@ -97,7 +125,13 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
             <p>Calendar</p>
           </Link>
 
-          <Link className={navbarClasses.linkContent} to="/">
+          <Link
+            className={
+              currentLocation === "/"
+                ? `${navbarClasses.linkContent} linkContentActive`
+                : navbarClasses.linkContent
+            }
+            to="/">
             <div
               className={
                 currentLocation === "/" ? "selectedPage active" : "selectedPage"
