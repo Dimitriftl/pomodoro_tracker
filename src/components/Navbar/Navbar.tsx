@@ -9,7 +9,6 @@ import { Link, useLocation } from "react-router-dom";
 // svgs imports
 import {
   AccountSvg,
-  CalendarSvg,
   DashboardSvg,
   LogOutSvg,
   PtLogo,
@@ -32,9 +31,7 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
   const { tasks } = useContext(TasksContext);
-  
 
-  
   // Location
   const location = useLocation();
   const [currentLocation, setCurrentLocation] = useState<string>(
@@ -118,25 +115,6 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
               <DashboardSvg />
             </div>
             <p>Dashboard</p>
-          </Link>
-
-          <Link
-            className={
-              currentLocation === "/calendar"
-                ? `${navbarClasses.linkContent} linkContentActive`
-                : navbarClasses.linkContent
-            }
-            to="/calendar">
-            <div
-              className={
-                currentLocation === "/calendar"
-                  ? "selectedPage active"
-                  : "selectedPage"
-              }></div>
-            <div className="svg">
-              <CalendarSvg />
-            </div>
-            <p>Calendar</p>
           </Link>
 
           <Link

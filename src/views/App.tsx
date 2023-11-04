@@ -9,7 +9,6 @@ import {
 import { Route, Routes } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import Pomodoro from "../views/pomodoro/Pomodoro.tsx";
-import Agenda from "./agenda/Agenda.tsx";
 import Dashboard from "./dashboard/Dashboard.tsx";
 import MyProviders from "../context/MyProviders.tsx";
 
@@ -29,7 +28,6 @@ function App() {
         <Navbar setThemeColor={setThemeColor} themeColor={themeColor} />
         <Routes>
           <Route path="/" element={<Pomodoro />} />
-          <Route path="/agenda" element={<Agenda />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </MyProviders>
