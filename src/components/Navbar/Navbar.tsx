@@ -1,4 +1,10 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { Link, useLocation } from "react-router-dom";
 // svgs imports
 import {
@@ -15,6 +21,8 @@ import {
 import userAccountPlaceholder from "../../assets/images/pt_account_logo.png";
 
 import "./Navbar.scss";
+import { TasksContext } from "../../context/MyProviders";
+import { useTaskCreation } from "../../hooks/useTaskCreation";
 
 type theme = "light" | "dark" | "system";
 interface NavbarProps {
@@ -23,6 +31,10 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
+  const { tasks } = useContext(TasksContext);
+  
+
+  
   // Location
   const location = useLocation();
   const [currentLocation, setCurrentLocation] = useState<string>(
@@ -31,6 +43,8 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
   useEffect(() => {
     setCurrentLocation(location.pathname);
   }, [location]);
+
+  console.log(tasks);
 
   // class that depends on theme color
   const navbarClasses: {

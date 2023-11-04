@@ -162,7 +162,7 @@ const Timer: React.FC<TimerProps> = ({
   const percentage = Math.round((minutesWithoutZero / countdownTime) * 100);
 
   return (
-    <>
+    <div className="timerContainer">
       <div className="circle">
         <div className="circleContent">
           <div className="time">
@@ -183,33 +183,35 @@ const Timer: React.FC<TimerProps> = ({
         </div>
       </div>
       <div className="buttonsContainer">
-        {isTimerRunning ? (
-          <div className="button">
-            <Button func={stopTimer}>
-              <PauseSvg />
-            </Button>
-          </div>
-        ) : (
-          <div className="button">
-            <Button func={startTimer}>
-              <PlaySvg />
-            </Button>
-          </div>
-        )}
+        <div className="buttonsContent">
+          {isTimerRunning ? (
+            <div className="button">
+              <Button func={stopTimer}>
+                <PauseSvg />
+              </Button>
+            </div>
+          ) : (
+            <div className="button">
+              <Button func={startTimer}>
+                <PlaySvg />
+              </Button>
+            </div>
+          )}
 
-        <Button func={handleSetting}>
-          <PomodoroSettingsSvg />
-        </Button>
+          <Button func={handleSetting}>
+            <PomodoroSettingsSvg />
+          </Button>
 
-        {timerBreak ? (
-          <Button func={skipTimer}>
-            <SkipSvg />
-          </Button>
-        ) : (
-          <Button func={resetTimer}>
-            <ResetSvg />
-          </Button>
-        )}
+          {timerBreak ? (
+            <Button func={skipTimer}>
+              <SkipSvg />
+            </Button>
+          ) : (
+            <Button func={resetTimer}>
+              <ResetSvg />
+            </Button>
+          )}
+        </div>
       </div>
       {openModal && (
         <ModalTimer
@@ -223,7 +225,7 @@ const Timer: React.FC<TimerProps> = ({
           setMinutesSetForLongBreak={setMinutesSetForLongBreak}
         />
       )}
-    </>
+    </div>
   );
 };
 

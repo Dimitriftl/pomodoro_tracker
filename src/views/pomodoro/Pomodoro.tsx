@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Timer from "../../components/pomodoro/Timer/Timer";
 import "./pomodoro.scss";
+import Task from "../../components/pomodoro/Tasks/Task";
 
 const Pomodoro = () => {
   // states
@@ -57,6 +58,7 @@ const Pomodoro = () => {
         numberOfPomodoroDoneGlobaly={numberOfPomodoroDoneGlobaly}
         setNumberOfPomodoroDoneGlobaly={setNumberOfPomodoroDoneGlobaly}
       />
+      <Task />
     </div>
   );
 };
