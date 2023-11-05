@@ -45,11 +45,7 @@ const MyProviders: React.FC<MyProvidersProps> = ({ children, themeColor }) => {
   return (
     <ThemeContext.Provider value={themeColor}>
       <TasksContext.Provider value={{ tasks, setTasks }}>
-        <AutoStartPomodoroContext.Provider
-          value={{
-            autoStartPomodoro,
-            setAutoStartPomodoro,
-          }}>
+        <AutoStartPomodoroContext.Provider value={{autoStartPomodoro, setAutoStartPomodoro}}>
           {children}
         </AutoStartPomodoroContext.Provider>
       </TasksContext.Provider>
