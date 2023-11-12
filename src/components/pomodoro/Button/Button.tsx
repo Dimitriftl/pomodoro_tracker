@@ -8,7 +8,7 @@ type ButtonProps = {
 
 const Button: React.FC<ButtonProps> = ({ children, func }) => {
   return (
-    <button className="timerButton" onClick={() => func()}>
+    <button className="timerButton neumorphismShadow" onClick={() => func()}>
       {children}
     </button>
   );

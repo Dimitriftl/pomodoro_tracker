@@ -1,5 +1,8 @@
 import { useState, createContext, Dispatch, SetStateAction } from "react";
 
+// theme types
+type Theme = "light" | "dark" | "system";
+
 type MyProvidersProps = {
   children: React.ReactNode;
   themeColor: Theme;
@@ -7,11 +10,9 @@ type MyProvidersProps = {
 };
 
 // theme context -------------------------------------
-// Types
-type Theme = "light" | "dark" | "system";
 
 // context creation
-const ThemeContext = createContext<Theme | undefined>(undefined);
+const ThemeContext = createContext<Theme | undefined>("dark");
 
 // auto start pomodoro context -------------------------------------
 // Types
@@ -34,7 +35,10 @@ type TasksContextType = {
 // context creation
 const TasksContext = createContext<TasksContextType | undefined>(undefined);
 
-const MyProviders: React.FC<MyProvidersProps> = ({ children, themeColor }) => {
+const MyProviders: React.FC<MyProvidersProps> = ({ children, themeColor}) => {
+
+  // theme context states
+
   // auto start pomodoro context states
   const [autoStartPomodoro, setAutoStartPomodoro] =
     useState<AutoStartPomodoroContextType["autoStartPomodoro"]>(false);
@@ -42,10 +46,12 @@ const MyProviders: React.FC<MyProvidersProps> = ({ children, themeColor }) => {
   // tasks context states
   const [tasks, setTasks] = useState<TasksContextType["tasks"]>([]);
 
+
   return (
-    <ThemeContext.Provider value={themeColor}>
+    <ThemeContext.Provider value={{themeColor}}>
       <TasksContext.Provider value={{ tasks, setTasks }}>
-        <AutoStartPomodoroContext.Provider value={{autoStartPomodoro, setAutoStartPomodoro}}>
+        <AutoStartPomodoroContext.Provider
+          value={{ autoStartPomodoro, setAutoStartPomodoro }}>
           {children}
         </AutoStartPomodoroContext.Provider>
       </TasksContext.Provider>

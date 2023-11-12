@@ -17,7 +17,10 @@ import {
 } from "../../../assets/svg/svg";
 import "./timer.scss";
 import ModalTimer from "../../../modals/modalTimer/ModalTimer";
-import { AutoStartPomodoroContext } from "../../../context/MyProviders";
+import {
+  AutoStartPomodoroContext,
+  ThemeContext,
+} from "../../../context/MyProviders";
 import Button from "../Button/Button";
 interface TimerProps {
   isTimerRunning: boolean;
@@ -88,6 +91,8 @@ const Timer: React.FC<TimerProps> = ({
 
   // states
   const [openModal, setOpenModal] = useState<boolean>(false);
+
+  const { themeColor } = useContext(ThemeContext);
 
   const startTimer = () => {
     setIsTimerRunning(true);
@@ -163,7 +168,7 @@ const Timer: React.FC<TimerProps> = ({
 
   return (
     <div className="timerContainer">
-      <div className="circle">
+      <div className="circle timerBackground">
         <div className="circleContent">
           <div className="time">
             <p>
@@ -187,28 +192,28 @@ const Timer: React.FC<TimerProps> = ({
           {isTimerRunning ? (
             <div className="button">
               <Button func={stopTimer}>
-                <PauseSvg />
+                <PauseSvg theme={themeColor} />
               </Button>
             </div>
           ) : (
             <div className="button">
               <Button func={startTimer}>
-                <PlaySvg />
+                <PlaySvg theme={themeColor} />
               </Button>
             </div>
           )}
 
           <Button func={handleSetting}>
-            <PomodoroSettingsSvg />
+            <PomodoroSettingsSvg theme={themeColor} />
           </Button>
 
           {timerBreak ? (
             <Button func={skipTimer}>
-              <SkipSvg />
+              <SkipSvg theme={themeColor} />
             </Button>
           ) : (
             <Button func={resetTimer}>
-              <ResetSvg />
+              <ResetSvg theme={themeColor} />
             </Button>
           )}
         </div>

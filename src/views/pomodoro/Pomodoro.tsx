@@ -2,8 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import Timer from "../../components/pomodoro/Timer/Timer";
 import "./pomodoro.scss";
 import Tasks from "../../components/pomodoro/Tasks/Tasks";
+import { ThemeContext } from "../../context/MyProviders";
 
 const Pomodoro = () => {
+  const {themeColor} = useContext(ThemeContext);  
+
   // states
   const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false); // start the timer if it's true
   const [timerfocus, setTimerFocus] = useState<boolean>(true); // display the time and the color for the focus time

@@ -41,22 +41,19 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
     setCurrentLocation(location.pathname);
   }, [location]);
 
-  console.log(tasks);
 
   // class that depends on theme color
   const navbarClasses: {
     container: string;
     switchThemeContainer: string;
     rightArrowContainer: string;
-    accountSquareContainer: string;
     linkContent: string;
     logout: string;
   } = {
-    container: "navbarContainer" + " " + themeColor,
+    container: "navbarContainer" + " " + "navbarBackground",
     switchThemeContainer: "switchThemeContainer" + " " + themeColor,
-    rightArrowContainer: "rightArrowContainer" + " " + themeColor,
-    accountSquareContainer: "accountSquareContainer" + " " + themeColor,
-    linkContent: "linkContent" + " " + themeColor,
+    rightArrowContainer: "rightArrowContainer" + " " + "backgroundBlue",
+    linkContent: "linkContent",
     logout: "linkContent logout" + " " + themeColor,
   };
 
@@ -76,7 +73,7 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
           {themeColor === "dark" ? <Moon /> : <Sun />}
         </div>
         <div className={navbarClasses.rightArrowContainer}>
-          <RightArrowSvg />
+          <RightArrowSvg theme={themeColor} />
         </div>
 
         <div className="linkContainer">
@@ -94,7 +91,7 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
                   : "selectedPage"
               }></div>
             <div className="svg">
-              <AccountSvg />
+              <AccountSvg theme={themeColor} />
             </div>
             <p>Account</p>
           </Link>
@@ -112,7 +109,7 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
                   : "selectedPage"
               }></div>
             <div className="svg">
-              <DashboardSvg />
+              <DashboardSvg theme={themeColor} />
             </div>
             <p>Dashboard</p>
           </Link>
@@ -129,14 +126,14 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
                 currentLocation === "/" ? "selectedPage active" : "selectedPage"
               }></div>
             <div className="svg">
-              <TimerSvg />
+              <TimerSvg theme={themeColor} />
             </div>
             <p>Pomodoro</p>
           </Link>
 
           <div className={navbarClasses.logout}>
             <div className="svg">
-              <LogOutSvg />
+              <LogOutSvg theme={themeColor} />
             </div>
             <p>Disconnect</p>
           </div>
