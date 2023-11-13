@@ -222,7 +222,7 @@ const Timer: React.FC<TimerProps> = ({
             </div>
           )}
 
-          <Button func={handleSetting}>
+          <Button func={handleSetting} isTimerRunning={isTimerRunning}>
             <PomodoroSettingsSvg theme={themeColor} />
           </Button>
 
