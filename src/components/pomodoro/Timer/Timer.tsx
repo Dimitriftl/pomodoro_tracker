@@ -169,6 +169,16 @@ const Timer: React.FC<TimerProps> = ({
   return (
     <div className="timerContainer">
       <div className="circle timerBackground">
+        <div className="progressBarContainer">
+          <CircularProgressbar
+            value={100}
+            strokeWidth={3}
+            styles={buildStyles({
+              pathColor: timerBreak || timerLongBreak ? "#FFDE67" : "#678bff",
+              trailColor: "transparent",
+            })}
+          />
+        </div>
         <div className="circleContent">
           <div className="time">
             <p>
