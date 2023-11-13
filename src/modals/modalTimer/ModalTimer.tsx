@@ -74,7 +74,7 @@ const ModalTimer: React.FC<ModalThemeProps> = ({
   return (
     <div>
       <div className="overlay">
-        <div className="modalContent">
+        <div className="modalContent background">
           <div className="modalTitle">
             <h3 className="settingTitle">Pomodoro settings</h3>
           </div>
@@ -89,8 +89,9 @@ const ModalTimer: React.FC<ModalThemeProps> = ({
               <div className="firstInput">
                 <p>Focus</p>
                 <input
+                
                   type="text"
-                  className="input"
+                  className="input inputBackground"
                   name="Focus"
                   onChange={handleChange}
                   value={minutesSetForFocus}
@@ -100,7 +101,7 @@ const ModalTimer: React.FC<ModalThemeProps> = ({
                 <p>Break</p>
                 <input
                   type="string"
-                  className="input"
+                  className="input inputBackground"
                   name="Break"
                   onChange={handleChangeBreak}
                   value={minutesSetForBreak}
@@ -110,7 +111,7 @@ const ModalTimer: React.FC<ModalThemeProps> = ({
                 <p>Long break</p>
                 <input
                   type="string"
-                  className="input"
+                  className="input inputBackground"
                   name="LongBreak"
                   onChange={handleChangeLongBreak}
                   value={minutesSetForLongBreak}
@@ -127,11 +128,11 @@ const ModalTimer: React.FC<ModalThemeProps> = ({
           </div>
           <div className="btnCloseModalContainer">
             <button
-              className="btn-close-modal"
+              className="ValidateButton backgroundBlue  "
               onClick={() => {
                 setOpenModal(false), resultToMinutes();
               }}>
-              <p>Valider</p>
+              Valider
             </button>
           </div>
         </div>

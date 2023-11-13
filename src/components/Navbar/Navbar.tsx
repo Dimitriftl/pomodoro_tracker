@@ -10,6 +10,7 @@ import { Link, useLocation } from "react-router-dom";
 import {
   AccountSvg,
   DashboardSvg,
+  CalendarSvg,
   LogOutSvg,
   PtLogo,
   RightArrowSvg,
@@ -40,7 +41,6 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
   useEffect(() => {
     setCurrentLocation(location.pathname);
   }, [location]);
-
 
   // class that depends on theme color
   const navbarClasses: {
@@ -110,6 +110,25 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
               }></div>
             <div className="svg">
               <DashboardSvg theme={themeColor} />
+            </div>
+            <p>Dashboard</p>
+          </Link>
+
+          <Link
+            className={
+              currentLocation === "/dashboard"
+                ? `${navbarClasses.linkContent} linkContentActive`
+                : navbarClasses.linkContent
+            }
+            to="/calendar">
+            <div
+              className={
+                currentLocation === "/calendar"
+                  ? "selectedPage active"
+                  : "selectedPage"
+              }></div>
+            <div className="svg">
+              <CalendarSvg theme={themeColor} />
             </div>
             <p>Dashboard</p>
           </Link>

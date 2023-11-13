@@ -17,17 +17,11 @@
   left: 50%;
   transform: translate(-50%, -50%);
   line-height: 1.4;
-  background: $dark-backgroud;
   padding: 14px 28px;
   max-width: 365px;
   width: 100%;
   min-height: 316px;
   border-radius: 10px;
-  color: $dark-white;
-}
-
-p { 
-  font-weight: 300;
 }
 
 .modalTitle {
@@ -70,7 +64,6 @@ p {
 
   p {
     font-size: 14px;
-
     padding-left: 2px;
   }
 
@@ -81,14 +74,11 @@ p {
     border-radius: 6px;
     border: none;
     text-align: left;
-    background: $dark-lighter-grey;
-    color: $dark-white;
     width: 80px;
     height: 30px;
     font-size: 16px;
     font-weight: 300;
     cursor: pointer;
-    box-shadow: 1px 1px 2px 0px #151515 inset;
   }
 
   .firstInput {
@@ -118,27 +108,21 @@ p {
   align-items: center;
   justify-content: center;
   position: relative;
-  // top: 4.5rem;
   width: 100%;
   height: 60px;
 }
 
-.btn-close-modal {
+.ValidateButton {
   position: absolute;
   cursor: pointer;
   width: 105px;
   height: 40px;
   font-size: 16px;
-  color: #fff;
   border-radius: 6px;
-  background-color: $dark-blue;
+  color: #fff;
   cursor: pointer;
   border: none;
   background-origin: border-box;
   background-clip: content-box, border-box;
   transition: 0.3s ease-in-out;
-}
-
-.btn-close-modal:hover {
-  background-color: $dark-blue-hover;
 }

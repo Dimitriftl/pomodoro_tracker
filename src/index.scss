@@ -17,6 +17,10 @@ body.light {
   background-color: #f2f2f2;
   color: $dark-backgroud;
 
+  .background {
+    background-color: $light-backgroud;
+  }
+
   // GENRAL
 
   button {
@@ -28,10 +32,15 @@ body.light {
   }
 
   .backgroundBlue:hover {
-    $light-blue-hover: $light-blue-hover;
+    background-color: $light-blue-hover;
   }
 
-  p {
+  p,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-weight: 300;
     color: $light-darker-grey;
   }
@@ -39,6 +48,12 @@ body.light {
   .neumorphismShadow {
     box-shadow: 1.5px 1.5px 3px 0px rgba(174, 174, 192, 0.4),
       -3px -3px 6px 0px #fff;
+  }
+
+  .inputBackground {
+    background-color: $light-grey;
+    box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.25) inset;
+    color: $light-darker-grey;
   }
 
   //NAVBAR
@@ -65,6 +80,10 @@ body.dark {
 
   //GENRAL
 
+  .background {
+    background-color: $dark-backgroud;
+  }
+
   // BUTTON
   button {
     background: #282930;
@@ -87,6 +106,13 @@ body.dark {
     box-shadow: 6px 6px 14px 0px #17171d, -6px -6px 14px 0px #2b2c36;
   }
 
+  .inputBackground {
+    background-color: $dark-lighter-grey;
+    box-shadow: 1px 1px 2px 0px #151515 inset;
+    color: #fff;
+
+  }
+
   //NABAR
 
   .navbarBackground {
@@ -104,5 +130,3 @@ body.dark {
     box-shadow: 15px 15px 30px 0px #17171d, -15px -15px 30px 0px #262730;
   }
 }
-
-// dark theme
