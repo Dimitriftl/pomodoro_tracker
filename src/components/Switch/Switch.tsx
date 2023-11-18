@@ -1,5 +1,6 @@
+import { ThemeContext } from "../../context/MyProviders";
 import "./switch.scss";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
 
 interface SwitchProps {
   autoStartPomodoro: boolean;
@@ -10,12 +11,20 @@ const Switch: React.FC<SwitchProps> = ({
   autoStartPomodoro,
   setAutoStartPomodoro,
 }) => {
+  const { themeColor } = useContext(ThemeContext);
+
+  console.log(themeColor);
+
+  const classes = {
+    switch: "switch" + " " + themeColor,
+  };
+
   const toggleAutoPlay = () => {
     setAutoStartPomodoro((current) => !current);
   };
 
   return (
-    <label className="switch">
+    <label className={classes.switch}>
       <input
         type="checkbox"
         onChange={toggleAutoPlay}

@@ -69,7 +69,6 @@
     display: flex;
     gap: 40px;
     justify-content: space-around;
-    // align-items: center;
     flex-wrap: wrap;
   }
 
@@ -92,12 +91,19 @@
       top: 5px;
     }
 
-    .selectedPage {
+    .pageMarker {
       position: absolute;
       left: 0;
       width: 5px;
       height: 55px;
-      background-color: #ffffff;
+
+      &.dark {
+        background-color: $dark-blue;
+      }
+
+      &.light {
+        background-color: $light-blue;
+      }
     }
 
     .active {

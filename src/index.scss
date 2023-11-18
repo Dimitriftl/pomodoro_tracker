@@ -29,10 +29,10 @@ body.light {
 
   .backgroundBlue {
     background-color: #2a72f1;
-  }
 
-  .backgroundBlue:hover {
-    background-color: $light-blue-hover;
+    &:hover {
+      background-color: $light-blue-hover;
+    }
   }
 
   p,
@@ -97,7 +97,12 @@ body.dark {
     background-color: $dark-blue-hover;
   }
 
-  p {
+  p,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-weight: 300;
     color: $dark-white;
   }
@@ -110,7 +115,6 @@ body.dark {
     background-color: $dark-lighter-grey;
     box-shadow: 1px 1px 2px 0px #151515 inset;
     color: #fff;
-
   }
 
   //NABAR

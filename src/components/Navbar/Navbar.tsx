@@ -48,12 +48,14 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
     switchThemeContainer: string;
     rightArrowContainer: string;
     linkContent: string;
+    pageMarker: string;
     logout: string;
   } = {
     container: "navbarContainer" + " " + "navbarBackground",
     switchThemeContainer: "switchThemeContainer" + " " + themeColor,
     rightArrowContainer: "rightArrowContainer" + " " + "backgroundBlue",
     linkContent: "linkContent",
+    pageMarker: "pageMarker" + " " + themeColor,
     logout: "linkContent logout" + " " + themeColor,
   };
 
@@ -87,8 +89,8 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
             <div
               className={
                 currentLocation === "/account"
-                  ? "selectedPage active"
-                  : "selectedPage"
+                  ? "pageMarker active backgroundBlue"
+                  : "pageMarker"
               }></div>
             <div className="svg">
               <AccountSvg theme={themeColor} />
@@ -105,8 +107,8 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
             <div
               className={
                 currentLocation === "/dashboard"
-                  ? "selectedPage active"
-                  : "selectedPage"
+                  ? "pageMarker active"
+                  : "pageMarker"
               }></div>
             <div className="svg">
               <DashboardSvg theme={themeColor} />
@@ -116,7 +118,7 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
 
           <Link
             className={
-              currentLocation === "/dashboard"
+              currentLocation === "/calendar"
                 ? `${navbarClasses.linkContent} linkContentActive`
                 : navbarClasses.linkContent
             }
@@ -124,13 +126,13 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
             <div
               className={
                 currentLocation === "/calendar"
-                  ? "selectedPage active"
-                  : "selectedPage"
+                  ? "pageMarker active"
+                  : "pageMarker"
               }></div>
             <div className="svg">
               <CalendarSvg theme={themeColor} />
             </div>
-            <p>Dashboard</p>
+            <p>Calendar</p>
           </Link>
 
           <Link
@@ -142,7 +144,7 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
             to="/">
             <div
               className={
-                currentLocation === "/" ? "selectedPage active" : "selectedPage"
+                currentLocation === "/" ? "pageMarker active" : "pageMarker"
               }></div>
             <div className="svg">
               <TimerSvg theme={themeColor} />
