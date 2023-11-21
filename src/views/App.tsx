@@ -8,8 +8,8 @@ import {
 } from "react";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
-import Pomodoro from "../views/pomodoro/Pomodoro.tsx";
-import Dashboard from "./dashboard/Dashboard.tsx";
+import Pomodoro from "./pomodoro/index/index.tsx";
+import Dashboard from "./dashboard/index/index.tsx";
 import MyProviders from "../context/MyProviders.tsx";
 
 type Theme = "light" | "dark" | "system";

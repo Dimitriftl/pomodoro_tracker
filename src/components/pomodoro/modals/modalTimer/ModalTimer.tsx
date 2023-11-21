@@ -1,7 +1,7 @@
-import { Dispatch, SetStateAction, useContext } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import "./modalTimer.scss";
-import { AutoStartPomodoroContext } from "../../context/MyProviders";
-import Switch from "../../components/Switch/Switch";
+import { AutoStartPomodoroContext } from "../../../../context/MyProviders";
+import Switch from "../../../../components/Switch/Switch";
 
 interface ModalThemeProps {
   setOpenModal: Dispatch<SetStateAction<boolean | undefined>>;
@@ -16,6 +16,9 @@ interface ModalThemeProps {
   setMinutesSetForLongBreak: Dispatch<SetStateAction<number>>;
 
   setInitinialTimerValue: Dispatch<SetStateAction<number>>;
+
+  initialValuesArray: number[];
+  setInitialValuesArray: Dispatch<SetStateAction<number[]>>;
 }
 
 const ModalTimer: React.FC<ModalThemeProps> = ({
@@ -26,43 +29,51 @@ const ModalTimer: React.FC<ModalThemeProps> = ({
   setMinutesSetForBreak,
   minutesSetForLongBreak,
   setMinutesSetForLongBreak,
-  setInitinialTimerValue,
+  initialValuesArray,
 }) => {
   const { autoStartPomodoro, setAutoStartPomodoro } = useContext(
     AutoStartPomodoroContext
   );
 
+  // what we want to do here is to set the inputs values as the new values for the initialValuesArray
+
   const handleChange = (event) => {
     const result = event.target.value.replace(/\D/g, "");
 
     if (result === "0") {
-      return "";
+      return null;
     }
 
+    // const newArray = [...initialValuesArray];
+    // newArray[0] = result;
+    // setArray(newArray);
     setMinutesSetForFocus(result);
-    setInitinialTimerValue(result); // to set an initial value to the progress bar
   };
 
   const handleChangeBreak = (event) => {
     const result = event.target.value.replace(/\D/g, "");
 
     if (result === "0") {
-      return "";
+      return null;
     }
 
+    // const newArray = [...initialValuesArray];
+    // newArray[1] = result;
+    // setArray(newArray);
     setMinutesSetForBreak(result);
-    setInitinialTimerValue(result); // to set an initial value to the progress bar
   };
 
   const handleChangeLongBreak = (event) => {
     const result = event.target.value.replace(/\D/g, "");
 
     if (result === "0") {
-      return "";
+      return null;
     }
 
+    // const newArray = [...initialValuesArray];
+    // newArray[2] = result;
+    // setArray(newArray);
     setMinutesSetForLongBreak(result);
-    setInitinialTimerValue(result); // to set an initial value to the progress bar
   };
 
   function resultToMinutes() {
@@ -89,7 +100,6 @@ const ModalTimer: React.FC<ModalThemeProps> = ({
               <div className="firstInput">
                 <p>Focus</p>
                 <input
-                
                   type="text"
                   className="input inputBackground"
                   name="Focus"

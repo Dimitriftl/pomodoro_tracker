@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import "./tasks.scss";
 import CreateTaskButton from "../Button/createTaskButton/CreateTaskButton";
-import ModalCreateTask from "../../../modals/modalCreateTask/ModalCreateTask";
+import ModalCreateTask from "../../../components/pomodoro/modals/modalCreateTask/ModalCreateTask";
 import { PlusSvg } from "../../../assets/svg/svg.jsx";
 import { ThemeContext } from "../../../context/MyProviders.js";
 
@@ -10,7 +10,7 @@ const Tasks = () => {
   const { themeColor } = useContext(ThemeContext);
 
   return (
-    <div className="taskContainer">
+    <div className="tasksContainer">
       <h2>Task to focus on.</h2>
 
       <button onClick={() => setModal(!modal)} id="openModalButton">

@@ -16,12 +16,12 @@ import {
   Blop,
 } from "../../../assets/svg/svg";
 import "./timer.scss";
-import ModalTimer from "../../../modals/modalTimer/ModalTimer";
+import ModalTimer from "../../../components/pomodoro/modals/modalTimer/ModalTimer";
 import {
   AutoStartPomodoroContext,
   ThemeContext,
 } from "../../../context/MyProviders";
-import Button from "../Button/Button";
+import Button from "../../../components/pomodoro/Button/TimerButton";
 interface TimerProps {
   isTimerRunning: boolean;
   setIsTimerRunning: Dispatch<SetStateAction<boolean>>;
@@ -47,9 +47,6 @@ interface TimerProps {
   countdownTime: number;
   setCountdownTime: Dispatch<SetStateAction<number>>;
 
-  initialTimerValue: number;
-  setInitinialTimerValue: Dispatch<SetStateAction<number>>;
-
   minutesWithoutZero: number;
 
   // display in HTMX
@@ -58,6 +55,9 @@ interface TimerProps {
 
   numberOfPomodoroDoneGlobaly: number;
   setNumberOfPomodoroDoneGlobaly: Dispatch<SetStateAction<number>>;
+
+  initialValuesArray: number[];
+  setInitialValuesArray: Dispatch<SetStateAction<number[]>>;
 }
 
 let interval: number;
@@ -78,14 +78,14 @@ const Timer: React.FC<TimerProps> = ({
   minutesSetForLongBreak,
   setMinutesSetForLongBreak,
   countdownTime,
-  initialTimerValue,
-  setInitinialTimerValue,
   setCountdownTime,
   minutesWithoutZero,
   minutes,
   seconds,
   numberOfPomodoroDoneGlobaly,
   setNumberOfPomodoroDoneGlobaly,
+  initialValuesArray,
+  setInitialValuesArray,
 }) => {
   const { autoStartPomodoro } = useContext(AutoStartPomodoroContext);
 
@@ -130,6 +130,7 @@ const Timer: React.FC<TimerProps> = ({
 
   useEffect(() => {
     if (countdownTime < 0) {
+      percentage = 100;
       if (!autoStartPomodoro) {
         stopTimer();
       }
@@ -164,14 +165,32 @@ const Timer: React.FC<TimerProps> = ({
     setMinutesSetForLongBreak(minutesSetForLongBreak / 60);
   }
 
-  const percentage = Math.round((minutesWithoutZero / countdownTime) * 100);
+  // countdownTime decrease every second
+
+  const percentageFocus = Math.round(
+    (countdownTime / initialValuesArray[0]) * 100
+  );
+  const percentageBreak = Math.round(
+    (countdownTime / initialValuesArray[1]) * 100
+  );
+  const percentageLongBreak = Math.round(
+    (countdownTime / initialValuesArray[2]) * 100
+  );
+
+  // }, [timerfocus, timerBreak, timerLongBreak]);
 
   return (
     <div className="timerContainer">
       <div className="circle timerBackground">
         <div className="progressBarContainer">
           <CircularProgressbar
-            value={100}
+            value={
+              timerfocus
+                ? percentageFocus
+                : timerBreak
+                ? percentageBreak
+                : percentageLongBreak
+            }
             strokeWidth={3}
             styles={buildStyles({
               pathColor:
@@ -239,8 +258,9 @@ const Timer: React.FC<TimerProps> = ({
       </div>
       {openModal && (
         <ModalTimer
+          initialValuesArray={initialValuesArray}
+          setInitialValuesArray={setInitialValuesArray}
           setOpenModal={setOpenModal}
-          setInitinialTimerValue={setInitinialTimerValue}
           minutesSetForFocus={minutesSetForFocus}
           setMinutesSetForFocus={setMinutesSetForFocus}
           minutesSetForBreak={minutesSetForBreak}

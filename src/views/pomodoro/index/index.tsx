@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import Timer from "../../components/pomodoro/Timer/Timer";
-import "./pomodoro.scss";
-import Tasks from "../../components/pomodoro/Tasks/Tasks";
-import { ThemeContext } from "../../context/MyProviders";
+import Timer from "../Timer/Timer";
+import "./index.scss";
+import Tasks from "../Tasks/Tasks";
+import { ThemeContext } from "../../../context/MyProviders";
 
 const Pomodoro = () => {
-  const {themeColor} = useContext(ThemeContext);  
+  const { themeColor } = useContext(ThemeContext);
 
   // states
   const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false); // start the timer if it's true
@@ -17,7 +17,7 @@ const Pomodoro = () => {
   const [minutesSetForBreak, setMinutesSetForBreak] = useState<number>(300);
   const [minutesSetForLongBreak, setMinutesSetForLongBreak] =
     useState<number>(900);
-  const [initialTimerValue, setInitinialTimerValue] = useState<number>(3300);
+
   const [countdownTime, setCountdownTime] =
     useState<number>(minutesSetForFocus); // timer value that will be decreased
 
@@ -29,6 +29,12 @@ const Pomodoro = () => {
     secondsWithoutZero < 10 ? `0${secondsWithoutZero}` : secondsWithoutZero; // timer that will be display on the timer
   const [numberOfPomodoroDoneGlobaly, setNumberOfPomodoroDoneGlobaly] =
     useState<number>(0); // use to set the long break
+
+  // initial values of the timers, used for the progress bar poucentage
+  // const  3300;
+  const [initialValuesArray, setInitialValuesArray]: number[] = [
+    3300, 300, 900,
+  ];
 
   useEffect(() => {
     setCountdownTime(minutesSetForFocus);
@@ -52,14 +58,15 @@ const Pomodoro = () => {
         minutesSetForLongBreak={minutesSetForLongBreak}
         setMinutesSetForLongBreak={setMinutesSetForLongBreak}
         countdownTime={countdownTime}
-        initialTimerValue={initialTimerValue}
-        setInitinialTimerValue={setInitinialTimerValue}
         setCountdownTime={setCountdownTime}
         minutesWithoutZero={minutesWithoutZero}
         minutes={minutes}
         seconds={seconds}
         numberOfPomodoroDoneGlobaly={numberOfPomodoroDoneGlobaly}
         setNumberOfPomodoroDoneGlobaly={setNumberOfPomodoroDoneGlobaly}
+        // for the progress bar
+        initialValuesArray={initialValuesArray}
+        setInitialValuesArray={setInitialValuesArray}
       />
       <Tasks />
     </div>
