@@ -4,6 +4,7 @@ import React, {
   SetStateAction,
   useEffect,
   useContext,
+  useRef,
 } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
@@ -84,19 +85,19 @@ const Timer: React.FC<TimerProps> = ({
   seconds,
   numberOfPomodoroDoneGlobaly,
   setNumberOfPomodoroDoneGlobaly,
-  initialValuesArray,
-  setInitialValuesArray,
 }) => {
   const { autoStartPomodoro } = useContext(AutoStartPomodoroContext);
 
   // states
   const [openModal, setOpenModal] = useState<boolean>(false);
 
+  let countdowntimeInitialValue = useRef<number>(countdownTime); // initial value of the timer used for the percentage of the progress bar
+
   const { themeColor } = useContext(ThemeContext);
 
   const startTimer = () => {
     setIsTimerRunning(true);
-
+    countdowntimeInitialValue.current = countdownTime;
     interval = window.setInterval(() => {
       setCountdownTime((countdownTime) => countdownTime - 1);
     }, 100);
@@ -128,9 +129,14 @@ const Timer: React.FC<TimerProps> = ({
     setOpenModal(true), resultToMinutes(), stopTimer();
   };
 
+  const handleNewTimerValue = (value: number) => {
+    setCountdownTime(value);
+    countdowntimeInitialValue.current = value;
+  };
+
+  // handle the end of the timer et set the new timer
   useEffect(() => {
     if (countdownTime < 0) {
-      percentage = 100;
       if (!autoStartPomodoro) {
         stopTimer();
       }
@@ -140,21 +146,22 @@ const Timer: React.FC<TimerProps> = ({
           setNumberOfPomodoroDoneGlobaly(
             (numberOfPomodoroDoneGlobaly) => numberOfPomodoroDoneGlobaly + 1
           );
-          setCountdownTime(minutesSetForBreak);
+          // setCountdownTime(minutesSetForBreak);
+          handleNewTimerValue(minutesSetForBreak);
           setTimerBreak(true);
         } else {
           setNumberOfPomodoroDoneGlobaly(0);
           setTimerLongBreak(true);
-          setCountdownTime(minutesSetForLongBreak);
+          handleNewTimerValue(minutesSetForLongBreak);
         }
       } else if (timerBreak) {
         setTimerBreak(false);
         setTimerFocus(true);
-        setCountdownTime(minutesSetForFocus);
+        handleNewTimerValue(minutesSetForFocus);
       } else {
         setTimerLongBreak(false);
         setTimerFocus(true);
-        setCountdownTime(minutesSetForFocus);
+        handleNewTimerValue(minutesSetForFocus);
       }
     }
   }, [countdownTime]);
@@ -165,16 +172,8 @@ const Timer: React.FC<TimerProps> = ({
     setMinutesSetForLongBreak(minutesSetForLongBreak / 60);
   }
 
-  // countdownTime decrease every second
-
-  const percentageFocus = Math.round(
-    (countdownTime / initialValuesArray[0]) * 100
-  );
-  const percentageBreak = Math.round(
-    (countdownTime / initialValuesArray[1]) * 100
-  );
-  const percentageLongBreak = Math.round(
-    (countdownTime / initialValuesArray[2]) * 100
+  const percentage = Math.round(
+    (countdownTime / countdowntimeInitialValue.current) * 100
   );
 
   // }, [timerfocus, timerBreak, timerLongBreak]);
@@ -184,13 +183,7 @@ const Timer: React.FC<TimerProps> = ({
       <div className="circle timerBackground">
         <div className="progressBarContainer">
           <CircularProgressbar
-            value={
-              timerfocus
-                ? percentageFocus
-                : timerBreak
-                ? percentageBreak
-                : percentageLongBreak
-            }
+            value={percentage}
             strokeWidth={3}
             styles={buildStyles({
               pathColor:

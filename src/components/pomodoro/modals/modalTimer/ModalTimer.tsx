@@ -35,7 +35,7 @@ const ModalTimer: React.FC<ModalThemeProps> = ({
     AutoStartPomodoroContext
   );
 
-  // what we want to do here is to set the inputs values as the new values for the initialValuesArray
+  // changer la logique pour modifier les timers, il faut que ceux-ci se modifie au onClick du bouton valider
 
   const handleChange = (event) => {
     const result = event.target.value.replace(/\D/g, "");
@@ -43,10 +43,6 @@ const ModalTimer: React.FC<ModalThemeProps> = ({
     if (result === "0") {
       return null;
     }
-
-    // const newArray = [...initialValuesArray];
-    // newArray[0] = result;
-    // setArray(newArray);
     setMinutesSetForFocus(result);
   };
 
@@ -57,9 +53,6 @@ const ModalTimer: React.FC<ModalThemeProps> = ({
       return null;
     }
 
-    // const newArray = [...initialValuesArray];
-    // newArray[1] = result;
-    // setArray(newArray);
     setMinutesSetForBreak(result);
   };
 
@@ -69,10 +62,6 @@ const ModalTimer: React.FC<ModalThemeProps> = ({
     if (result === "0") {
       return null;
     }
-
-    // const newArray = [...initialValuesArray];
-    // newArray[2] = result;
-    // setArray(newArray);
     setMinutesSetForLongBreak(result);
   };
 

@@ -31,10 +31,7 @@ const Pomodoro = () => {
     useState<number>(0); // use to set the long break
 
   // initial values of the timers, used for the progress bar poucentage
-  // const  3300;
-  const [initialValuesArray, setInitialValuesArray]: number[] = [
-    3300, 300, 900,
-  ];
+
 
   useEffect(() => {
     setCountdownTime(minutesSetForFocus);
@@ -64,9 +61,6 @@ const Pomodoro = () => {
         seconds={seconds}
         numberOfPomodoroDoneGlobaly={numberOfPomodoroDoneGlobaly}
         setNumberOfPomodoroDoneGlobaly={setNumberOfPomodoroDoneGlobaly}
-        // for the progress bar
-        initialValuesArray={initialValuesArray}
-        setInitialValuesArray={setInitialValuesArray}
       />
       <Tasks />
     </div>
