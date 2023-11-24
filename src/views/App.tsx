@@ -11,6 +11,7 @@ import Navbar from "../components/Navbar/Navbar";
 import Pomodoro from "./pomodoro/index/index.tsx";
 import Dashboard from "./dashboard/index/index.tsx";
 import MyProviders from "../context/MyProviders.tsx";
+import Calendar from "./calendar/index/index.tsx";
 
 type Theme = "light" | "dark" | "system";
 
@@ -28,6 +29,7 @@ function App() {
         <Navbar setThemeColor={setThemeColor} themeColor={themeColor} />
         <Routes>
           <Route path="/" element={<Pomodoro />} />
+          <Route path="/calendar" element={<Calendar />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </MyProviders>

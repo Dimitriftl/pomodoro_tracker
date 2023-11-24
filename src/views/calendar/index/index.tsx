@@ -1,9 +1,10 @@
 import React from "react";
+import Header from "../Header/Header";
 
 const Calendar = () => {
   return (
     <div>
-      <h1>calendar</h1>
+      <Header />
     </div>
   );
 };

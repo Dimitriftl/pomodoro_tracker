@@ -1,0 +1,24 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-left: 100px;
+  padding-right: 26px;
+  height: 74px;
+  border-bottom: 1px solid #353842;
+}
+
+#headerButton {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  font-size: 15px;
+  align-items: center;
+  width: 180px;
+  height: 40px;
+  color: #fff;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+}
