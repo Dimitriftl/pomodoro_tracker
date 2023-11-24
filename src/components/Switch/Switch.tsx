@@ -13,8 +13,6 @@ const Switch: React.FC<SwitchProps> = ({
 }) => {
   const { themeColor } = useContext(ThemeContext);
 
-  console.log(themeColor);
-
   const classes = {
     switch: "switch" + " " + themeColor,
   };

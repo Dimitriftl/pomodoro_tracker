@@ -56,9 +56,6 @@ interface TimerProps {
 
   numberOfPomodoroDoneGlobaly: number;
   setNumberOfPomodoroDoneGlobaly: Dispatch<SetStateAction<number>>;
-
-  initialValuesArray: number[];
-  setInitialValuesArray: Dispatch<SetStateAction<number[]>>;
 }
 
 let interval: number;
@@ -176,7 +173,6 @@ const Timer: React.FC<TimerProps> = ({
     (countdownTime / countdowntimeInitialValue.current) * 100
   );
 
-  // }, [timerfocus, timerBreak, timerLongBreak]);
 
   return (
     <div className="timerContainer">
@@ -251,8 +247,6 @@ const Timer: React.FC<TimerProps> = ({
       </div>
       {openModal && (
         <ModalTimer
-          initialValuesArray={initialValuesArray}
-          setInitialValuesArray={setInitialValuesArray}
           setOpenModal={setOpenModal}
           minutesSetForFocus={minutesSetForFocus}
           setMinutesSetForFocus={setMinutesSetForFocus}
@@ -260,6 +254,7 @@ const Timer: React.FC<TimerProps> = ({
           setMinutesSetForBreak={setMinutesSetForBreak}
           minutesSetForLongBreak={minutesSetForLongBreak}
           setMinutesSetForLongBreak={setMinutesSetForLongBreak}
+          countdowntimeInitialValue={countdowntimeInitialValue}
         />
       )}
     </div>

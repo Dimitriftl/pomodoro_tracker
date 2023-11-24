@@ -17,8 +17,7 @@ interface ModalThemeProps {
 
   setInitinialTimerValue: Dispatch<SetStateAction<number>>;
 
-  initialValuesArray: number[];
-  setInitialValuesArray: Dispatch<SetStateAction<number[]>>;
+  countdowntimeInitialValue: React.MutableRefObject<number>;
 }
 
 const ModalTimer: React.FC<ModalThemeProps> = ({
@@ -29,11 +28,18 @@ const ModalTimer: React.FC<ModalThemeProps> = ({
   setMinutesSetForBreak,
   minutesSetForLongBreak,
   setMinutesSetForLongBreak,
-  initialValuesArray,
+  countdowntimeInitialValue,
 }) => {
   const { autoStartPomodoro, setAutoStartPomodoro } = useContext(
     AutoStartPomodoroContext
   );
+
+  const [localMinutesSetForFocus, setLocalMinutesSetForFocus] =
+    useState<number>(minutesSetForFocus);
+  const [localMinutesSetForBreak, setLocalMinutesSetForBreak] =
+    useState<number>(minutesSetForBreak);
+  const [localMinutesSetForLongBreak, setLocalMinutesSetForLongBreak] =
+    useState<number>(minutesSetForLongBreak);
 
   // changer la logique pour modifier les timers, il faut que ceux-ci se modifie au onClick du bouton valider
 
@@ -43,7 +49,7 @@ const ModalTimer: React.FC<ModalThemeProps> = ({
     if (result === "0") {
       return null;
     }
-    setMinutesSetForFocus(result);
+    setLocalMinutesSetForFocus(result);
   };
 
   const handleChangeBreak = (event) => {
@@ -53,7 +59,7 @@ const ModalTimer: React.FC<ModalThemeProps> = ({
       return null;
     }
 
-    setMinutesSetForBreak(result);
+    setLocalMinutesSetForBreak(result);
   };
 
   const handleChangeLongBreak = (event) => {
@@ -62,13 +68,15 @@ const ModalTimer: React.FC<ModalThemeProps> = ({
     if (result === "0") {
       return null;
     }
-    setMinutesSetForLongBreak(result);
+    setLocalMinutesSetForLongBreak(result);
   };
 
+  // convert minutes to seconds
   function resultToMinutes() {
-    setMinutesSetForFocus(minutesSetForFocus * 60);
-    setMinutesSetForBreak(minutesSetForBreak * 60);
-    setMinutesSetForLongBreak(minutesSetForLongBreak * 60);
+    setMinutesSetForFocus(localMinutesSetForFocus * 60);
+    setMinutesSetForBreak(localMinutesSetForBreak * 60);
+    setMinutesSetForLongBreak(localMinutesSetForLongBreak * 60);
+    countdowntimeInitialValue.current = localMinutesSetForFocus * 60;
   }
 
   return (
@@ -93,7 +101,7 @@ const ModalTimer: React.FC<ModalThemeProps> = ({
                   className="input inputBackground"
                   name="Focus"
                   onChange={handleChange}
-                  value={minutesSetForFocus}
+                  value={localMinutesSetForFocus}
                 />
               </div>
               <div className="secondInput">
@@ -103,7 +111,7 @@ const ModalTimer: React.FC<ModalThemeProps> = ({
                   className="input inputBackground"
                   name="Break"
                   onChange={handleChangeBreak}
-                  value={minutesSetForBreak}
+                  value={localMinutesSetForBreak}
                 />
               </div>
               <div className="thirdInput">
@@ -113,7 +121,7 @@ const ModalTimer: React.FC<ModalThemeProps> = ({
                   className="input inputBackground"
                   name="LongBreak"
                   onChange={handleChangeLongBreak}
-                  value={minutesSetForLongBreak}
+                  value={localMinutesSetForLongBreak}
                 />
               </div>
             </div>
