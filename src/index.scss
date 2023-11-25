@@ -16,6 +16,19 @@
 body.light {
   background-color: #f2f2f2;
   color: $dark-backgroud;
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: $light-backgroud;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 6px;
+  }
+
 
   .background {
     background-color: $light-backgroud;
@@ -25,6 +38,7 @@ body.light {
 
   button {
     background-color: rgb(255, 255, 255);
+    cursor: pointer;
   }
 
   .backgroundBlue {
@@ -43,6 +57,16 @@ body.light {
   h6 {
     font-weight: 300;
     color: $light-darker-grey;
+  }
+
+  input,
+  textarea {
+    color: $light-darker-grey;
+    background-color: transparent;
+
+    &::placeholder {
+      color: $light-grey;
+    }
   }
 
   .neumorphismShadow {
@@ -77,6 +101,18 @@ body.light {
 body.dark {
   background-color: $dark-backgroud;
   color: #f2f2f2;
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: $dark-backgroud;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 6px;
+  }
 
   //GENRAL
 
@@ -105,6 +141,16 @@ body.dark {
   h6 {
     font-weight: 300;
     color: $dark-white;
+  }
+
+  input,
+  textarea {
+    color: $dark-white;
+    background-color: transparent;
+
+    &::placeholder {
+      color: $dark-darker-white;
+    }
   }
 
   .neumorphismShadow {
