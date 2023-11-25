@@ -17,8 +17,11 @@ type modalProps = {
 const ModalCreateTask = ({ modal, setModal }) => {
   // context state
   const { themeColor } = useContext(ThemeContext);
-  const [description, setDescription] = useState<string>("");
   const areaMaxLength = 120;
+
+  // teask states
+  const [taskName, setTaskName] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
 
   // handle la fermerture du modal avec la touche escape / esc
   useEffect(() => {
@@ -50,6 +53,8 @@ const ModalCreateTask = ({ modal, setModal }) => {
           <input
             type="text"
             name="taskName"
+            value={taskName}
+            onChange={(e) => setTaskName(e.target.value)}
             id="taskName"
             placeholder="Add a title"
           />
@@ -69,7 +74,7 @@ const ModalCreateTask = ({ modal, setModal }) => {
           </div>
           <div id="modalFooter">
             <button id="validate" className="backgroundBlue" type="submit">
-              <p>valider</p>
+              valider
             </button>
           </div>
         </form>

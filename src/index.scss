@@ -29,7 +29,6 @@ body.light {
     border-radius: 6px;
   }
 
-
   .background {
     background-color: $light-backgroud;
   }
@@ -39,6 +38,7 @@ body.light {
   button {
     background-color: rgb(255, 255, 255);
     cursor: pointer;
+    color: #fff;
   }
 
   .backgroundBlue {
@@ -59,13 +59,24 @@ body.light {
     color: $light-darker-grey;
   }
 
-  input,
-  textarea {
-    color: $light-darker-grey;
+  input {
+    color: #595c5f;
     background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #dadce0;
 
     &::placeholder {
-      color: $light-grey;
+      color: $dark-darker-white;
+    }
+  }
+
+  textarea {
+    color: #595c5f;
+    background-color: transparent;
+    border: 1px solid #dadce0;
+
+    &::placeholder {
+      color: $dark-darker-white;
     }
   }
 
@@ -122,7 +133,9 @@ body.dark {
 
   // BUTTON
   button {
-    background: #282930;
+    background: $dark-lighter-grey;
+    cursor: pointer;
+    color: #fff;
   }
 
   .backgroundBlue {
@@ -143,10 +156,21 @@ body.dark {
     color: $dark-white;
   }
 
-  input,
+  input {
+    color: $dark-white;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid $dark-lighter-grey;
+
+    &::placeholder {
+      color: $dark-darker-white;
+    }
+  }
+
   textarea {
     color: $dark-white;
     background-color: transparent;
+    border: 1px solid $dark-lighter-grey;
 
     &::placeholder {
       color: $dark-darker-white;
