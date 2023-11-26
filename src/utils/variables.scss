@@ -1,23 +1,39 @@
-// Dark theme variables
+:root {
+  body.dark {
+    --color-backgroud: #1e1f26;
+    --color-second-backgroud: #282930;
+    --color-third-backgroud: #272830;
+    --color-blue: #678bff;
+    --color-hover: #7192ff;
+    --color-hightlight: rgba(103, 139, 255, 0.05);
+    --color-text: #ffffff;
+    --color-placeholder: #a9a9a9;
 
-// Colors
+    // box shadow
+    --box-shadow-button: 6px 6px 14px 0px #17171d, -6px -6px 14px 0px #2b2c36;
+    --box-shadow-timer: 15px 15px 30px 0px #17171d, -15px -15px 30px 0px #262730;
+    --box-shadow-input: 1px 1px 2px 0px #151515 inset;
+  }
 
-$dark-backgroud: #1e1f26;
-$dark-lighter-grey: #282930;
-$dark-darker-grey: #272830;
-$dark-blue: #678bff;
-$dark-blue-hover: #7192ff;
-$dark-hightlight-blue: rgba(103, 139, 255, 0.05);
-$dark-white: #ffffff;
-$dark-darker-white: #a9a9a9;
+  body.light {
+    --color-backgroud: #f2f2f2;
+    --color-second-backgroud: #ffffff;
+    --color-third-backgroud: #f0f0f3;
+    --color-blue: #2a72f1;
+    --color-hover: #387aec;
+    --color-hightlight: #e8f0fe;
+    --color-text: #383838;
+    --color-placeholder: #a9a9a9;
 
-// Dark theme variables
+    // box shadow
+    --box-shadow-button: 1.5px 1.5px 3px 0px rgba(174, 174, 192, 0.4),
+      -3px -3px 6px 0px #fff;
+    --box-shadow-timer: 20px 20px 40px 0px #a8a8a8, -20px -20px 40px 0px #fff;
+    --box-shadow-input: 1px 1px 2px 0px rgba(0, 0, 0, 0.25) inset;
+  }
+}
 
-$light-backgroud: #f2f2f2;
-$light-white: #ffffff;
-$light-grey: #f0f0f3;
-$light-blue: #2a72f1;
-$light-blue-hover: #387aec;
-$light-hightlight-blue: rgba(103, 139, 255, 0.05);
-$light-darker-white: #a9a9a9;
-$light-darker-grey: #383838;
+// $color-primary: #7380ec;
+// $color-danger: #ff7782;
+// $color-success: #41f1b6;
+// $color-warning: #ffbb55;

@@ -1,9 +1,11 @@
+@import "../../../../../utils/variables.scss";
+
 #listStartContainer {
   display: flex;
   position: absolute;
   flex-direction: column;
   //   align-items: center;
-  gap: 10px;
+  gap: 5px;
   width: 120px;
   height: 180px;
   overflow: scroll;
@@ -16,8 +18,9 @@
 
   p {
     cursor: pointer;
+    padding: 5px 0;
     &:hover {
-      background-color: blue;
+      background-color: var(--color-hightlight);
     }
   }
 }

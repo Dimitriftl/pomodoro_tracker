@@ -13,111 +13,207 @@
 // make a light and dark theme for the body.
 
 // light theme
-body.light {
-  background-color: #f2f2f2;
-  color: $dark-backgroud;
-  ::-webkit-scrollbar {
-    width: 10px;
-  }
+// body.light {
+//   background-color: #f2f2f2;
+//   color: var(--color-backgroud);
+//   ::-webkit-scrollbar {
+//     width: 10px;
+//   }
 
-  ::-webkit-scrollbar-track {
-    background: $light-backgroud;
-  }
+//   ::-webkit-scrollbar-track {
+//     background: var(--color-backgroud);
+//   }
 
-  ::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 6px;
-  }
+//   ::-webkit-scrollbar-thumb {
+//     background: #888;
+//     border-radius: 6px;
+//   }
 
-  .background {
-    background-color: $light-backgroud;
-  }
+//   .background {
+//     background-color: var(--color-backgroud);
+//   }
 
-  // GENRAL
+//   // GENRAL
 
-  button {
-    background-color: rgb(255, 255, 255);
-    cursor: pointer;
-    color: #fff;
-  }
+//   button {
+//     background-color: rgb(255, 255, 255);
+//     cursor: pointer;
+//     color: #fff;
+//   }
 
-  .backgroundBlue {
-    background-color: #2a72f1;
+//   .backgroundBlue {
+//     background-color: #2a72f1;
 
-    &:hover {
-      background-color: $light-blue-hover;
-    }
-  }
+//     &:hover {
+//       background-color: var(--color-hover);
+//     }
+//   }
 
-  p,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-weight: 300;
-    color: $light-darker-grey;
-  }
+//   p,
+//   h2,
+//   h3,
+//   h4,
+//   h5,
+//   h6 {
+//     font-weight: 300;
+//     color: var(--color-text);
+//   }
 
-  input {
-    color: #595c5f;
-    background-color: transparent;
-    border: none;
-    border-bottom: 1px solid #dadce0;
+//   input {
+//     color: #595c5f;
+//     background-color: transparent;
+//     border: none;
+//     border-bottom: 1px solid #dadce0;
 
-    &::placeholder {
-      color: $dark-darker-white;
-    }
-  }
+//     &::placeholder {
+//       color: --color-placeholder;
+//     }
+//   }
 
-  textarea {
-    color: #595c5f;
-    background-color: transparent;
-    border: 1px solid #dadce0;
+//   textarea {
+//     color: #595c5f;
+//     background-color: transparent;
+//     border: 1px solid #dadce0;
 
-    &::placeholder {
-      color: $dark-darker-white;
-    }
-  }
+//     &::placeholder {
+//       color: --color-placeholder;
+//     }
+//   }
 
-  .neumorphismShadow {
-    box-shadow: 1.5px 1.5px 3px 0px rgba(174, 174, 192, 0.4),
-      -3px -3px 6px 0px #fff;
-  }
+//   .neumorphismShadow {
+//     box-shadow: 1.5px 1.5px 3px 0px rgba(174, 174, 192, 0.4),
+//       -3px -3px 6px 0px #fff;
+//   }
 
-  .inputBackground {
-    background-color: $light-grey;
-    box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.25) inset;
-    color: $light-darker-grey;
-  }
+//   .inputBackground {
+//     background-color: var(--color-third-backgroud);
+//     box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.25) inset;
+//     color: var(--color-text);
+//   }
 
-  //NAVBAR
+//   //NAVBAR
 
-  .navbarBackground {
-    background-color: $light-white;
-  }
+//   .navbarBackground {
+//     background-color: var(--color-second-backgroud);
+//   }
 
-  .selected {
-    background-color: $light-hightlight-blue;
-  }
+//   .selected {
+//     background-color: var(--color-hightlight);
+//   }
 
-  // POMODORO
+//   // POMODORO
 
-  .timerBackground {
-    background-color: $light-backgroud;
-    box-shadow: 20px 20px 40px 0px #a8a8a8, -20px -20px 40px 0px #fff;
-  }
-}
+//   .timerBackground {
+//     background-color: var(--color-backgroud);
+//     box-shadow: 20px 20px 40px 0px #a8a8a8, -20px -20px 40px 0px #fff;
+//   }
+// }
 
-body.dark {
-  background-color: $dark-backgroud;
+// body.dark {
+//   background-color: var(--color-backgroud);
+//   color: #f2f2f2;
+//   ::-webkit-scrollbar {
+//     width: 10px;
+//   }
+
+//   ::-webkit-scrollbar-track {
+//     background: var(--color-backgroud);
+//   }
+
+//   ::-webkit-scrollbar-thumb {
+//     background: #888;
+//     border-radius: 6px;
+//   }
+
+//   //GENRAL
+
+//   .background {
+//     background-color: var(--color-backgroud);
+//   }
+
+//   // BUTTON
+//   button {
+//     background: var(--color-second-backgroud);
+//     cursor: pointer;
+//     color: #fff;
+//   }
+
+//   .backgroundBlue {
+//     background-color: var(--color-blue);
+//   }
+
+//   .backgroundBlue:hover {
+//     background-color: var(--color-hover);
+//   }
+
+//   p,
+//   h2,
+//   h3,
+//   h4,
+//   h5,
+//   h6 {
+//     font-weight: 300;
+//     color: var(--color-text);
+//   }
+
+//   input {
+//     color: var(--color-text);
+//     background-color: transparent;
+//     border: none;
+//     border-bottom: 1px solid var(--color-second-backgroud);
+
+//     &::placeholder {
+//       color: --color-placeholder;
+//     }
+//   }
+
+//   textarea {
+//     color: var(--color-text);
+//     background-color: transparent;
+//     border: 1px solid var(--color-second-backgroud);
+
+//     &::placeholder {
+//       color: --color-placeholder;
+//     }
+//   }
+
+//   .neumorphismShadow {
+//     box-shadow: 6px 6px 14px 0px #17171d, -6px -6px 14px 0px #2b2c36;
+//   }
+
+//   .inputBackground {
+//     background-color: var(--color-second-backgroud);
+//     box-shadow: 1px 1px 2px 0px #151515 inset;
+//     color: #fff;
+//   }
+
+//   //NABAR
+
+//   .navbarBackground {
+//     background-color: var(--color-second-backgroud);
+//   }
+
+//   .selected {
+//     background-color: var(--color-hightlight);
+//   }
+
+//   // POMODORO
+
+//   .timerBackground {
+//     background-color: var(--color-backgroud);
+//     box-shadow: 15px 15px 30px 0px #17171d, -15px -15px 30px 0px #262730;
+//   }
+// }
+
+body {
+  background-color: var(--color-backgroud);
   color: #f2f2f2;
   ::-webkit-scrollbar {
     width: 10px;
   }
 
   ::-webkit-scrollbar-track {
-    background: $dark-backgroud;
+    background: var(--color-backgroud);
   }
 
   ::-webkit-scrollbar-thumb {
@@ -128,22 +224,22 @@ body.dark {
   //GENRAL
 
   .background {
-    background-color: $dark-backgroud;
+    background-color: var(--color-backgroud);
   }
 
   // BUTTON
   button {
-    background: $dark-lighter-grey;
+    background: var(--color-second-backgroud);
     cursor: pointer;
     color: #fff;
   }
 
   .backgroundBlue {
-    background-color: $dark-blue;
+    background-color: var(--color-blue);
   }
 
   .backgroundBlue:hover {
-    background-color: $dark-blue-hover;
+    background-color: var(--color-hover);
   }
 
   p,
@@ -153,54 +249,54 @@ body.dark {
   h5,
   h6 {
     font-weight: 300;
-    color: $dark-white;
+    color: var(--color-text);
   }
 
   input {
-    color: $dark-white;
+    color: var(--color-text);
     background-color: transparent;
     border: none;
-    border-bottom: 1px solid $dark-lighter-grey;
+    border-bottom: 1px solid var(--color-second-backgroud);
 
     &::placeholder {
-      color: $dark-darker-white;
+      color: --color-placeholder;
     }
   }
 
   textarea {
-    color: $dark-white;
+    color: var(--color-text);
     background-color: transparent;
-    border: 1px solid $dark-lighter-grey;
+    border: 1px solid var(--color-second-backgroud);
 
     &::placeholder {
-      color: $dark-darker-white;
+      color: --color-placeholder;
     }
   }
 
   .neumorphismShadow {
-    box-shadow: 6px 6px 14px 0px #17171d, -6px -6px 14px 0px #2b2c36;
+    box-shadow: var(--box-shadow-button);
   }
 
   .inputBackground {
-    background-color: $dark-lighter-grey;
-    box-shadow: 1px 1px 2px 0px #151515 inset;
-    color: #fff;
+    background-color: var(--color-second-backgroud);
+    box-shadow: var(--box-shadow-input);
+    color: var(--color-text);
   }
 
   //NABAR
 
   .navbarBackground {
-    background-color: $dark-lighter-grey;
+    background-color: var(--color-second-backgroud);
   }
 
   .selected {
-    background-color: $dark-hightlight-blue;
+    background-color: var(--color-hightlight);
   }
 
   // POMODORO
 
   .timerBackground {
-    background-color: $dark-backgroud;
-    box-shadow: 15px 15px 30px 0px #17171d, -15px -15px 30px 0px #262730;
+    background-color: var(--color-backgroud);
+    box-shadow: var(--box-shadow-timer);
   }
 }

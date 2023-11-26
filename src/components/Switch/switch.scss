@@ -8,39 +8,39 @@
 
   &.dark {
     .slider {
-      background: $dark-lighter-grey;
+      background: var(--color-second-backgroud);
       box-shadow: 1px 1px 2px 0px #1a1a1a inset;
     }
 
     .slider:before {
-      background-color: $dark-darker-white;
+      background-color: var(--color-placeholder);
     }
 
     input:checked + .slider {
-      background-color: $dark-lighter-grey;
+      background-color: var(--color-third-backgroud);
     }
 
     input:checked + .slider:before {
-      background-color: $dark-blue;
+      background-color: var(--color-blue);
     }
   }
 
   &.light {
     .slider {
-      background: $light-grey;
+      background: var(--color-second-backgroud);
       box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.25) inset;
     }
 
     .slider:before {
-      background-color: $light-darker-white;
+      background-color: var(--color-placeholder);
     }
 
     input:checked + .slider {
-      background-color: $light-grey;
+      background-color: var(--color-third-backgroud);
     }
 
     input:checked + .slider:before {
-      background-color: $light-blue;
+      background-color: var(--color-blue);
     }
   }
 
