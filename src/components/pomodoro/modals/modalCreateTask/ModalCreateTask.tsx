@@ -8,62 +8,63 @@ import React, {
 import "./modalCreateTask.scss";
 import { ThemeContext } from "../../../../context/MyProviders";
 import { CrossSvg, ClockSvg } from "../../../../assets/svg/svg";
-import ListOfHours from "./listOfHours/ListOfHours";
+import ListOfHoursStart from "./listOfHoursStart/ListOfHours";
+import ListOfHoursEnd from "./listOfHoursEnd/ListOfHoursEnd";
 
 type modalProps = {
   modal: boolean;
   setMdoal: Dispatch<SetStateAction<boolean>>;
 };
 
-const hoursArray = [
-  { time: "12:00am" },
-  { time: "12:30am" },
-  { time: "1:00am" },
-  { time: "1:30am" },
-  { time: "2:00am" },
-  { time: "2:30am" },
-  { time: "3:00am" },
-  { time: "3:30am" },
-  { time: "4:00am" },
-  { time: "4:30am" },
-  { time: "5:00am" },
-  { time: "5:30am" },
-  { time: "6:00am" },
-  { time: "6:30am" },
-  { time: "7:00am" },
-  { time: "7:30am" },
-  { time: "8:00am" },
-  { time: "8:30am" },
-  { time: "9:00am" },
-  { time: "9:30am" },
-  { time: "10:00am" },
-  { time: "10:30am" },
-  { time: "11:00am" },
-  { time: "11:30am" },
-  { time: "12:00pm" },
-  { time: "12:30pm" },
-  { time: "1:00pm" },
-  { time: "1:30pm" },
-  { time: "2:00pm" },
-  { time: "2:30pm" },
-  { time: "3:00pm" },
-  { time: "3:30pm" },
-  { time: "4:00pm" },
-  { time: "4:30pm" },
-  { time: "5:00pm" },
-  { time: "5:30pm" },
-  { time: "6:00pm" },
-  { time: "6:30pm" },
-  { time: "7:00pm" },
-  { time: "7:30pm" },
-  { time: "8:00pm" },
-  { time: "8:30pm" },
-  { time: "9:00pm" },
-  { time: "9:30pm" },
-  { time: "10:00pm" },
-  { time: "10:30pm" },
-  { time: "11:00pm" },
-  { time: "11:30pm" },
+const arrayOfHours = [
+  { id: 1, time: "12:00am" },
+  { id: 2, time: "12:30am" },
+  { id: 3, time: "1:00am" },
+  { id: 4, time: "1:30am" },
+  { id: 5, time: "2:00am" },
+  { id: 6, time: "2:30am" },
+  { id: 7, time: "3:00am" },
+  { id: 8, time: "3:30am" },
+  { id: 9, time: "4:00am" },
+  { id: 10, time: "4:30am" },
+  { id: 11, time: "5:00am" },
+  { id: 12, time: "5:30am" },
+  { id: 13, time: "6:00am" },
+  { id: 14, time: "6:30am" },
+  { id: 15, time: "7:00am" },
+  { id: 16, time: "7:30am" },
+  { id: 17, time: "8:00am" },
+  { id: 18, time: "8:30am" },
+  { id: 19, time: "9:00am" },
+  { id: 20, time: "9:30am" },
+  { id: 21, time: "10:00am" },
+  { id: 22, time: "10:30am" },
+  { id: 23, time: "11:00am" },
+  { id: 24, time: "11:30am" },
+  { id: 25, time: "12:00pm" },
+  { id: 26, time: "12:30pm" },
+  { id: 27, time: "1:00pm" },
+  { id: 28, time: "1:30pm" },
+  { id: 29, time: "2:00pm" },
+  { id: 30, time: "2:30pm" },
+  { id: 31, time: "3:00pm" },
+  { id: 32, time: "3:30pm" },
+  { id: 33, time: "4:00pm" },
+  { id: 34, time: "4:30pm" },
+  { id: 35, time: "5:00pm" },
+  { id: 36, time: "5:30pm" },
+  { id: 37, time: "6:00pm" },
+  { id: 38, time: "6:30pm" },
+  { id: 39, time: "7:00pm" },
+  { id: 40, time: "7:30pm" },
+  { id: 41, time: "8:00pm" },
+  { id: 42, time: "8:30pm" },
+  { id: 43, time: "9:00pm" },
+  { id: 44, time: "9:30pm" },
+  { id: 45, time: "10:00pm" },
+  { id: 46, time: "10:30pm" },
+  { id: 47, time: "11:00pm" },
+  { id: 48, time: "11:30pm" },
 ];
 
 const ModalCreateTask = ({ modal, setModal }) => {
@@ -77,8 +78,6 @@ const ModalCreateTask = ({ modal, setModal }) => {
   const [taskDate, setTaskDate] = useState<string>("");
   const [taskStartTime, setTaskStartTime] = useState<string>("");
   const [taskEndTime, setTaskEndTime] = useState<string>("");
-
-
 
   // handle la fermerture du modal avec la touche escape / esc
   useEffect(() => {
@@ -159,26 +158,27 @@ const ModalCreateTask = ({ modal, setModal }) => {
                 <input
                   type="text"
                   readOnly={true}
+                  value={taskStartTime}
                   name="startTime"
                   id="startTime"
                 />
-                <ListOfHours
-                  hoursArray={hoursArray}
+                <ListOfHoursStart
+                  arrayOfHours={arrayOfHours}
                   setTaskStartTime={setTaskStartTime}
-                  setTaskEndTime={setTaskEndTime}
                 />
               </div>
               <div id="secondHourInput">
                 <input
                   type="time"
+                  value={taskEndTime}
                   name="endTime"
                   id="endTime"
                   readOnly={true}
                 />
-                 <ListOfHours
-                  hoursArray={hoursArray}
-                  setTaskStartTime={setTaskStartTime}
+                <ListOfHoursEnd
+                  arrayOfHours={arrayOfHours}
                   setTaskEndTime={setTaskEndTime}
+                  taskStartTime={taskStartTime}
                 />
               </div>
             </div>
