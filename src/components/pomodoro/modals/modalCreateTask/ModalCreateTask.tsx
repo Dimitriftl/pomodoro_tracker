@@ -78,6 +78,14 @@ const ModalCreateTask = ({ modal, setModal }) => {
   const [taskDate, setTaskDate] = useState<string>("");
   const [taskStartTime, setTaskStartTime] = useState<string>("");
   const [taskEndTime, setTaskEndTime] = useState<string>("");
+  const [arrayFiltered, setArrayFiltered] = useState<
+    { id: number; time: string }[]
+  >([]);
+
+  // hours list modals 
+  const [isStartTimeOpen, setIsStartTimeOpen] = useState<boolean>(false);
+  const [isEndTimeOpen, setIsEndTimeOpen] = useState<boolean>(false);
+
 
   // handle la fermerture du modal avec la touche escape / esc
   useEffect(() => {
@@ -100,7 +108,7 @@ const ModalCreateTask = ({ modal, setModal }) => {
   // get current date, used for min date in input
   const date = new Date();
   const day = date.getDate();
-  const month = date.getMonth() + 1;
+  const month = date.getMonth() + 1; // +1 because month start at 0
   const year = date.getFullYear();
 
   // format date
@@ -165,6 +173,7 @@ const ModalCreateTask = ({ modal, setModal }) => {
                 <ListOfHoursStart
                   arrayOfHours={arrayOfHours}
                   setTaskStartTime={setTaskStartTime}
+                  setArrayFiltered={setArrayFiltered}
                 />
               </div>
               <div id="secondHourInput">
@@ -176,9 +185,8 @@ const ModalCreateTask = ({ modal, setModal }) => {
                   readOnly={true}
                 />
                 <ListOfHoursEnd
-                  arrayOfHours={arrayOfHours}
+                  arrayFiltered={arrayFiltered}
                   setTaskEndTime={setTaskEndTime}
-                  taskStartTime={taskStartTime}
                 />
               </div>
             </div>
