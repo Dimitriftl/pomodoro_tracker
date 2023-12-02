@@ -82,10 +82,9 @@ const ModalCreateTask = ({ modal, setModal }) => {
     { id: number; time: string }[]
   >([]);
 
-  // hours list modals 
+  // hours list modals
   const [isStartTimeOpen, setIsStartTimeOpen] = useState<boolean>(false);
   const [isEndTimeOpen, setIsEndTimeOpen] = useState<boolean>(false);
-
 
   // handle la fermerture du modal avec la touche escape / esc
   useEffect(() => {
@@ -151,8 +150,8 @@ const ModalCreateTask = ({ modal, setModal }) => {
             </p>
           </div>
           <div id="dateInputsContainer">
-            <ClockSvg theme={themeColor} />
-            <div className="dateInput">
+            <div id="dateInput">
+              <ClockSvg theme={themeColor} />
               <input
                 type="date"
                 name="date"
@@ -161,7 +160,7 @@ const ModalCreateTask = ({ modal, setModal }) => {
                 onChange={(e) => handleDateChange(e)}
               />
             </div>
-            <div className="hoursInputs">
+            <div id="hoursInputs">
               <div id="firstHourInput">
                 <input
                   type="text"
@@ -169,25 +168,41 @@ const ModalCreateTask = ({ modal, setModal }) => {
                   value={taskStartTime}
                   name="startTime"
                   id="startTime"
+                  onClick={() => {
+                    setIsStartTimeOpen(!isStartTimeOpen),
+                      setIsEndTimeOpen(false);
+                  }}
                 />
-                <ListOfHoursStart
-                  arrayOfHours={arrayOfHours}
-                  setTaskStartTime={setTaskStartTime}
-                  setArrayFiltered={setArrayFiltered}
-                />
+                {isStartTimeOpen && (
+                  <ListOfHoursStart
+                    arrayOfHours={arrayOfHours}
+                    setTaskStartTime={setTaskStartTime}
+                    setArrayFiltered={setArrayFiltered}
+                    setIsStartTimeOpen={setIsStartTimeOpen}
+                  />
+                )}
               </div>
+              <span>-</span>
               <div id="secondHourInput">
                 <input
-                  type="time"
+                  type="text"
                   value={taskEndTime}
                   name="endTime"
                   id="endTime"
                   readOnly={true}
+                  onClick={() => {
+                    arrayFiltered.length > 0 &&
+                      setIsEndTimeOpen(!isEndTimeOpen),
+                      setIsStartTimeOpen(false);
+                  }}
                 />
-                <ListOfHoursEnd
-                  arrayFiltered={arrayFiltered}
-                  setTaskEndTime={setTaskEndTime}
-                />
+                {isEndTimeOpen && (
+                  <ListOfHoursEnd
+                    arrayFiltered={arrayFiltered}
+                    setTaskEndTime={setTaskEndTime}
+                    setIsEndTimeOpen={setIsEndTimeOpen}
+                  />
+                )}
               </div>
             </div>
           </div>

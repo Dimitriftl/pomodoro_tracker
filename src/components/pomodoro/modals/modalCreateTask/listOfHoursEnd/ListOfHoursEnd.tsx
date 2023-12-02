@@ -1,13 +1,19 @@
-import React from "react";
+import React, { FC } from "react";
+import "./listOfHoursEnd.scss";
 
 type arrayFilteredType = { id: number; time: string };
 
-type props = {
+type ListOfHoursEndProps = {
   arrayFiltered: arrayFilteredType[];
   setTaskEndTime: React.Dispatch<React.SetStateAction<string>>;
+  setIsEndTimeOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const ListOfHoursENd = ({ arrayFiltered, setTaskEndTime }) => {
+const ListOfHoursENd: FC<ListOfHoursEndProps> = ({
+  arrayFiltered,
+  setTaskEndTime,
+  setIsEndTimeOpen,
+}) => {
   return (
     <div id="listEndContainer" className="background">
       {arrayFiltered.map((hour: arrayFilteredType) => {
@@ -16,6 +22,7 @@ const ListOfHoursENd = ({ arrayFiltered, setTaskEndTime }) => {
             key={hour.id}
             onClick={() => {
               setTaskEndTime(hour.time);
+              setIsEndTimeOpen(false);
             }}>
             {hour.time}
           </p>

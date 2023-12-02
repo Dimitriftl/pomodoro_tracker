@@ -18,7 +18,7 @@
   transform: translate(-50%, -50%);
   line-height: 1.4;
   padding: 14px 20px;
-  max-width: 365px;
+  max-width: 400px;
   width: 100%;
   min-height: 400px;
   border-radius: 10px;
@@ -81,15 +81,50 @@
       }
     }
 
-
     // date inputs
 
-    #dateInputsContainer { 
+    #dateInputsContainer {
       display: flex;
-      justify-content: space-between;
+      // justify-content: space-between;
       align-items: center;
       width: 100%;
+      gap: 30px;
 
+      #dateInput {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        width: 100%;
+
+        input[type="date"] {
+          width: 130px;
+          height: 30px;
+          padding-left: 10px;
+          outline: none;
+          font-size: 14px;
+        }
+      }
+
+      input[type="text"] {
+        width: 75px;
+        height: 30px;
+        // padding-left: 10px;
+        outline: none;
+        font-size: 17px;
+
+        // selected
+        &:focus {
+          background-color: var(--color-hightlight);
+        }
+      }
+
+      #hoursInputs {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        width: 100%;
+        // background: #000;
+      }
     }
 
     // modal footer
