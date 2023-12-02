@@ -9,6 +9,10 @@
     --color-text: #ffffff;
     --color-placeholder: #a9a9a9;
 
+    // input
+
+    --color-border-input: #282930;
+
     // box shadow
     --box-shadow-button: 6px 6px 14px 0px #17171d, -6px -6px 14px 0px #2b2c36;
     --box-shadow-timer: 15px 15px 30px 0px #17171d, -15px -15px 30px 0px #262730;
@@ -23,7 +27,11 @@
     --color-hover: #387aec;
     --color-hightlight: #e8f0fe;
     --color-text: #383838;
-    --color-placeholder: #a9a9a9;
+    --color-placeholder: #a9a9a9--color-hightlight;
+
+    // input
+
+    --color-border-input: #DBDBDB;
 
     // box shadow
     --box-shadow-button: 1.5px 1.5px 3px 0px rgba(174, 174, 192, 0.4),
