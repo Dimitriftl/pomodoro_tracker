@@ -115,26 +115,6 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
             </div>
             <p>Dashboard</p>
           </Link>
-
-          <Link
-            className={
-              currentLocation === "/calendar"
-                ? `${navbarClasses.linkContent} linkContentActive`
-                : navbarClasses.linkContent
-            }
-            to="/calendar">
-            <div
-              className={
-                currentLocation === "/calendar"
-                  ? "pageMarker active"
-                  : "pageMarker"
-              }></div>
-            <div className="svg">
-              <CalendarSvg theme={themeColor} />
-            </div>
-            <p>Calendar</p>
-          </Link>
-
           <Link
             className={
               currentLocation === "/"

@@ -29,7 +29,6 @@ function App() {
         <Navbar setThemeColor={setThemeColor} themeColor={themeColor} />
         <Routes>
           <Route path="/" element={<Pomodoro />} />
-          <Route path="/calendar" element={<Calendar />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </MyProviders>
