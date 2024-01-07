@@ -12,10 +12,17 @@ import Pomodoro from "./pomodoro/index/index.tsx";
 import Dashboard from "./dashboard/index/index.tsx";
 import MyProviders from "../context/MyProviders.tsx";
 import Calendar from "./calendar/index/index.tsx";
+import SignIn from "./Connexion/SignIn.tsx";
+import SignUp from "./Connexion/SignUp.tsx";
+import { useLocation } from "react-router-dom";
 
 type Theme = "light" | "dark" | "system";
 
 function App() {
+  const location = useLocation();
+
+  console.log(location.pathname);
+
   // theme context states
   const [themeColor, setThemeColor] = useState<Theme>("dark");
 
@@ -26,9 +33,13 @@ function App() {
   return (
     <>
       <MyProviders themeColor={themeColor} setThemeColor={setThemeColor}>
-        <Navbar setThemeColor={setThemeColor} themeColor={themeColor} />
+        {location.pathname !== ("/signin" || "/signup") && (
+          <Navbar setThemeColor={setThemeColor} themeColor={themeColor} />
+        )}
         <Routes>
           <Route path="/" element={<Pomodoro />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </MyProviders>

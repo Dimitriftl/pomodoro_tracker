@@ -3,9 +3,12 @@ import Timer from "../Timer/Timer";
 import "./index.scss";
 import Tasks from "../Tasks/Tasks";
 import { ThemeContext } from "../../../context/MyProviders";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Pomodoro = () => {
   const { themeColor } = useContext(ThemeContext);
+
+  const navigate = useNavigate();
 
   // states
   const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false); // start the timer if it's true
@@ -32,13 +35,21 @@ const Pomodoro = () => {
 
   // initial values of the timers, used for the progress bar poucentage
 
-
   useEffect(() => {
     setCountdownTime(minutesSetForFocus);
   }, [minutesSetForFocus]);
 
   return (
     <div className="pomodoroContainer">
+      <div id="logButtonsContainer">
+        <button id="signInButton" onClick={() => navigate("/signin")}>
+          Sign In
+        </button>
+        <button id="signUpButton" onClick={() => navigate("/signup")}>
+          Sign Up
+        </button>
+      </div>
+      <button></button>
       <Timer
         isTimerRunning={isTimerRunning}
         setIsTimerRunning={setIsTimerRunning}
