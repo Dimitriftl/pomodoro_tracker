@@ -1,0 +1,95 @@
+#signUpContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    padding: 30px 10%;
+  //   background: #000;
+  }
+  
+  #signUpContent {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    max-width: 1440px;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.295);
+    border-radius: 18px;
+  }
+  
+  #signUpLeftPart {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    background-color: #1e1f26;
+    border-radius: 18px 0 0 18px;
+    overflow: hidden;
+
+      // svgs
+  #rightCornerShape {
+    position: absolute;
+    top: -10px; // hide the top part of the svg because of the border radius
+    right: -10px;
+    width: 50%;
+  }
+
+  #leftCornerShape {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+  }
+  #bigCircle {
+    position: absolute;
+    top: 15%;
+    left: 17%;
+    width: 15%;
+    width: 15%;
+  }
+  #mediumCircle {
+    position: absolute;
+    bottom: 25%;
+    left: 55%;
+    width: 10%;
+  }
+  #tinyCircle {
+    position: absolute;
+    bottom: 13%;
+    right: 15%;
+    width: 5%;
+  }
+
+  #signUpPageText  {
+    position: absolute;
+    top: 35%;
+    
+    width: 100%;
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--color-text);
+    text-align: center;
+
+    h1 { 
+      font-size: 2ch;
+    }
+
+    h2 { 
+      font-size: 1ch;
+    }
+  }
+  }
+  
+  #signUpRightPart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+    border-radius: 0 18px 18px 0;
+  }

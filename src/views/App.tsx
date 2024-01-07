@@ -33,7 +33,7 @@ function App() {
   return (
     <>
       <MyProviders themeColor={themeColor} setThemeColor={setThemeColor}>
-        {location.pathname !== ("/signin" || "/signup") && (
+        {location.pathname !== "/signin" && location.pathname !== "/signup" && (
           <Navbar setThemeColor={setThemeColor} themeColor={themeColor} />
         )}
         <Routes>

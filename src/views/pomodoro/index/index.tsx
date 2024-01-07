@@ -49,7 +49,6 @@ const Pomodoro = () => {
           Sign Up
         </button>
       </div>
-      <button></button>
       <Timer
         isTimerRunning={isTimerRunning}
         setIsTimerRunning={setIsTimerRunning}
