@@ -11,9 +11,9 @@
 }
 
 body {
+  position: relative;
   background-color: var(--color-backgroud);
   color: var(--color-text);
-  zoom: 0.9;
   height: 100vh;
 
   // scrollbar
