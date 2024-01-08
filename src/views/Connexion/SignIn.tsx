@@ -5,11 +5,14 @@ import leftCornerShape from "../../assets/svg/loginPage/loginLeftCornerShape.svg
 import bigCircle from "../../assets/svg/loginPage/BigCircle.svg";
 import mediumCircle from "../../assets/svg/loginPage/mediumCircle.svg";
 import tinyCircle from "../../assets/svg/loginPage/timyCircle.svg";
+import { useNavigate } from "react-router-dom";
 
 type currentPageType = "signIn" | "SignUp";
 
 const SignIn = () => {
   const [currentPage, setCurrentPage] = useState<currentPageType>("signIn");
+
+  const navigate = useNavigate();
 
   return (
     <div id="signInContainer">
@@ -41,7 +44,7 @@ const SignIn = () => {
           <div id="signInFooter">
             <p>
               Don't have an account yet ?{" "}
-              <span onClick={() => setCurrentPage("SignUp")}>Sign Up</span>
+              <span onClick={() => navigate("/signup")}> Sign Up</span>
             </p>
           </div>
         </div>
