@@ -26,6 +26,11 @@ function App() {
 
   // theme context states
   const [themeColor, setThemeColor] = useState<Theme>("dark");
+  let localTheme = localStorage.getItem("theme") as Theme;
+
+  useEffect(() => {
+    localTheme !== null && setThemeColor(localTheme);
+  }, []);
 
   useEffect(() => {
     document.body.className = themeColor;
@@ -38,7 +43,6 @@ function App() {
           <Navbar setThemeColor={setThemeColor} themeColor={themeColor} />
         )}
         <Routes>
-
           <Route path="/" element={<Pomodoro />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />

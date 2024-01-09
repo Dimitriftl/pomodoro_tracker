@@ -42,6 +42,10 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
     setCurrentLocation(location.pathname);
   }, [location]);
 
+  useEffect(() => {
+    localStorage.setItem("theme", themeColor);
+  }, [themeColor]);
+
   // class that depends on theme color
   const navbarClasses: {
     container: string;
@@ -71,7 +75,8 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
             themeColor === "dark"
               ? setThemeColor("light")
               : setThemeColor("dark")
-          }>
+          }
+        >
           {themeColor === "dark" ? <Moon /> : <Sun />}
         </div>
         <div className={navbarClasses.rightArrowContainer}>
@@ -85,13 +90,15 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
                 ? `${navbarClasses.linkContent} linkContentActive`
                 : navbarClasses.linkContent
             }
-            to="/account">
+            to="/account"
+          >
             <div
               className={
                 currentLocation === "/account"
                   ? "pageMarker active backgroundBlue"
                   : "pageMarker"
-              }></div>
+              }
+            ></div>
             <div className="svg">
               <AccountSvg theme={themeColor} />
             </div>
@@ -103,13 +110,15 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
                 ? `${navbarClasses.linkContent} linkContentActive`
                 : navbarClasses.linkContent
             }
-            to="/dashboard">
+            to="/dashboard"
+          >
             <div
               className={
                 currentLocation === "/dashboard"
                   ? "pageMarker active"
                   : "pageMarker"
-              }></div>
+              }
+            ></div>
             <div className="svg">
               <DashboardSvg theme={themeColor} />
             </div>
@@ -121,11 +130,13 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
                 ? `${navbarClasses.linkContent} linkContentActive`
                 : navbarClasses.linkContent
             }
-            to="/">
+            to="/"
+          >
             <div
               className={
                 currentLocation === "/" ? "pageMarker active" : "pageMarker"
-              }></div>
+              }
+            ></div>
             <div className="svg">
               <TimerSvg theme={themeColor} />
             </div>
