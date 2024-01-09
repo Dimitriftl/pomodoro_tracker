@@ -12,9 +12,10 @@ import Pomodoro from "./pomodoro/index/index.tsx";
 import Dashboard from "./dashboard/index/index.tsx";
 import MyProviders from "../context/MyProviders.tsx";
 import Calendar from "./calendar/index/index.tsx";
-import SignIn from "./Connexion/SignIn.tsx";
-import SignUp from "./Connexion/SignUp.tsx";
+import SignIn from "./connexion/SignIn.tsx";
+import SignUp from "./connexion/SignUp.tsx";
 import { useLocation } from "react-router-dom";
+import Account from "./account/Account.tsx";
 
 type Theme = "light" | "dark" | "system";
 
@@ -37,9 +38,11 @@ function App() {
           <Navbar setThemeColor={setThemeColor} themeColor={themeColor} />
         )}
         <Routes>
+
           <Route path="/" element={<Pomodoro />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/account" element={<Account />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </MyProviders>
