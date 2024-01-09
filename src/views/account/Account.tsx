@@ -4,6 +4,8 @@ import editSvg from "../../assets/svg/accountPage/edit.svg";
 
 const Account = () => {
   const [editPassword, setEditPassword] = useState<boolean>(false);
+
+  // TODO : quand le back sera fait valider la modification de données à la volé avec un debounce de 3s ou ajouter un bouton valider à la place
   return (
     <div id="accountContainer">
       <div id="accountContent">

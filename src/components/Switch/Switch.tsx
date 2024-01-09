@@ -1,6 +1,6 @@
 import { ThemeContext } from "../../context/MyProviders";
 import "./switch.scss";
-import { Dispatch, SetStateAction, useContext } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect } from "react";
 
 interface SwitchProps {
   autoStartPomodoro: boolean;

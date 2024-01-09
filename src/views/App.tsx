@@ -27,9 +27,13 @@ function App() {
   // theme context states
   const [themeColor, setThemeColor] = useState<Theme>("dark");
   let localTheme = localStorage.getItem("theme") as Theme;
+  let autoStartPomodoro = localStorage.getItem("autoStartPomodoro");
 
+  // local storage
   useEffect(() => {
     localTheme !== null && setThemeColor(localTheme);
+    autoStartPomodoro === null &&
+      localStorage.setItem("autoStartPomodoro", "false");
   }, []);
 
   useEffect(() => {

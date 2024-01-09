@@ -1,4 +1,10 @@
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import "./modalTimer.scss";
 import { AutoStartPomodoroContext } from "../../../../context/MyProviders";
 import Switch from "../../../../components/Switch/Switch";
@@ -40,6 +46,16 @@ const ModalTimer: React.FC<ModalThemeProps> = ({
     useState<number>(minutesSetForBreak);
   const [localMinutesSetForLongBreak, setLocalMinutesSetForLongBreak] =
     useState<number>(minutesSetForLongBreak);
+
+
+
+  console.log(autoStartPomodoro);
+  
+
+
+  useEffect(() => {
+    localStorage.setItem("autoStartPomodoro", autoStartPomodoro);
+  }, [autoStartPomodoro]);
 
   // changer la logique pour modifier les timers, il faut que ceux-ci se modifie au onClick du bouton valider
 
@@ -138,7 +154,8 @@ const ModalTimer: React.FC<ModalThemeProps> = ({
               className="ValidateButton backgroundBlue  "
               onClick={() => {
                 setOpenModal(false), resultToMinutes();
-              }}>
+              }}
+            >
               Valider
             </button>
           </div>
