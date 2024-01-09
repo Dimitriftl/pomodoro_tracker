@@ -142,31 +142,95 @@
         width: 20%;
         font-size: 14px;
         font-weight: 500;
-        color : var(--color-text);
+        color: var(--color-text);
         transition: 300ms ease;
       }
     }
 
     #accountEditPasswordButton {
-        background-color: var(--color-blue);
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border: none;
-        border-radius: 6px;
-        width: 60px;
-        height: 25px;
-        gap: 5px;
-        position: absolute;
-        bottom: 20px;
-        right: 0px;
-        font-size: 12px;
+      background-color: var(--color-blue);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: none;
+      border-radius: 6px;
+      width: 60px;
+      height: 25px;
+      gap: 5px;
+      position: absolute;
+      bottom: 20px;
+      right: 0px;
+      font-size: 12px;
 
-        img {
-            width: 14px;
-            height: 14px;
+      img {
+        width: 14px;
+        height: 14px;
+      }
+    }
+
+    #editPasswordContainer {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 80%;
+      border: 1px solid var(--color-line);
+    //   background-color: red;
+      padding: 10px;
+
+      .inputContainerEditPassword {
+        display: flex;
+        justify-content: flex-start;
+        align-items: end;
+        gap: 20px;
+        width: 80%;
+        padding: 20px 0;
+        position: relative;
+
+        .inputLabel {
+          width: 40%;
+          font-size: 12px;
+          font-weight: 500;
+          color: var(--color-text);
+          transition: 300ms ease;
         }
+
+        input {
+          width: 60%;
+          height: 30px;
+          border-radius: 0%;
+          border-bottom: 1px solid var(--color-blue);
+          padding: 0 10px;
+          outline: none;
+          font-size: 14px;
+          font-weight: 500;
+          color: var(--color-text);
+          transition: 300ms ease;
+        }
+      }
+
+      #editPasswordbuttonsContainer {
+        padding: 0 10px;
+        width: 100%;
+        gap: 10px;
+        display: flex;
+        justify-content: flex-end;
+
+        button {
+          background-color: var(--color-blue);
+          color: white;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border: none;
+          border-radius: 6px;
+          width: 60px;
+          height: 25px;
+          font-size: 12px;
+        }
+      }
     }
   }
 }

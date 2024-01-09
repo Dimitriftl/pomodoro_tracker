@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import "./account.scss";
 import editSvg from "../../assets/svg/accountPage/edit.svg";
 
 const Account = () => {
+  const [editPassword, setEditPassword] = useState<boolean>(false);
   return (
     <div id="accountContainer">
       <div id="accountContent">
@@ -39,11 +40,38 @@ const Account = () => {
           </div>
           <div className="inputContainer">
             <p className="inputLabel">Password</p>
-            <input type="password" readonly placeholder="***************" />
-            <button id="accountEditPasswordButton">
+            <input type="password" placeholder="***************" />
+            <button
+              id="accountEditPasswordButton"
+              onClick={() => setEditPassword(!editPassword)}
+            >
               <img src={editSvg} alt="" /> edit
             </button>
           </div>
+          {
+            /* edit password container */
+            editPassword && (
+              <div id="editPasswordContainer">
+                <div className="inputContainerEditPassword">
+                  <p className="inputLabel">New password</p>
+                  <input type="password" placeholder="***************" />
+                </div>
+                <div className="inputContainerEditPassword">
+                  <p className="inputLabel">Confirm password</p>
+                  <input type="password" placeholder="***************" />
+                </div>
+                <div id="editPasswordbuttonsContainer">
+                  <button id="accountEditPasswordSave">Save</button>
+                  <button
+                    id="accountEditPasswordCancel"
+                    onClick={() => setEditPassword(false)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            )
+          }
         </div>
       </div>
     </div>
