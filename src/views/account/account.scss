@@ -34,6 +34,7 @@
     width: 35%;
     height: 85%;
     gap: 20px;
+    border-right: 1px solid var(--color-line);
     // background-color: blue;
 
     #accountImgContainer {
@@ -55,6 +56,7 @@
 
         p {
           display: none;
+          color: white;
         }
 
         #editIcon {
@@ -85,6 +87,7 @@
           font-size: 14px;
           padding: 0 5px;
           font-weight: 600;
+          gap: 5px;
 
           img {
             width: 20px;
@@ -99,14 +102,71 @@
       }
     }
   }
-
   #accountRightPart {
     display: flex;
+    padding-top: 10%;
     flex-direction: column;
-    justify-content: center;
+    // justify-content: center;
     align-items: center;
     width: 65%;
     height: 85%;
-    background-color: green;
+    gap: 10px;
+
+    .inputContainer {
+      display: flex;
+      justify-content: flex-start;
+      align-items: end;
+      gap: 10px;
+      width: 80%;
+      padding: 20px 0;
+      position: relative;
+
+      input {
+        width: 60%;
+        height: 30px;
+        border-radius: 0%;
+        border-bottom: 1px solid var(--color-blue);
+        padding: 0 10px;
+        outline: none;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--color-text);
+        transition: 300ms ease;
+      }
+
+      input:focus + .inputLabel {
+        color: var(--color-blue);
+      }
+
+      .inputLabel {
+        width: 20%;
+        font-size: 14px;
+        font-weight: 500;
+        color : var(--color-text);
+        transition: 300ms ease;
+      }
+    }
+
+    #accountEditPasswordButton {
+        background-color: var(--color-blue);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        border-radius: 6px;
+        width: 60px;
+        height: 25px;
+        gap: 5px;
+        position: absolute;
+        bottom: 20px;
+        right: 0px;
+        font-size: 12px;
+
+        img {
+            width: 14px;
+            height: 14px;
+        }
+    }
   }
 }
