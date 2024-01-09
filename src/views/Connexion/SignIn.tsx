@@ -37,7 +37,7 @@ const SignIn = () => {
             <h2>connection</h2>
           </div>
           <form action="">
-            <input type="text" placeholder="Email" />
+            <input type="text" autoFocus placeholder="Email" />
             <input type="password" placeholder="Password" />
             <button type="submit">Sign In</button>
           </form>

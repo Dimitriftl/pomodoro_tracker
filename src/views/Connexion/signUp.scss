@@ -119,8 +119,11 @@
       color: #1e1f26;
       border-color: var(--color-blue);
       padding-bottom: 10px;
-      ::placeholder {
+      &::placeholder {
         color: #a9a9a9;
+      }
+      &:focus {
+        border-bottom: 2px solid var(--color-blue);
       }
     }
 

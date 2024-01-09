@@ -32,7 +32,7 @@ const SignUp = () => {
             <h2>Inscription</h2>
           </div>
           <form action="">
-            <input type="text" placeholder="Email" />
+            <input type="text" autoFocus placeholder="Email" />
             <input type="password" placeholder="Password" />
             <input type="password" placeholder="Confirm password" />
             <button type="submit">Sign Up</button>
