@@ -23,6 +23,9 @@ import {
   ThemeContext,
 } from "../../../context/MyProviders";
 import Button from "../../../components/pomodoro/Button/TimerButton";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 interface TimerProps {
   isTimerRunning: boolean;
   setIsTimerRunning: Dispatch<SetStateAction<boolean>>;
@@ -146,6 +149,16 @@ const Timer: React.FC<TimerProps> = ({
           // setCountdownTime(minutesSetForBreak);
           handleNewTimerValue(minutesSetForBreak);
           setTimerBreak(true);
+          toast("Focus is over well done!", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: themeColor === "light" ? "light" : "dark",
+          });
         } else {
           setNumberOfPomodoroDoneGlobaly(0);
           setTimerLongBreak(true);
@@ -155,6 +168,16 @@ const Timer: React.FC<TimerProps> = ({
         setTimerBreak(false);
         setTimerFocus(true);
         handleNewTimerValue(minutesSetForFocus);
+        toast("Break is over!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: themeColor === "light" ? "light" : "dark",
+        });
       } else {
         setTimerLongBreak(false);
         setTimerFocus(true);
@@ -173,9 +196,9 @@ const Timer: React.FC<TimerProps> = ({
     (countdownTime / countdowntimeInitialValue.current) * 100
   );
 
-
   return (
     <div className="timerContainer">
+      <ToastContainer />
       <div className="circle timerBackground">
         <div className="progressBarContainer">
           <CircularProgressbar
