@@ -32,9 +32,9 @@ const SignUp = () => {
             <h2>Inscription</h2>
           </div>
           <form action="">
-            <input type="text" placeholder="email" />
-            <input type="password" placeholder="password" />
-            <input type="password" placeholder="password" />
+            <input type="text" placeholder="Email" />
+            <input type="password" placeholder="Password" />
+            <input type="password" placeholder="Confirm password" />
             <button type="submit">Sign Up</button>
           </form>
           <div id="signUpFooter">
