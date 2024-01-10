@@ -43,9 +43,12 @@ const MyProviders: React.FC<MyProvidersProps> = ({ children, themeColor }) => {
     useState<AutoStartPomodoroContextType["autoStartPomodoro"]>(false);
 
   let autoStartPomodoroStorage = localStorage.getItem("autoStartPomodoro");
+
+  console.log(typeof autoStartPomodoroStorage);
+  
   useEffect(() => {
     autoStartPomodoroStorage !== null &&
-      setAutoStartPomodoro(autoStartPomodoroStorage);
+      setAutoStartPomodoro(autoStartPomodoroStorage === "true" ? true : false);
   }, []);
 
   // tasks context states
