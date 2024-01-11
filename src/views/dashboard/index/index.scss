@@ -65,11 +65,15 @@
     }
 
     #dashboardDetailsContainer {
+      position: relative;
       display: flex;
+      flex-direction: column;
       flex: 2;
       background-color: var(--color-second-backgroud);
       box-shadow: var(--box-shadow-container);
       border-radius: 9px;
+      padding: 10px;
+      gap: 25px;
     }
   }
 }

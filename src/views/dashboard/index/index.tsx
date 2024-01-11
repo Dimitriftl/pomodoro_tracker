@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./index.scss";
+import HoursWorkedDetails from "../../../components/hoursWorkedDetails/HoursWorkedDetails";
 
 type detailsDisplayed = "hours" | "tasks";
 
@@ -34,7 +35,9 @@ const Dashboard = () => {
         </div>
         <div id="dashboardDetailsContainer">
           {detailsDisplayed === "hours" ? (
-            <h2>hours details</h2>
+            <>
+              <HoursWorkedDetails />
+            </>
           ) : (
             <h2>tasks details</h2>
           )}
