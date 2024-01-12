@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./index.scss";
 import HoursWorkedDetails from "../../../components/hoursWorkedDetails/HoursWorkedDetails";
+import TaskWorkedDetails from "../../../components/tasksWorkedDetails/TaskWorkedDetails";
 
 type detailsDisplayed = "hours" | "tasks";
 
@@ -39,7 +40,7 @@ const Dashboard = () => {
               <HoursWorkedDetails />
             </>
           ) : (
-            <h2>tasks details</h2>
+            <TaskWorkedDetails />
           )}
         </div>
       </div>

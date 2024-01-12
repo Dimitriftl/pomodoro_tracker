@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import "./hoursWorkedDetails.scss";
+import "./taskWorkedDetails.scss";
 
 type pageSelected = "week" | "month" | "year";
 
-const HoursWorkedDetails = () => {
+const TaskWorkedDetails = () => {
   const [pageSelected, setPageSelected] = useState<pageSelected>("week");
 
   return (
     <>
-      <div id="hoursWorkedDetailsHeader">
-        <h2>Hours details</h2>
-        <div id="hoursWorkedDetailsHeaderButtons">
+      <div id="tasksWorkedDetailsHeader">
+        <h2>Tasks details</h2>
+        <div id="tasksWorkedDetailsHeaderButtons">
           <button
             onClick={() => setPageSelected("week")}
             className={pageSelected === "week" ? "active" : ""}
@@ -30,15 +30,15 @@ const HoursWorkedDetails = () => {
             Year
           </button>
         </div>
-        <div id="hoursWorkedDetailsWeekHandler">
+        <div id="tasksWorkedDetailsWeekHandler">
           <button>Previous</button>
           <h3>Week 1</h3>
           <button>Next</button>
         </div>
       </div>
-      <div id="hoursWorkedDetailsContent"></div>
+      <div id="tasksWorkedDetailsContent"></div>
     </>
   );
 };
 
-export default HoursWorkedDetails;
+export default TaskWorkedDetails;
