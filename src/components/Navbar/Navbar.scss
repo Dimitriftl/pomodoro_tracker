@@ -117,7 +117,9 @@
       font-size: 16px;
       font-weight: 500;
       display: none;
-      transition: width 300ms ease;
+      animation-name: over;
+      animation-duration: 0.2s;
+      animation-fill-mode: forwards;
     }
   }
 
@@ -160,5 +162,20 @@
   .rightArrowContainer {
     transform: rotate(180deg);
     box-shadow: -3px -2px 4px rgba(0, 0, 0, 0.434);
+  }
+}
+
+@keyframes over {
+  0% {
+    opacity: 0;
+    margin-left: -99em;
+  }
+  50% {
+    opacity: 0;
+    margin-left: 15px;
+  }
+  100% {
+    opacity: 1;
+    margin-left: 15px;
   }
 }
