@@ -14,15 +14,12 @@ const TaskWorkedDetails = () => {
         label: "Hours worked",
         data: [12, 19, 3, 5, 0, 3, 10],
         borderColor: "#678bff",
-        backgroundColor: (context) => {
+        backgroundColor: (context: any) => {
           const bgColor = ["#617dd9b4", "#678aff1f"];
-
           if (!context.chart.chartArea) return null;
-
           console.log(context.chart.chartArea);
           const {
             ctx,
-            data,
             chartArea: { top, bottom },
           } = context.chart;
           const gradientBg = ctx.createLinearGradient(0, top, 0, bottom);
