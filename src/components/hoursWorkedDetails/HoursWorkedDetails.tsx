@@ -36,7 +36,9 @@ const HoursWorkedDetails = () => {
           <button>Next</button>
         </div>
       </div>
-      <div id="hoursWorkedDetailsContent"></div>
+      <div id="hoursWorkedDetailsContent">
+        
+      </div>
     </>
   );
 };

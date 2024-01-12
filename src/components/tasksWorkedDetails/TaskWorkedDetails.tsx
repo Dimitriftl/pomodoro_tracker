@@ -36,7 +36,9 @@ const TaskWorkedDetails = () => {
           <button>Next</button>
         </div>
       </div>
-      <div id="tasksWorkedDetailsContent"></div>
+      <div id="tasksWorkedDetailsContent">
+        
+      </div>
     </>
   );
 };
