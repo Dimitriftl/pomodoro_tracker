@@ -10,7 +10,6 @@
 
   #hoursWorkedDetailsHeaderButtons {
     position: absolute;
-    left: 0px;
     top: 20px;
     display: flex;
     height: 100%;
@@ -58,6 +57,11 @@
 #hoursWorkedDetailsContent {
   display: flex;
   flex: 10;
-  background-color: rgb(52, 52, 52);
+  justify-content: center;
+  align-items: center;
+  max-height: 500px;
+  background-color: var(--color-first-backgroud);
   border-radius: 12px;
+  padding: 0 50px;
+
 }

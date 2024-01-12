@@ -1,61 +1,64 @@
 #tasksWorkedDetailsHeader {
+  display: flex;
+  flex: 1;
+  position: relative;
+  flex-wrap: wrap;
+  h2 {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  #tasksWorkedDetailsHeaderButtons {
+    position: absolute;
+    left: 0px;
+    top: 20px;
     display: flex;
-    flex: 1;
-    position: relative;
-    flex-wrap: wrap;
-    h2 {
-      width: 100%;
-      margin-bottom: 10px;
-    }
-  
-    #tasksWorkedDetailsHeaderButtons {
-      position: absolute;
-      left: 0px;
-      top: 20px;
-      display: flex;
-      height: 100%;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-  
-      .active {
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    .active {
+      background-color: var(--color-blue);
+      border-radius: 9px;
+      padding: 5px;
+      border: none;
+      color: #fff;
+
+      &:hover {
         background-color: var(--color-blue);
-        border-radius: 9px;
-        padding: 5px;
-        border: none;
-        color: #fff;
-  
-        &:hover {
-          background-color: var(--color-blue);
-        }
-      }
-  
-      button {
-        width: 64px;
-        height: 34px;
-        border-radius: 9px;
-        border: 1px solid var(--color-blue);
-        color: var(--color-text);
-  
-        &:hover {
-          background-color: var(--color-hightlight);
-        }
       }
     }
-  
-    #tasksWorkedDetailsWeekHandler {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      gap: 10px;
+
+    button {
+      width: 64px;
+      height: 34px;
+      border-radius: 9px;
+      border: 1px solid var(--color-blue);
+      color: var(--color-text);
+
+      &:hover {
+        background-color: var(--color-hightlight);
+      }
     }
   }
-  
-  #tasksWorkedDetailsContent {
+
+  #tasksWorkedDetailsWeekHandler {
     display: flex;
-    flex: 10;
-    background-color: rgb(52, 52, 52);
-    border-radius: 12px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
   }
-  
+}
+
+#tasksWorkedDetailsContent {
+  display: flex;
+  flex: 10;
+  justify-content: center;
+  align-items: center;
+  max-height: 500px;
+  background-color: var(--color-first-backgroud);
+  border-radius: 12px;
+  padding: 0 50px;
+}
