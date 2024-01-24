@@ -19,8 +19,18 @@ const SignUp = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
     useState<boolean>(false);
-  const [isConfirmPasswordValid, setIsConfirmPasswordValid] =
-    useState<boolean>(false);
+  const [passwordValue, setPasswordValue] = useState<string>("");
+  const [confirmPasswordValue, setConfirmPasswordValue] = useState<string>("");
+
+  const handlePasswordVisibility = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
+
+  const handleConfirmPasswordVisibility = () => {
+    setIsConfirmPasswordVisible(!isConfirmPasswordVisible);
+  };
+
+  const passwordRegex = `/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[~!@#$%^&*()_+{}|:"<>?/]).{8,}$/`;
 
   const navigate = useNavigate();
   return (
@@ -74,19 +84,45 @@ const SignUp = () => {
               name="name"
             />
             <input type="text" required placeholder="Email" name="email" />
-            <input
-              type="password"
-              required
-              placeholder="Password"
-              name="password"
-            />
-            <input
-              type="password"
-              required
-              placeholder="Confirm password"
-              name="confirmPassword"
-            />
-            <button type="submit">Sign Up</button>
+            <div id="passwordContainer">
+              <input
+                type={isPasswordVisible ? "text" : "password"}
+                required
+                onChange={(e) => setPasswordValue(e.target.value)}
+                placeholder="Password"
+                name="password"
+              />
+              <p
+                style={{ color: "red" }}
+                className="passwordVisibility"
+                onClick={handlePasswordVisibility}>
+                yes
+              </p>
+            </div>
+            <div id="confirmPasswordContainer">
+              <input
+                type={isConfirmPasswordVisible ? "text" : "password"}
+                required
+                onChange={(e) => setConfirmPasswordValue(e.target.value)}
+                placeholder="Confirm password"
+                name="confirmPassword"
+              />
+              <p
+                style={{ color: "red" }}
+                className="passwordVisibility"
+                onClick={handleConfirmPasswordVisibility}>
+                yes
+              </p>
+            </div>
+            <button
+              type="submit"
+              disabled={
+                passwordValue === confirmPasswordValue && passwordValue !== ""
+                  ? false
+                  : true
+              }>
+              Sign Up
+            </button>
           </form>
           <div id="signUpFooter">
             <p>
