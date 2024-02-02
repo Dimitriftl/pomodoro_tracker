@@ -22,7 +22,8 @@ import userAccountPlaceholder from "../../assets/images/pt_account_logo.png";
 
 import "./Navbar.scss";
 import { TasksContext } from "../../context/MyProviders";
-import { useTaskCreation } from "../../hooks/useTaskCreation";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 type theme = "light" | "dark" | "system";
 interface NavbarProps {
@@ -35,6 +36,7 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
 
   // Location
   const location = useLocation();
+  const navigate = useNavigate();
   const [currentLocation, setCurrentLocation] = useState<string>(
     location.pathname
   );
@@ -75,8 +77,7 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
             themeColor === "dark"
               ? setThemeColor("light")
               : setThemeColor("dark")
-          }
-        >
+          }>
           {themeColor === "dark" ? <Moon /> : <Sun />}
         </div>
         <div className={navbarClasses.rightArrowContainer}>
@@ -90,15 +91,13 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
                 ? `${navbarClasses.linkContent} linkContentActive`
                 : navbarClasses.linkContent
             }
-            to="/account"
-          >
+            to="/account">
             <div
               className={
                 currentLocation === "/account"
                   ? "pageMarker active backgroundBlue"
                   : "pageMarker"
-              }
-            ></div>
+              }></div>
             <div className="svg">
               <AccountSvg theme={themeColor} />
             </div>
@@ -110,15 +109,13 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
                 ? `${navbarClasses.linkContent} linkContentActive`
                 : navbarClasses.linkContent
             }
-            to="/dashboard"
-          >
+            to="/dashboard">
             <div
               className={
                 currentLocation === "/dashboard"
                   ? "pageMarker active"
                   : "pageMarker"
-              }
-            ></div>
+              }></div>
             <div className="svg">
               <DashboardSvg theme={themeColor} />
             </div>
@@ -130,20 +127,23 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
                 ? `${navbarClasses.linkContent} linkContentActive`
                 : navbarClasses.linkContent
             }
-            to="/"
-          >
+            to="/">
             <div
               className={
                 currentLocation === "/" ? "pageMarker active" : "pageMarker"
-              }
-            ></div>
+              }></div>
             <div className="svg">
               <TimerSvg theme={themeColor} />
             </div>
             <p>Pomodoro</p>
           </Link>
 
-          <div className={navbarClasses.logout}>
+          <div
+            className={navbarClasses.logout}
+            onClick={() => {
+              Cookies.remove("accessToken");
+              navigate("/signin");
+            }}>
             <div className="svg">
               <LogOutSvg theme={themeColor} />
             </div>
