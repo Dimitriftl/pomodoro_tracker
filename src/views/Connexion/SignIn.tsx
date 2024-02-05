@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./SignIn.scss";
 import rightCornerShape from "../../assets/svg/loginPage/loginRightCornerShape.svg";
 import leftCornerShape from "../../assets/svg/loginPage/loginLeftCornerShape.svg";
@@ -8,8 +8,8 @@ import tinyCircle from "../../assets/svg/loginPage/timyCircle.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
-
-type currentPageType = "signIn" | "SignUp";
+import { UserContext } from "../../context/MyProviders";
+import Loader from "../../components/loader/Loader";
 
 interface FormElements extends HTMLFormControlsCollection {
   email: HTMLInputElement;
@@ -22,7 +22,8 @@ interface SignInFormElement extends HTMLFormElement {
 
 const SignIn = () => {
   const token = Cookies.get("accessToken");
-  const [formValidate, setFormValidate] = useState<boolean>(false);
+  const { setUser } = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -34,12 +35,41 @@ const SignIn = () => {
       if (token) {
         // push to home page
         navigate("/");
-        setFormValidate(false);
+        setIsLoading(false);
       } else {
-        setFormValidate(false);
+        setIsLoading(false);
       }
     }, 500);
-  }, [token, formValidate]);
+  }, [token, isLoading]);
+
+  const handleSubmit = (event: React.FormEvent<SignInFormElement>) => {
+    event.preventDefault();
+    setIsLoading(true);
+    if (error) {
+      setError(false);
+    }
+    const formElements = event.currentTarget.elements;
+    const data = {
+      email: formElements.email.value,
+      password: formElements.password.value,
+    };
+    axios
+      .post("http://localhost:3000/api/users/login", data)
+      .then((res) => {
+        const token = res.data.data.token;
+        Cookies.set("accessToken", token, { expires: 7 });
+        setUser(res.data.data.user);
+        setIsLoading(false);
+      })
+      .then(() => {
+        navigate("/");
+      })
+      .catch(function (error) {
+        setIsLoading(false);
+        setError(true);
+        setErrorMessage(error.response.data.msg);
+      });
+  };
 
   return (
     <div id="signInContainer">
@@ -64,30 +94,7 @@ const SignIn = () => {
             <h2>connection</h2>
           </div>
           {error && <p id="errorMessage">{errorMessage}</p>}
-          <form
-            onSubmit={(event: React.FormEvent<SignInFormElement>) => {
-              event.preventDefault();
-              setFormValidate(true);
-              if (error) {
-                setError(false);
-              }
-              const formElements = event.currentTarget.elements;
-              const data = {
-                email: formElements.email.value,
-                password: formElements.password.value,
-              };
-
-              axios
-                .post("http://localhost:3000/api/users/login", data)
-                .then((res) => {
-                  const token = res.data.data.token;
-                  Cookies.set("accessToken", token, { expires: 7 });
-                })
-                .catch(function (error) {
-                  setError(true);
-                  setErrorMessage(error.response.data.msg);
-                });
-            }}>
+          <form onSubmit={(event) => handleSubmit(event)}>
             <input
               className={error ? "warning" : ""}
               type="text"
@@ -105,7 +112,24 @@ const SignIn = () => {
               placeholder="Password"
               onClick={() => setError(false)}
             />
-            <button type="submit">Sign In</button>
+            <button
+              disabled={isLoading}
+              type="submit"
+              className="backgroundBlue">
+              {isLoading ? (
+                <Loader
+                  color="white"
+                  svgWidth="40"
+                  svgHeight="40"
+                  cx="20"
+                  cy="20"
+                  r="15"
+                  strokeWidth="3"
+                />
+              ) : (
+                "Sign In"
+              )}
+            </button>
           </form>
           <div id="signInFooter">
             <p>

@@ -41,14 +41,15 @@ body {
     background: var(--color-second-backgroud);
     cursor: pointer;
     color: #fff;
+
+    &:disabled {
+      background: var(--color-button-disabled);
+      cursor: not-allowed;
+    }
   }
 
   .backgroundBlue {
     background-color: var(--color-blue);
-  }
-
-  .backgroundBlue:hover {
-    background-color: var(--color-hover);
   }
 
   p,

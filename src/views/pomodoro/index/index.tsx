@@ -2,11 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import Timer from "../Timer/Timer";
 import "./index.scss";
 import Tasks from "../Tasks/Tasks";
-import { ThemeContext } from "../../../context/MyProviders";
+import { ThemeContext, UserContext } from "../../../context/MyProviders";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Pomodoro = () => {
   const { themeColor } = useContext(ThemeContext);
+  const { user } = useContext(UserContext);
+
+  console.log("user =>", user);
 
   const navigate = useNavigate();
 

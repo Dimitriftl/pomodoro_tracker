@@ -1,4 +1,10 @@
-import { useState, createContext, Dispatch, SetStateAction, useEffect } from "react";
+import {
+  useState,
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+} from "react";
 
 // theme types
 type Theme = "light" | "dark" | "system";
@@ -9,10 +15,31 @@ type MyProvidersProps = {
   setThemeColor?: Dispatch<SetStateAction<Theme>>;
 };
 
+// user context -------------------------------------
+
+// user types
+
+interface userType {
+  _id: "65aff1f37110ed3877deba42";
+  name: "Dimitri";
+  email: "test@dimitri.com";
+  password: "$2b$10$UBWFJXMrLFHHQZw7Chm5GeOvZZT7D.O3FVxxGqjThSXdLVuicjPti";
+  role: "user";
+}
+
+type UserContextType = {
+  user: userType | null;
+  setUser: (user: userType | null) => void;
+};
+
+// context creation
+
+const UserContext = createContext<UserContextType | undefined>(undefined);
+
 // theme context -------------------------------------
 
 // context creation
-const ThemeContext = createContext<Theme | undefined>("dark");
+const ThemeContext = createContext<Theme>("dark");
 
 // auto start pomodoro context -------------------------------------
 // Types
@@ -36,16 +63,15 @@ type TasksContextType = {
 const TasksContext = createContext<TasksContextType | undefined>(undefined);
 
 const MyProviders: React.FC<MyProvidersProps> = ({ children, themeColor }) => {
+  const [user, setUser] = useState<UserContextType["user"] | null>(null);
   // theme context states
 
   // auto start pomodoro context states
   const [autoStartPomodoro, setAutoStartPomodoro] =
     useState<AutoStartPomodoroContextType["autoStartPomodoro"]>(false);
 
-  let autoStartPomodoroStorage = localStorage.getItem("autoStartPomodoro");
+  const autoStartPomodoroStorage = localStorage.getItem("autoStartPomodoro");
 
-  console.log(typeof autoStartPomodoroStorage);
-  
   useEffect(() => {
     autoStartPomodoroStorage !== null &&
       setAutoStartPomodoro(autoStartPomodoroStorage === "true" ? true : false);
@@ -56,16 +82,17 @@ const MyProviders: React.FC<MyProvidersProps> = ({ children, themeColor }) => {
 
   return (
     <ThemeContext.Provider value={{ themeColor }}>
-      <TasksContext.Provider value={{ tasks, setTasks }}>
-        <AutoStartPomodoroContext.Provider
-          value={{ autoStartPomodoro, setAutoStartPomodoro }}
-        >
-          {children}
-        </AutoStartPomodoroContext.Provider>
-      </TasksContext.Provider>
+      <UserContext.Provider value={{ user, setUser }}>
+        <TasksContext.Provider value={{ tasks, setTasks }}>
+          <AutoStartPomodoroContext.Provider
+            value={{ autoStartPomodoro, setAutoStartPomodoro }}>
+            {children}
+          </AutoStartPomodoroContext.Provider>
+        </TasksContext.Provider>
+      </UserContext.Provider>
     </ThemeContext.Provider>
   );
 };
 
 export default MyProviders;
-export { AutoStartPomodoroContext, ThemeContext, TasksContext };
+export { AutoStartPomodoroContext, ThemeContext, TasksContext, UserContext };

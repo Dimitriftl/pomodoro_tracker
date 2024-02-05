@@ -38,10 +38,6 @@
       background-color: var(--color-backgroud);
       transition: background-color 0.2s ease-in-out;
       color: var(--color-text);
-
-      &:hover {
-        background: var(--color-hightlight);
-      }
     }
   }
 }
