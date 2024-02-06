@@ -21,9 +21,10 @@ import {
 import userAccountPlaceholder from "../../assets/images/pt_account_logo.png";
 
 import "./Navbar.scss";
-import { TasksContext } from "../../context/MyProviders";
+import { IsUserLoggedInContext, TasksContext } from "../../context/MyProviders";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import useVerifyToken from "../../hooks/useVerifyToken";
 
 type theme = "light" | "dark" | "system";
 interface NavbarProps {
@@ -33,6 +34,9 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
   const { tasks } = useContext(TasksContext);
+  const { isUserLoggedIn } = useContext(IsUserLoggedInContext);
+
+  console.log(isUserLoggedIn, "isUserLoggedIn");
 
   // Location
   const location = useLocation();
@@ -40,6 +44,9 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
   const [currentLocation, setCurrentLocation] = useState<string>(
     location.pathname
   );
+  const token = Cookies.get("accessToken");
+  const tokenExpired = useVerifyToken(token);
+
   useEffect(() => {
     setCurrentLocation(location.pathname);
   }, [location]);
@@ -83,72 +90,114 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
         <div className={navbarClasses.rightArrowContainer}>
           <RightArrowSvg theme={themeColor} />
         </div>
-
         <div className="linkContainer">
-          <Link
-            className={
-              currentLocation === "/account"
-                ? `${navbarClasses.linkContent} linkContentActive`
-                : navbarClasses.linkContent
-            }
-            to="/account">
-            <div
-              className={
-                currentLocation === "/account"
-                  ? "pageMarker active backgroundBlue"
-                  : "pageMarker"
-              }></div>
-            <div className="svg">
-              <AccountSvg theme={themeColor} />
-            </div>
-            <p>Account</p>
-          </Link>
-          <Link
-            className={
-              currentLocation === "/dashboard"
-                ? `${navbarClasses.linkContent} linkContentActive`
-                : navbarClasses.linkContent
-            }
-            to="/dashboard">
-            <div
-              className={
-                currentLocation === "/dashboard"
-                  ? "pageMarker active"
-                  : "pageMarker"
-              }></div>
-            <div className="svg">
-              <DashboardSvg theme={themeColor} />
-            </div>
-            <p>Dashboard</p>
-          </Link>
-          <Link
-            className={
-              currentLocation === "/"
-                ? `${navbarClasses.linkContent} linkContentActive`
-                : navbarClasses.linkContent
-            }
-            to="/">
-            <div
-              className={
-                currentLocation === "/" ? "pageMarker active" : "pageMarker"
-              }></div>
-            <div className="svg">
-              <TimerSvg theme={themeColor} />
-            </div>
-            <p>Pomodoro</p>
-          </Link>
+          {isUserLoggedIn ? (
+            <>
+              <Link
+                className={
+                  currentLocation === "/account"
+                    ? `${navbarClasses.linkContent} linkContentActive`
+                    : navbarClasses.linkContent
+                }
+                to="/account">
+                <div
+                  className={
+                    currentLocation === "/account"
+                      ? "pageMarker active backgroundBlue"
+                      : "pageMarker"
+                  }></div>
+                <div className="svg">
+                  <AccountSvg theme={themeColor} />
+                </div>
+                <p>Account</p>
+              </Link>
+              <Link
+                className={
+                  currentLocation === "/dashboard"
+                    ? `${navbarClasses.linkContent} linkContentActive`
+                    : navbarClasses.linkContent
+                }
+                to="/dashboard">
+                <div
+                  className={
+                    currentLocation === "/dashboard"
+                      ? "pageMarker active"
+                      : "pageMarker"
+                  }></div>
+                <div className="svg">
+                  <DashboardSvg theme={themeColor} />
+                </div>
+                <p>Dashboard</p>
+              </Link>
+              <Link
+                className={
+                  currentLocation === "/"
+                    ? `${navbarClasses.linkContent} linkContentActive`
+                    : navbarClasses.linkContent
+                }
+                to="/">
+                <div
+                  className={
+                    currentLocation === "/" ? "pageMarker active" : "pageMarker"
+                  }></div>
+                <div className="svg">
+                  <TimerSvg theme={themeColor} />
+                </div>
+                <p>Pomodoro</p>
+              </Link>
 
-          <div
-            className={navbarClasses.logout}
-            onClick={() => {
-              Cookies.remove("accessToken");
-              navigate("/signin");
-            }}>
-            <div className="svg">
-              <LogOutSvg theme={themeColor} />
-            </div>
-            <p>Disconnect</p>
-          </div>
+              <div
+                className={navbarClasses.logout}
+                onClick={() => {
+                  Cookies.remove("accessToken");
+                  window.localStorage.removeItem("userData");
+                  navigate("/signin");
+                }}>
+                <div className="svg">
+                  <LogOutSvg theme={themeColor} />
+                </div>
+                <p>Disconnect</p>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="disabledLink">
+                <div className="svg">
+                  <AccountSvg
+                    color="var(--color-placeholder)"
+                    theme={themeColor}
+                  />
+                </div>
+                <p>Account</p>
+              </div>
+              <div className="disabledLink">
+                <div className="svg">
+                  <DashboardSvg
+                    color="var(--color-placeholder)"
+                    theme={themeColor}
+                  />
+                </div>
+                <p>Dashboard</p>
+              </div>
+
+              <Link
+                className={
+                  currentLocation === "/"
+                    ? `${navbarClasses.linkContent} linkContentActive`
+                    : navbarClasses.linkContent
+                }
+                to="/">
+                <div
+                  className={
+                    currentLocation === "/" ? "pageMarker active" : "pageMarker"
+                  }></div>
+                <div className="svg">
+                  <TimerSvg theme={themeColor} />
+                </div>
+                <p>Pomodoro</p>
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </div>

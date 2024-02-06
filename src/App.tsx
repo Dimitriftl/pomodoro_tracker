@@ -20,6 +20,7 @@ import Loading from "./views/loading/Loading.tsx";
 import Cookies from "js-cookie";
 import { getUserData } from "./utils/auth.ts";
 import useVerifyToken from "./hooks/useVerifyToken.ts";
+// import { IsUserLoggedInTypes } from "./utils/types/globalTypes.ts";
 
 type Theme = "light" | "dark" | "system";
 
@@ -33,6 +34,7 @@ function App() {
   const token = Cookies.get("accessToken");
   const navigate = useNavigate();
   const tokenExpired = useVerifyToken(token);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
 
   // local storage
   useEffect(() => {
@@ -71,7 +73,11 @@ function App() {
       {loading ? (
         <Loading />
       ) : (
-        <MyProviders themeColor={themeColor} setThemeColor={setThemeColor}>
+        <MyProviders
+          themeColor={themeColor}
+          setThemeColor={setThemeColor}
+          isUserLoggedIn={isUserLoggedIn}
+          setIsUserLoggedIn={setIsUserLoggedIn}>
           {location.pathname !== "/signin" &&
             location.pathname !== "/signup" && (
               <Navbar setThemeColor={setThemeColor} themeColor={themeColor} />

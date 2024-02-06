@@ -13,28 +13,24 @@ type MyProvidersProps = {
   children: React.ReactNode;
   themeColor: Theme;
   setThemeColor?: Dispatch<SetStateAction<Theme>>;
+  isUserLoggedIn: boolean;
+  setIsUserLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 // user context -------------------------------------
 
 // user types
 
-interface userType {
-  _id: "65aff1f37110ed3877deba42";
-  name: "Dimitri";
-  email: "test@dimitri.com";
-  password: "$2b$10$UBWFJXMrLFHHQZw7Chm5GeOvZZT7D.O3FVxxGqjThSXdLVuicjPti";
-  role: "user";
-}
-
-type UserContextType = {
-  user: userType | null;
-  setUser: (user: userType | null) => void;
+type UserIsLogedInContextType = {
+  isUserLoggedIn: boolean;
+  setIsUserLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 // context creation
 
-const UserContext = createContext<UserContextType | undefined>(undefined);
+const IsUserLoggedInContext = createContext<
+  UserIsLogedInContextType | undefined
+>(undefined);
 
 // theme context -------------------------------------
 
@@ -62,8 +58,12 @@ type TasksContextType = {
 // context creation
 const TasksContext = createContext<TasksContextType | undefined>(undefined);
 
-const MyProviders: React.FC<MyProvidersProps> = ({ children, themeColor }) => {
-  const [user, setUser] = useState<UserContextType["user"] | null>(null);
+const MyProviders: React.FC<MyProvidersProps> = ({
+  children,
+  themeColor,
+  setIsUserLoggedIn,
+  isUserLoggedIn,
+}) => {
   // theme context states
 
   // auto start pomodoro context states
@@ -82,17 +82,23 @@ const MyProviders: React.FC<MyProvidersProps> = ({ children, themeColor }) => {
 
   return (
     <ThemeContext.Provider value={{ themeColor }}>
-      <UserContext.Provider value={{ user, setUser }}>
+      <IsUserLoggedInContext.Provider
+        value={{ isUserLoggedIn, setIsUserLoggedIn }}>
         <TasksContext.Provider value={{ tasks, setTasks }}>
           <AutoStartPomodoroContext.Provider
             value={{ autoStartPomodoro, setAutoStartPomodoro }}>
             {children}
           </AutoStartPomodoroContext.Provider>
         </TasksContext.Provider>
-      </UserContext.Provider>
+      </IsUserLoggedInContext.Provider>
     </ThemeContext.Provider>
   );
 };
 
 export default MyProviders;
-export { AutoStartPomodoroContext, ThemeContext, TasksContext, UserContext };
+export {
+  AutoStartPomodoroContext,
+  ThemeContext,
+  TasksContext,
+  IsUserLoggedInContext,
+};

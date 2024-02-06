@@ -8,7 +8,7 @@ import tinyCircle from "../../assets/svg/loginPage/timyCircle.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { UserContext } from "../../context/MyProviders";
+import { IsUserLoggedInContext } from "../../context/MyProviders";
 import Loader from "../../components/loader/Loader";
 
 interface FormElements extends HTMLFormControlsCollection {
@@ -22,7 +22,7 @@ interface SignInFormElement extends HTMLFormElement {
 
 const SignIn = () => {
   const token = Cookies.get("accessToken");
-  const { setUser } = useContext(UserContext);
+  const { setIsUserLoggedIn } = useContext(IsUserLoggedInContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
