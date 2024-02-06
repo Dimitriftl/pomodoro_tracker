@@ -51,7 +51,13 @@ function App() {
         setLoading(false);
       } else {
         setLoading(false);
-        navigate("/signin");
+        if (
+          location.pathname !== "/signin" &&
+          location.pathname !== "/signup" &&
+          location.pathname !== "/"
+        ) {
+          navigate("/");
+        }
       }
     }, 1000);
   }, []);
