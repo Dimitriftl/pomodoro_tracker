@@ -19,34 +19,39 @@ import Account from "./views/account/Account.tsx";
 import Loading from "./views/loading/Loading.tsx";
 import Cookies from "js-cookie";
 import { getUserData } from "./utils/auth.ts";
+import useVerifyToken from "./hooks/useVerifyToken.ts";
 
 type Theme = "light" | "dark" | "system";
 
 function App() {
   const location = useLocation();
-
-  console.log(location.pathname);
-
   // theme context states
   const [themeColor, setThemeColor] = useState<Theme>("dark");
   let localTheme = localStorage.getItem("theme") as Theme;
   let autoStartPomodoro = localStorage.getItem("autoStartPomodoro");
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true); // this laoding is used to check if the user is connected on page load
   const token = Cookies.get("accessToken");
   const navigate = useNavigate();
+  const tokenExpired = useVerifyToken(token);
 
   // local storage
   useEffect(() => {
-    localTheme !== null && setThemeColor(localTheme);
-    autoStartPomodoro === null &&
+    if (localTheme !== null) {
+      setThemeColor(localTheme);
+    }
+    if (autoStartPomodoro === null) {
       localStorage.setItem("autoStartPomodoro", "false");
-
+    }
+    // if user is not connected, redirect to signin page
     setTimeout(() => {
-      if (token) {
+      console.log(tokenExpired, "tokenExpired");
+
+      if (token !== undefined && tokenExpired === false) {
+        // we stay on current page
         setLoading(false);
       } else {
-        navigate("/signin");
         setLoading(false);
+        navigate("/signin");
       }
     }, 1000);
   }, []);
