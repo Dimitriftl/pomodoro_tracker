@@ -2,11 +2,15 @@ import React, { useContext, useEffect, useState } from "react";
 import Timer from "../Timer/Timer";
 import "./index.scss";
 import Tasks from "../Tasks/Tasks";
-import { ThemeContext } from "../../../context/MyProviders";
+import {
+  IsUserLoggedInContext,
+  ThemeContext,
+} from "../../../context/MyProviders";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Pomodoro = () => {
   const { themeColor } = useContext(ThemeContext);
+  const { isUserLoggedIn } = useContext(IsUserLoggedInContext);
 
   const navigate = useNavigate();
 
@@ -41,14 +45,16 @@ const Pomodoro = () => {
 
   return (
     <div className="pomodoroContainer">
-      <div id="logButtonsContainer">
-        <button id="signInButton" onClick={() => navigate("/signin")}>
-          Sign In
-        </button>
-        <button id="signUpButton" onClick={() => navigate("/signup")}>
-          Sign Up
-        </button>
-      </div>
+      {!isUserLoggedIn && (
+        <div id="logButtonsContainer">
+          <button id="signInButton" onClick={() => navigate("/signin")}>
+            Sign In
+          </button>
+          <button id="signUpButton" onClick={() => navigate("/signup")}>
+            Sign Up
+          </button>
+        </div>
+      )}
       <Timer
         isTimerRunning={isTimerRunning}
         setIsTimerRunning={setIsTimerRunning}
