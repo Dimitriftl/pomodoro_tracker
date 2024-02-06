@@ -56,11 +56,6 @@ const SignIn = () => {
     axios
       .post("http://localhost:3000/api/users/login", data)
       .then((res) => {
-        console.log(res.data);
-        console.log(res.data.data.token);
-        console.log(res.data.data.user);
-        console.log(res.data.data.user.tasks);
-
         const token = res.data.data.token;
         Cookies.set("accessToken", token, { expires: 7 });
         let data = {
@@ -72,6 +67,7 @@ const SignIn = () => {
           tasks: res.data.data.user.tasks,
         };
         localStorage.setItem("userData", JSON.stringify(data));
+        setIsUserLoggedIn(true);
         setIsLoading(false);
       })
       .then(() => {

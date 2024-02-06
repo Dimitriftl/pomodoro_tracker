@@ -50,8 +50,10 @@ function App() {
 
       if (token !== undefined && tokenExpired === false) {
         // we stay on current page
+        setIsUserLoggedIn(true);
         setLoading(false);
       } else {
+        setIsUserLoggedIn(false);
         setLoading(false);
         if (
           location.pathname !== "/signin" &&

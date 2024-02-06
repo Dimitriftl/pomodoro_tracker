@@ -34,7 +34,9 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
   const { tasks } = useContext(TasksContext);
-  const { isUserLoggedIn } = useContext(IsUserLoggedInContext);
+  const { isUserLoggedIn, setIsUserLoggedIn } = useContext(
+    IsUserLoggedInContext
+  );
 
   console.log(isUserLoggedIn, "isUserLoggedIn");
 
@@ -151,6 +153,7 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
                 onClick={() => {
                   Cookies.remove("accessToken");
                   window.localStorage.removeItem("userData");
+                  setIsUserLoggedIn(false);
                   navigate("/signin");
                 }}>
                 <div className="svg">
