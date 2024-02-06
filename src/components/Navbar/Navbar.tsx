@@ -154,7 +154,7 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
                   Cookies.remove("accessToken");
                   window.localStorage.removeItem("userData");
                   setIsUserLoggedIn(false);
-                  navigate("/signin");
+                  navigate("/");
                 }}>
                 <div className="svg">
                   <LogOutSvg theme={themeColor} />
