@@ -56,15 +56,12 @@ const SignIn = () => {
     axios
       .post("http://localhost:3000/api/users/login", data)
       .then((res) => {
-        const token = res.data.data.token;
+        const token = res.data.token;
         Cookies.set("accessToken", token, { expires: 7 });
+
         let data = {
-          user: {
-            email: res.data.data.user.email,
-            name: res.data.data.user.name,
-            id: res.data.data.user.id,
-          },
-          tasks: res.data.data.user.tasks,
+          user: res.data.data.user,
+          tasks: res.data.data.tasks,
         };
         localStorage.setItem("userData", JSON.stringify(data));
         setIsUserLoggedIn(true);
