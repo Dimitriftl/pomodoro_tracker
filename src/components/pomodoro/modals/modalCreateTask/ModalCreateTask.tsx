@@ -10,20 +10,27 @@ import { ThemeContext } from "../../../../context/MyProviders";
 import { CrossSvg, ClockSvg } from "../../../../assets/svg/svg";
 import ListOfHoursStart from "./listOfHoursStart/ListOfHours";
 import ListOfHoursEnd from "./listOfHoursEnd/ListOfHoursEnd";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 type modalProps = {
   modal: boolean;
   setMdoal: Dispatch<SetStateAction<boolean>>;
 };
 
-
 const ModalCreateTask = ({ modal, setModal }) => {
   // context state
   const { themeColor } = useContext(ThemeContext);
-  const areaMaxLength = 120;
+  const areaMaxLength = 200;
   // tasks states
-  const [taskName, setTaskName] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
+  const [taskName, setTaskName] = useState<string>("travailler projet d'ecole");
+  const [description, setDescription] = useState<string>(
+    "Tasks créée depuis le front"
+  );
+  const [numberOfPomodoro, setNumberOfPomodoro] = useState<number | undefined>(
+    3
+  );
+  const token = Cookies.get("accessToken");
   // hours list modals
 
   // handle la fermerture du modal avec la touche escape / esc
@@ -43,8 +50,50 @@ const ModalCreateTask = ({ modal, setModal }) => {
     };
   }, [modal]);
 
+  const handlePomodoroInputChange = (event) => {
+    const result = event.target.value.replace(/\D/g, "");
 
+    if (result === "0") {
+      return null;
+    }
+    setNumberOfPomodoro(result);
+  };
 
+  const updateLocalStorage = (data: any) => {
+    const localUserData = localStorage.getItem("userData");
+    const userDataObject = JSON.parse(localUserData || "{}");
+    const tasksArray = userDataObject.tasks || [];
+    const newAtasksArray = [...tasksArray, data];
+    // Met à jour la propriété "tasks"
+    userDataObject.tasks = newAtasksArray;
+    const newUserDataString = JSON.stringify(userDataObject);
+    // Met à jour le contenu du localStorage
+    localStorage.setItem("userData", newUserDataString);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(taskName, description, numberOfPomodoro);
+    const data = {
+      taskName: taskName,
+      description: description,
+      numberOfPomodoroSet: numberOfPomodoro,
+    };
+
+    axios
+      .post("http://localhost:3000/api/tasks/", data, {
+        headers: {
+          authorization: `Bearer ${Cookies.get("accessToken")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data, "create task response");
+        updateLocalStorage(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -56,7 +105,7 @@ const ModalCreateTask = ({ modal, setModal }) => {
             <CrossSvg theme={themeColor} />
           </button>
         </div>
-        <form id="createTaskForm">
+        <form onSubmit={(e) => handleSubmit(e)} id="createTaskForm">
           <input
             type="text"
             name="taskName"
@@ -65,6 +114,14 @@ const ModalCreateTask = ({ modal, setModal }) => {
             id="taskName"
             placeholder="Add a title"
           />
+          <div id="numberOfPomodoroContainer">
+            <input
+              placeholder="Number of pomodoro"
+              type="text"
+              value={numberOfPomodoro}
+              onChange={(e) => handlePomodoroInputChange(e)}
+            />
+          </div>
           <div id="textareaContainer">
             <textarea
               maxLength={areaMaxLength}

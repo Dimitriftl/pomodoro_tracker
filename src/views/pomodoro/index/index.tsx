@@ -24,10 +24,8 @@ const Pomodoro = () => {
   const [minutesSetForBreak, setMinutesSetForBreak] = useState<number>(300);
   const [minutesSetForLongBreak, setMinutesSetForLongBreak] =
     useState<number>(900);
-
   const [countdownTime, setCountdownTime] =
     useState<number>(minutesSetForFocus); // timer value that will be decreased
-
   const minutesWithoutZero: number = Math.floor(countdownTime / 60);
   const secondsWithoutZero: number = Math.floor(countdownTime % 60);
   const minutes: number | string =
