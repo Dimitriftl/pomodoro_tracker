@@ -89,6 +89,7 @@ const ModalCreateTask = ({ modal, setModal }) => {
       .then((res) => {
         console.log(res.data, "create task response");
         updateLocalStorage(res.data);
+        setModal(!modal);
       })
       .catch((err) => {
         console.log(err);

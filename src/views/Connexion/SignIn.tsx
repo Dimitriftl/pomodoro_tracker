@@ -59,11 +59,11 @@ const SignIn = () => {
         const token = res.data.token;
         Cookies.set("accessToken", token, { expires: 7 });
 
-        let data = {
+        let dataToLocalStorage = {
           user: res.data.data.user,
           tasks: res.data.data.tasks,
         };
-        localStorage.setItem("userData", JSON.stringify(data));
+        localStorage.setItem("userData", JSON.stringify(dataToLocalStorage));
         setIsUserLoggedIn(true);
         setIsLoading(false);
       })
