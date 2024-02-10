@@ -70,7 +70,7 @@ const ConfirmModal: FC<ConfirmModalProps> = ({
             </div>
             <div className="confirmModalContent">
               <p>
-                You’re about to set your task your task “
+                You’re about to set your task “
                 <span style={{ fontWeight: "500" }}>{taskName}</span>” on{" "}
                 <span style={{ fontWeight: "500", color: "var(--color-blue)" }}>
                   Done
