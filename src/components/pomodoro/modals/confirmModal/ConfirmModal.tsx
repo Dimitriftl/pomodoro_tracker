@@ -15,6 +15,7 @@ interface ConfirmModalProps {
   deleteTask?: (id: string) => void;
   taskId: string | null;
   taskName: string;
+  setOpenTask: Dispatch<SetStateAction<boolean>>;
 }
 
 const ConfirmModal: FC<ConfirmModalProps> = ({
@@ -23,6 +24,7 @@ const ConfirmModal: FC<ConfirmModalProps> = ({
   deleteTask,
   taskId,
   taskName,
+  setOpenTask,
 }) => {
   const { themeColor } = useContext(ThemeContext);
 
@@ -52,12 +54,16 @@ const ConfirmModal: FC<ConfirmModalProps> = ({
             <div className="confirmModalFooter">
               <button
                 className="confirmModalCancelButton"
-                onClick={() => setTypeOfModal(null)}>
+                onClick={() => {
+                  setOpenTask(false), setTypeOfModal(null);
+                }}>
                 Cancel
               </button>
               <button
                 id="confirmModalDeleteButton"
-                onClick={() => deleteTask(taskId)}>
+                onClick={() => {
+                  setOpenTask(false), deleteTask(taskId);
+                }}>
                 Delete
               </button>
             </div>

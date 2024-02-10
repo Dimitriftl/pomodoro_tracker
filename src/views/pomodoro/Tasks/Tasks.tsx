@@ -20,10 +20,10 @@ const Tasks = () => {
   const [modal, setModal] = useState(false);
   const [tasksArray, setTasksArray] = useState([]);
   const { themeColor } = useContext(ThemeContext);
-  const [taskId, setTaskId] = useState<string | null>(null); // used for open the proper task
+  const [taskId, setTaskId] = useState<string | null>(null); // used for dropdown the proper task
   const [openTask, setOpenTask] = useState<boolean>(false);
   const [taskIdFocused, setTaskIdFocused] = useState<string | null>(null); // used to focus the pomodoro
-  const [typeOfModal, setTypeOfModal] = useState<typeOfModalTypes>("done"); //used for confirm modals
+  const [typeOfModal, setTypeOfModal] = useState<typeOfModalTypes>(null); //used for confirm modals
   const [taskName, setTaskName] = useState<string>("");
 
   useEffect(() => {
@@ -129,7 +129,7 @@ const Tasks = () => {
                   <>
                     <button
                       id="deleteButton"
-                      onClick={() => setTypeOfModal("done")}>
+                      onClick={() => setTypeOfModal("delete")}>
                       <BinSvg color="var(--color-red)" />
                       Delete
                     </button>
@@ -159,6 +159,7 @@ const Tasks = () => {
           deleteTask={deleteTask}
           taskId={taskId}
           taskName={taskName}
+          setOpenTask={setOpenTask}
         />
       )}
     </div>
