@@ -56,8 +56,6 @@ const Tasks = () => {
     }:${seconds < 10 ? `0${seconds}` : seconds}`;
   };
 
-  console.log(getTodayDate(), "getTodayDate");
-
   const deleteTask = async (id: string) => {
     const headers = {
       authorization: `Bearer ${Cookies.get("accessToken")}`,
