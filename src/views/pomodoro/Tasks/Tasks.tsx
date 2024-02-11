@@ -24,7 +24,9 @@ const Tasks = () => {
   const [openTask, setOpenTask] = useState<boolean>(false);
   const [taskIdFocused, setTaskIdFocused] = useState<string | null>(null); // used to focus the pomodoro
   const [typeOfModal, setTypeOfModal] = useState<typeOfModalTypes>(null); //used for confirm modals
+  const [editTask, setEditTask] = useState<boolean>(false); // used to edit the task
   const [taskName, setTaskName] = useState<string>("");
+  const [taskDescription, setTaskDescription] = useState<string>("");
 
   useEffect(() => {
     console.log("useEffect");
@@ -82,6 +84,28 @@ const Tasks = () => {
       });
   };
 
+  const editTaskFunction = async (task) => {
+    console.log("edit task id =>", task);
+    const headers = {
+      authorization: `Bearer ${Cookies.get("accessToken")}`,
+    };
+
+    const data = {
+      ...task,
+      description: taskDescription,
+      taskName: taskName,
+    };
+
+    await axios
+      .put("http://localhost:3000/api/tasks/", data, { headers })
+      .then((res) => {
+        console.log(res.data, "edit Response");
+      })
+      .catch((error) => {
+        return console.error(error);
+      });
+  };
+
   const filtredData = tasksArray.filter(
     (task) => task._id === "65c60133514e6769cc8e737c"
   );
@@ -106,7 +130,17 @@ const Tasks = () => {
                 : "taskContainer"
             }>
             <div className="taskHeader">
-              <p>{task?.taskName}</p>
+              {editTask && taskId === task._id ? (
+                <input
+                  type="text"
+                  value={taskName}
+                  onChange={(e) => setTaskName(e.target.value)}
+                  max={200}
+                  id="taskNameInput"
+                />
+              ) : (
+                <p>{task?.taskName}</p>
+              )}
               <div className="taskHeaderRight">
                 <p>
                   {task?.numberOfpomodoroDone} /{task?.numberOfPomodoroSet}
@@ -121,32 +155,68 @@ const Tasks = () => {
               </div>
             </div>
             <div className="taskDropDownContainer">
-              <div className="taskMain">
-                <p className="taskDesc">{task?.description}</p>
-              </div>
-              <div className="taskFooter">
-                {openTask ? (
-                  <>
-                    <button
-                      id="deleteButton"
-                      onClick={() => setTypeOfModal("delete")}>
-                      <BinSvg color="var(--color-red)" />
-                      Delete
-                    </button>
-                    <button id="editButton">
-                      <EditSvg color="#FFF" />
-                      Edit
-                    </button>
-                  </>
-                ) : (
-                  <button
-                    id="editButton"
-                    onClick={() => setTypeOfModal("done")}>
-                    <LittleClockSvg color="#FFF" />
-                    Done
-                  </button>
-                )}
-              </div>
+              {editTask ? (
+                <>
+                  <div className="taskMain">
+                    <textarea
+                      value={taskDescription}
+                      onChange={(e) => setTaskDescription(e.target.value)}
+                      max={200}
+                      className="taskDescInput"
+                    />
+                  </div>
+                  <div className="taskFooter">
+                    <>
+                      <button
+                        id="cancelButton"
+                        onClick={() => setEditTask(false)}>
+                        Cancel
+                      </button>
+                      <button
+                        id="editButton"
+                        onClick={() => editTaskFunction(task)}>
+                        <EditSvg color="#FFF" />
+                        Save
+                      </button>
+                    </>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="taskMain">
+                    <p className="taskDesc">{task?.description}</p>
+                  </div>
+                  <div className="taskFooter">
+                    {openTask ? (
+                      <>
+                        <button
+                          id="deleteButton"
+                          onClick={() => setTypeOfModal("delete")}>
+                          <BinSvg color="var(--color-red)" />
+                          Delete
+                        </button>
+                        <button
+                          id="editButton"
+                          onClick={() => {
+                            setEditTask(true),
+                              setTaskDescription(task.description),
+                              setTaskName(task.taskName);
+                          }}>
+                          <EditSvg color="#FFF" />
+                          Edit
+                        </button>
+                      </>
+                    ) : (
+                      <button
+                        id="editButton"
+                        onClick={() => setTypeOfModal("done")}>
+                        <LittleClockSvg color="#FFF" />
+                        Done
+                      </button>
+                    )}
+                  </div>
+                </>
+              )}
             </div>
           </div>
         );

@@ -56,6 +56,12 @@
     align-items: center;
     padding: 1rem;
 
+    #taskNameInput {
+      border-color: var(--color-backgroud);
+      font-size: 16px;
+      width: 80%;
+    }
+
     .taskHeaderRight {
       display: flex;
       justify-content: center;
@@ -109,6 +115,19 @@
         overflow-y: auto;
         font-size: 14px;
       }
+
+      .taskDescInput {
+        display: flex;
+        resize: none;
+        width: 100%;
+        height: 85px;
+        border: 2px solid var(--color-backgroud);
+        border-radius: 6px;
+        padding: 10px;
+        overflow-y: auto;
+        font-size: 14px;
+        outline: none;
+      }
     }
     .taskFooter {
       display: flex;
@@ -145,6 +164,18 @@
         border: none;
         outline: none;
         background-color: var(--color-blue);
+        font-weight: 500;
+      }
+
+      #cancelButton {
+        border-radius: 3px;
+        width: 60px;
+        height: 25px;
+        font-size: 12px;
+        border: 1px solid var(--color-red);
+        outline: none;
+        background-color: transparent;
+        color: var(--color-text);
         font-weight: 500;
       }
     }
