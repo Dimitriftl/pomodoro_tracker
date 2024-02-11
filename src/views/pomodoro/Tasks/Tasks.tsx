@@ -99,16 +99,28 @@ const Tasks = () => {
     await axios
       .put("http://localhost:3000/api/tasks/", data, { headers })
       .then((res) => {
-        console.log(res.data, "edit Response");
+        console.log(res.data, "res");
+        const newTasksArray = tasksArray.map((item) => {
+          if (task._id === item._id) {
+            return {
+              ...task,
+              taskName: taskName,
+              description: taskDescription,
+            };
+          }
+          return item;
+        });
+        setTasksArray(newTasksArray);
+        const localUserData = localStorage.getItem("userData");
+        const userDataObject = JSON.parse(localUserData || "{}");
+        userDataObject.tasks = newTasksArray;
+        localStorage.setItem("userData", JSON.stringify(userDataObject));
+        setEditTask(false);
       })
       .catch((error) => {
         return console.error(error);
       });
   };
-
-  const filtredData = tasksArray.filter(
-    (task) => task._id === "65c60133514e6769cc8e737c"
-  );
 
   return (
     <div className="tasksContainer ">
