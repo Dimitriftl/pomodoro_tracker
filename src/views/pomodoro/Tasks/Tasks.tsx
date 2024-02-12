@@ -110,7 +110,7 @@ const Tasks = () => {
         </button>
       ) : (
         <button id="openModalButtonDisabled">
-          <p>Please connect to create task</p>
+          <p>Please connect to create tasks</p>
         </button>
       )}
       {tasksArray.map((task, index) => {
