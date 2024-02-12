@@ -50,6 +50,13 @@ function App() {
 
       if (token !== undefined && tokenExpired === false) {
         // we stay on current page
+        if (
+          location.pathname !== "/dashbord" &&
+          location.pathname !== "/account" &&
+          location.pathname !== "/"
+        ) {
+          navigate("/");
+        }
         setIsUserLoggedIn(true);
         setLoading(false);
       } else {
@@ -91,6 +98,7 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/account" element={<Account />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="*" element={<Pomodoro />} />
           </Routes>
         </MyProviders>
       )}

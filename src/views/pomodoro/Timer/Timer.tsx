@@ -121,7 +121,7 @@ const Timer: React.FC<TimerProps> = ({
     setIsTimerRunning(false);
     setTimerFocus(true);
     setTimerBreak(false);
-    setCountdownTime(minutesSetForFocus);
+    handleNewTimerValue(minutesSetForFocus);
     startTimer();
   };
 

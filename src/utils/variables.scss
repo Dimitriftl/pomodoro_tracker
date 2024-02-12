@@ -23,6 +23,7 @@
     --box-shadow-timer: 15px 15px 30px 0px #17171d, -15px -15px 30px 0px #262730;
     --box-shadow-input: 1px 1px 2px 0px #151515 inset;
     --box-shadow-container: 2px 2px 6px 0px rgba(0, 0, 0, 0.25);
+    --box-shadow-pastille: 1px 0 10px 0 #678aff7e;
   }
 
   body.light {
@@ -50,5 +51,6 @@
       -20px -20px 40px 0px #ffffff;
     --box-shadow-input: 1px 1px 2px 0px rgba(0, 0, 0, 0.25) inset;
     --box-shadow-container: 2px 2px 6px 0px rgba(181, 181, 181, 0.25);
+    --box-shadow-pastille: 1px 0 10px 0 #2a73f181;
   }
 }

@@ -38,26 +38,6 @@ const Tasks = () => {
     setTasksArray(userDataObject.tasks || []);
   }, [localStorage.getItem("userData")]);
 
-  console.log(isUserLoggedIn, "isUserLoggedIn");
-
-  // get date with the format 2021-08-25 00:00:00
-  const getTodayDate = () => {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    // return current hour
-    const hour = date.getHours();
-    const minutes = date.getMinutes();
-    const seconds = date.getSeconds();
-
-    return `${year}-${month < 10 ? `0${month}` : month}-${
-      day < 10 ? `0${day}` : day
-    } ${hour < 10 ? `0${hour}` : hour}:${
-      minutes < 10 ? `0${minutes}` : minutes
-    }:${seconds < 10 ? `0${seconds}` : seconds}`;
-  };
-
   const deleteTask = async (id: string) => {
     const headers = {
       authorization: `Bearer ${Cookies.get("accessToken")}`,
@@ -138,7 +118,9 @@ const Tasks = () => {
           <div
             key={index}
             onClick={() => {
-              setTaskIdFocused(task._id);
+              task._id === taskIdFocused
+                ? setTaskIdFocused(null)
+                : setTaskIdFocused(task._id);
               setTaskName(task.taskName);
             }}
             className={
@@ -146,12 +128,18 @@ const Tasks = () => {
                 ? "taskContainer taskDropDowned"
                 : "taskContainer"
             }>
-            <div className="taskHeader">
+            {taskIdFocused === task._id && <div id="activePastille"></div>}
+            <div
+              className="taskHeader"
+              style={{
+                paddingLeft: taskIdFocused === task._id ? "1.8rem" : "1rem",
+              }}>
               {editTask && taskId === task._id ? (
                 <input
                   type="text"
                   value={taskName}
                   onChange={(e) => setTaskName(e.target.value)}
+                  onClick={(e) => e.stopPropagation()}
                   max={200}
                   id="taskNameInput"
                 />
@@ -160,18 +148,24 @@ const Tasks = () => {
               )}
               <div className="taskHeaderRight">
                 <p>
-                  {task?.numberOfpomodoroDone} /{task?.numberOfPomodoroSet}
+                  {task?.numberOfPomodoroDone}/{task?.numberOfPomodoroSet}
                 </p>
                 <button
-                  onClick={() => {
-                    setTaskId(task._id), setOpenTask(!openTask);
+                  onClick={(e) => {
+                    e.stopPropagation(),
+                      setTaskId(task._id),
+                      setOpenTask(!openTask);
                   }}
                   id="arrowButton">
                   <ArrowSvg theme={themeColor} />
                 </button>
               </div>
             </div>
-            <div className="taskDropDownContainer">
+            <div
+              className="taskDropDownContainer"
+              style={{
+                paddingLeft: taskIdFocused === task._id ? "1rem" : "0",
+              }}>
               {editTask ? (
                 <>
                   <div className="taskMain">
@@ -179,6 +173,7 @@ const Tasks = () => {
                       value={taskDescription}
                       onChange={(e) => setTaskDescription(e.target.value)}
                       max={200}
+                      onClick={(e) => e.stopPropagation()}
                       className="taskDescInput"
                     />
                   </div>
@@ -186,12 +181,16 @@ const Tasks = () => {
                     <>
                       <button
                         id="cancelButton"
-                        onClick={() => setEditTask(false)}>
+                        onClick={(e) => {
+                          e.stopPropagation(), setEditTask(false);
+                        }}>
                         Cancel
                       </button>
                       <button
                         id="editButton"
-                        onClick={() => editTaskFunction(task)}>
+                        onClick={(e) => {
+                          e.stopPropagation(), editTaskFunction(task);
+                        }}>
                         <EditSvg color="#FFF" />
                         Save
                       </button>
@@ -208,14 +207,17 @@ const Tasks = () => {
                       <>
                         <button
                           id="deleteButton"
-                          onClick={() => setTypeOfModal("delete")}>
+                          onClick={(e) => {
+                            e.stopPropagation(), setTypeOfModal("delete");
+                          }}>
                           <BinSvg color="var(--color-red)" />
                           Delete
                         </button>
                         <button
                           id="editButton"
-                          onClick={() => {
-                            setEditTask(true),
+                          onClick={(e) => {
+                            e.stopPropagation(),
+                              setEditTask(true),
                               setTaskDescription(task.description),
                               setTaskName(task.taskName);
                           }}>
@@ -226,7 +228,9 @@ const Tasks = () => {
                     ) : (
                       <button
                         id="editButton"
-                        onClick={() => setTypeOfModal("done")}>
+                        onClick={(e) => {
+                          e.stopPropagation(), setTypeOfModal("done");
+                        }}>
                         <LittleClockSvg color="#FFF" />
                         Done
                       </button>
