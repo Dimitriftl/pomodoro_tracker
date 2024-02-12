@@ -9,7 +9,10 @@ import {
   EditSvg,
   LittleClockSvg,
 } from "../../../assets/svg/svg.jsx";
-import { ThemeContext } from "../../../context/MyProviders.js";
+import {
+  IsUserLoggedInContext,
+  ThemeContext,
+} from "../../../context/MyProviders.js";
 import axios from "axios";
 import Cookies from "js-cookie";
 import ConfirmModal from "../../../components/pomodoro/modals/confirmModal/ConfirmModal.js";
@@ -27,16 +30,15 @@ const Tasks = () => {
   const [editTask, setEditTask] = useState<boolean>(false); // used to edit the task
   const [taskName, setTaskName] = useState<string>("");
   const [taskDescription, setTaskDescription] = useState<string>("");
+  const { isUserLoggedIn } = useContext(IsUserLoggedInContext);
 
   useEffect(() => {
-    console.log("useEffect");
-
     const localUserData = localStorage.getItem("userData");
     const userDataObject = JSON.parse(localUserData || "{}");
     setTasksArray(userDataObject.tasks || []);
   }, [localStorage.getItem("userData")]);
 
-  console.log(new Date(), "messages");
+  console.log(isUserLoggedIn, "isUserLoggedIn");
 
   // get date with the format 2021-08-25 00:00:00
   const getTodayDate = () => {
@@ -83,7 +85,6 @@ const Tasks = () => {
   };
 
   const editTaskFunction = async (task) => {
-    console.log("edit task id =>", task);
     const headers = {
       authorization: `Bearer ${Cookies.get("accessToken")}`,
     };
@@ -123,9 +124,15 @@ const Tasks = () => {
   return (
     <div className="tasksContainer ">
       <h2>Task to focus on.</h2>
-      <button onClick={() => setModal(!modal)} id="openModalButton">
-        <PlusSvg theme={themeColor} />
-      </button>
+      {isUserLoggedIn ? (
+        <button onClick={() => setModal(!modal)} id="openModalButton">
+          <PlusSvg theme={themeColor} />
+        </button>
+      ) : (
+        <button id="openModalButtonDisabled">
+          <p>Please connect to create task</p>
+        </button>
+      )}
       {tasksArray.map((task, index) => {
         return (
           <div
