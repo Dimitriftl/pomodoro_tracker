@@ -214,14 +214,8 @@ const Timer: React.FC<TimerProps> = ({
             styles={buildStyles({
               pathColor:
                 timerBreak || timerLongBreak
-                  ? themeColor === "dark"
-                    ? "#FFDE67"
-                    : "#f0cd20"
-                  : timerfocus
-                  ? themeColor === "dark"
-                    ? "#678bff"
-                    : "#2A72F1"
-                  : null,
+                  ? "var(--color-yellow)"
+                  : "var(--color-blue)",
               trailColor: "transparent",
             })}
           />

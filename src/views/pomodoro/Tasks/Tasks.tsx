@@ -31,6 +31,7 @@ type taskType = {
   numberOfPomodoroSet: number;
   numberOfPomodoroDone: number;
   taskDone: boolean;
+  timeSpend?: number;
 };
 
 const Tasks = () => {
@@ -127,8 +128,6 @@ const Tasks = () => {
   };
 
   useEffect(() => {
-    console.log(isTimerOver, "isTimerOver");
-
     if (isTimerOver) {
       updateNumberOfPomodoro(taskIdFocused);
     }
