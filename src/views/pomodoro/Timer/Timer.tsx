@@ -21,11 +21,13 @@ import ModalTimer from "../../../components/pomodoro/modals/modalTimer/ModalTime
 import {
   AutoStartPomodoroContext,
   ThemeContext,
+  TimerContext,
 } from "../../../context/MyProviders";
 import Button from "../../../components/pomodoro/Button/TimerButton";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { TimerContextType } from "../../../utils/types/contextsTypes";
 interface TimerProps {
   isTimerRunning: boolean;
   setIsTimerRunning: Dispatch<SetStateAction<boolean>>;
@@ -64,8 +66,6 @@ interface TimerProps {
 let interval: number;
 
 const Timer: React.FC<TimerProps> = ({
-  isTimerRunning,
-  setIsTimerRunning,
   timerfocus,
   setTimerFocus,
   timerBreak,
@@ -95,6 +95,10 @@ const Timer: React.FC<TimerProps> = ({
 
   const { themeColor } = useContext(ThemeContext);
 
+  const { isTimerRunning, setIsTimerRunning, setIsTimerOver } = useContext<
+    TimerContextType | undefined
+  >(TimerContext);
+
   const startTimer = () => {
     setIsTimerRunning(true);
     countdowntimeInitialValue.current = countdownTime;
@@ -123,6 +127,7 @@ const Timer: React.FC<TimerProps> = ({
     setTimerBreak(false);
     handleNewTimerValue(minutesSetForFocus);
     startTimer();
+    setIsTimerOver(false);
   };
 
   const handleSetting = () => {
@@ -142,6 +147,7 @@ const Timer: React.FC<TimerProps> = ({
       }
       if (timerfocus) {
         setTimerFocus(false);
+        setIsTimerOver(true); // used to implement the number of pomodoro done on the task selected and add the time spent on the task
         if (numberOfPomodoroDoneGlobaly < 3) {
           setNumberOfPomodoroDoneGlobaly(
             (numberOfPomodoroDoneGlobaly) => numberOfPomodoroDoneGlobaly + 1
@@ -165,6 +171,7 @@ const Timer: React.FC<TimerProps> = ({
           handleNewTimerValue(minutesSetForLongBreak);
         }
       } else if (timerBreak) {
+        setIsTimerOver(false);
         setTimerBreak(false);
         setTimerFocus(true);
         handleNewTimerValue(minutesSetForFocus);

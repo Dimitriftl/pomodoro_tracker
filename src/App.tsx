@@ -1,17 +1,9 @@
-import {
-  useState,
-  useContext,
-  useEffect,
-  createContext,
-  Dispatch,
-  SetStateAction,
-} from "react";
+import { useState, useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar.tsx";
 import Pomodoro from "./views/pomodoro/index/index.tsx";
 import Dashboard from "./views/dashboard/index/index.tsx";
 import MyProviders from "./context/MyProviders.tsx";
-import Calendar from "./calendar/index/index.tsx";
 import SignIn from "./views/connexion/SignIn.tsx";
 import SignUp from "./views/connexion/SignUp.tsx";
 import { useLocation } from "react-router-dom";
@@ -20,6 +12,7 @@ import Loading from "./views/loading/Loading.tsx";
 import Cookies from "js-cookie";
 import { getUserData } from "./utils/auth.ts";
 import useVerifyToken from "./hooks/useVerifyToken.ts";
+import { TimerContextType } from "./utils/types/contextsTypes.ts";
 // import { IsUserLoggedInTypes } from "./utils/types/globalTypes.ts";
 
 type Theme = "light" | "dark" | "system";
@@ -28,8 +21,8 @@ function App() {
   const location = useLocation();
   // theme context states
   const [themeColor, setThemeColor] = useState<Theme>("dark");
-  let localTheme = localStorage.getItem("theme") as Theme;
-  let autoStartPomodoro = localStorage.getItem("autoStartPomodoro");
+  const localTheme = localStorage.getItem("theme") as Theme;
+  const autoStartPomodoro = localStorage.getItem("autoStartPomodoro");
   const [loading, setLoading] = useState<boolean>(true); // this laoding is used to check if the user is connected on page load
   const token = Cookies.get("accessToken");
   const navigate = useNavigate();

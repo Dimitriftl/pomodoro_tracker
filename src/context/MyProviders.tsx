@@ -5,9 +5,12 @@ import {
   SetStateAction,
   useEffect,
 } from "react";
-
-// theme types
-type Theme = "light" | "dark" | "system";
+import {
+  UserIsLoggedInContextType,
+  Theme,
+  ThemeContextTypes,
+  TimerContextType,
+} from "../utils/types/contextsTypes";
 
 type MyProvidersProps = {
   children: React.ReactNode;
@@ -21,21 +24,16 @@ type MyProvidersProps = {
 
 // user types
 
-type UserIsLogedInContextType = {
-  isUserLoggedIn: boolean;
-  setIsUserLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
 // context creation
 
 const IsUserLoggedInContext = createContext<
-  UserIsLogedInContextType | undefined
+  UserIsLoggedInContextType | undefined
 >(undefined);
 
 // theme context -------------------------------------
 
 // context creation
-const ThemeContext = createContext<Theme>("dark");
+const ThemeContext = createContext<ThemeContextTypes | Theme>("dark");
 
 // auto start pomodoro context -------------------------------------
 // Types
@@ -57,6 +55,8 @@ type TasksContextType = {
 
 // context creation
 const TasksContext = createContext<TasksContextType | undefined>(undefined);
+
+const TimerContext = createContext<boolean | undefined>(undefined);
 
 const MyProviders: React.FC<MyProvidersProps> = ({
   children,
@@ -80,15 +80,29 @@ const MyProviders: React.FC<MyProvidersProps> = ({
   // tasks context states
   const [tasks, setTasks] = useState<TasksContextType["tasks"]>([]);
 
+  // timer context
+
+  const [isTimerOver, setIsTimerOver] = useState<boolean>(false);
+
+  const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false); // used for timer context
+
   return (
     <ThemeContext.Provider value={{ themeColor }}>
       <IsUserLoggedInContext.Provider
         value={{ isUserLoggedIn, setIsUserLoggedIn }}>
         <TasksContext.Provider value={{ tasks, setTasks }}>
-          <AutoStartPomodoroContext.Provider
-            value={{ autoStartPomodoro, setAutoStartPomodoro }}>
-            {children}
-          </AutoStartPomodoroContext.Provider>
+          <TimerContext.Provider
+            value={{
+              isTimerOver,
+              setIsTimerOver,
+              isTimerRunning,
+              setIsTimerRunning,
+            }}>
+            <AutoStartPomodoroContext.Provider
+              value={{ autoStartPomodoro, setAutoStartPomodoro }}>
+              {children}
+            </AutoStartPomodoroContext.Provider>
+          </TimerContext.Provider>
         </TasksContext.Provider>
       </IsUserLoggedInContext.Provider>
     </ThemeContext.Provider>
@@ -101,4 +115,5 @@ export {
   ThemeContext,
   TasksContext,
   IsUserLoggedInContext,
+  TimerContext,
 };

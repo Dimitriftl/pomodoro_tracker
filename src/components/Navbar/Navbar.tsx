@@ -21,11 +21,14 @@ import {
 import userAccountPlaceholder from "../../assets/images/pt_account_logo.png";
 
 import "./Navbar.scss";
-import { IsUserLoggedInContext, TasksContext } from "../../context/MyProviders";
+import {
+  IsUserLoggedInContext,
+  TasksContext,
+  TimerContext,
+} from "../../context/MyProviders";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import useVerifyToken from "../../hooks/useVerifyToken";
-
+import { TimerContextType } from "../../utils/types/contextsTypes";
 type theme = "light" | "dark" | "system";
 interface NavbarProps {
   themeColor: theme;
@@ -47,7 +50,10 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
     location.pathname
   );
   const token = Cookies.get("accessToken");
-  const tokenExpired = useVerifyToken(token);
+
+  const { isTimerRunning } = useContext<TimerContextType | undefined>(
+    TimerContext
+  );
 
   useEffect(() => {
     setCurrentLocation(location.pathname);
@@ -93,7 +99,7 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
           <RightArrowSvg theme={themeColor} />
         </div>
         <div className="linkContainer">
-          {isUserLoggedIn ? (
+          {isUserLoggedIn && !isTimerRunning ? (
             <>
               <Link
                 className={

@@ -66,7 +66,7 @@
   font-size: 16px;
   overflow: hidden;
 
-  #activePastille {
+  .activePastille {
     position: absolute;
     left: 0;
     border-radius: 12px 0 0 12px;
@@ -74,6 +74,11 @@
     width: 14px;
     background-color: var(--color-blue);
     box-shadow: var(--box-shadow-pastille);
+  }
+
+  .DonePastille {
+    background-color: var(--color-green);
+    box-shadow: var(--box-shadow-pastille-done);
   }
 
   .taskHeader {
