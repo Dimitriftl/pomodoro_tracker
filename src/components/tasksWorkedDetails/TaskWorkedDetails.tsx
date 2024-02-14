@@ -17,7 +17,6 @@ const TaskWorkedDetails = () => {
         backgroundColor: (context: any) => {
           const bgColor = ["#617dd9b4", "#678aff1f"];
           if (!context.chart.chartArea) return null;
-          console.log(context.chart.chartArea);
           const {
             ctx,
             chartArea: { top, bottom },
@@ -45,20 +44,17 @@ const TaskWorkedDetails = () => {
         <div id="tasksWorkedDetailsHeaderButtons">
           <button
             onClick={() => setPageSelected("week")}
-            className={pageSelected === "week" ? "active" : ""}
-          >
+            className={pageSelected === "week" ? "active" : ""}>
             Week
           </button>
           <button
             onClick={() => setPageSelected("month")}
-            className={pageSelected === "month" ? "active" : ""}
-          >
+            className={pageSelected === "month" ? "active" : ""}>
             Month
           </button>
           <button
             onClick={() => setPageSelected("year")}
-            className={pageSelected === "year" ? "active" : ""}
-          >
+            className={pageSelected === "year" ? "active" : ""}>
             Year
           </button>
         </div>

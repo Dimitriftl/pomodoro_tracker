@@ -41,8 +41,6 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
     IsUserLoggedInContext
   );
 
-  console.log(isUserLoggedIn, "isUserLoggedIn");
-
   // Location
   const location = useLocation();
   const navigate = useNavigate();

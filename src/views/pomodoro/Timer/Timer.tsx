@@ -102,8 +102,6 @@ const Timer: React.FC<TimerProps> = ({
   const { isTimerRunning, setIsTimerRunning, setIsTimerOver, setTimeFocused } =
     useContext<TimerContextType | undefined>(TimerContext);
 
-  console.log(timerfocus, "timerfocus");
-
   const startTimer = () => {
     setIsTimerRunning(true);
     countdowntimeInitialValue.current = countdownTime;
@@ -117,8 +115,6 @@ const Timer: React.FC<TimerProps> = ({
   };
 
   const startTimeWorked = () => {
-    console.log("start time worked");
-
     intervalTimeFocused = window.setInterval(() => {
       setCurrentTimeWorked((currentTimeWorked) => currentTimeWorked + 1);
     }, 1000);
@@ -126,8 +122,6 @@ const Timer: React.FC<TimerProps> = ({
       window.clearInterval(intervalTimeFocused);
     };
   };
-
-  console.log("CURRENT TIMER WORKED => ", currentTimeWorked);
 
   const stopTimer = () => {
     setIsTimerRunning(false);
@@ -244,8 +238,6 @@ const Timer: React.FC<TimerProps> = ({
   const percentage = Math.round(
     (countdownTime / countdowntimeInitialValue.current) * 100
   );
-
-  console.log(percentage, "percentage");
 
   return (
     <div className="timerContainer">

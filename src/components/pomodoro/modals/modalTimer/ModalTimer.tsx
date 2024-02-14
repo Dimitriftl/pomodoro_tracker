@@ -47,12 +47,6 @@ const ModalTimer: React.FC<ModalThemeProps> = ({
   const [localMinutesSetForLongBreak, setLocalMinutesSetForLongBreak] =
     useState<number>(minutesSetForLongBreak);
 
-
-
-  console.log(autoStartPomodoro);
-  
-
-
   useEffect(() => {
     localStorage.setItem("autoStartPomodoro", autoStartPomodoro);
   }, [autoStartPomodoro]);
@@ -154,8 +148,7 @@ const ModalTimer: React.FC<ModalThemeProps> = ({
               className="ValidateButton backgroundBlue  "
               onClick={() => {
                 setOpenModal(false), resultToMinutes();
-              }}
-            >
+              }}>
               Valider
             </button>
           </div>

@@ -50,8 +50,6 @@ const Tasks = () => {
   );
   const { isTimerOver, isTimerRunning, timeFocused } = useContext(TimerContext);
 
-  console.log(timeFocused, "timeFocused");
-
   useEffect(() => {
     // get tasks from the local storage when the component is mounted
     const localUserData = localStorage.getItem("userData");
@@ -157,10 +155,6 @@ const Tasks = () => {
     const userData = {
       timeSpend: timeFocused,
     };
-
-    console.log("user.totalTimeSend => ", user.totalTimeSpend);
-    console.log("timeFocused => ", timeFocused);
-    console.log("userData => ", userData);
 
     await axios
       .put("http://localhost:3000/api/users/user/timespend", userData, {

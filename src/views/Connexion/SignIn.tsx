@@ -59,8 +59,6 @@ const SignIn = () => {
         const token = res.data.token;
         Cookies.set("accessToken", token, { expires: 7 });
 
-        console.log("user REsponse =>", res.data.data.user);
-
         let dataToLocalStorage = {
           user: res.data.data.user,
           tasks: res.data.data.tasks,

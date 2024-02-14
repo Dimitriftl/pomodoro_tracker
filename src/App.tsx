@@ -39,8 +39,6 @@ function App() {
     }
     // if user is not connected, redirect to signin page
     setTimeout(() => {
-      console.log(tokenExpired, "tokenExpired");
-
       if (token !== undefined && tokenExpired === false) {
         // we stay on current page
         if (

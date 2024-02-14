@@ -73,7 +73,6 @@ const ModalCreateTask = ({ modal, setModal }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(taskName, description, numberOfPomodoro);
     const data = {
       taskName: taskName,
       description: description,
