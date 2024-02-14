@@ -86,6 +86,8 @@ const MyProviders: React.FC<MyProvidersProps> = ({
 
   const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false); // used for timer context
 
+  const [timeFocused, setTimeFocused] = useState<number>(0); // used to add the time spent on the task
+
   return (
     <ThemeContext.Provider value={{ themeColor }}>
       <IsUserLoggedInContext.Provider
@@ -97,6 +99,8 @@ const MyProviders: React.FC<MyProvidersProps> = ({
               setIsTimerOver,
               isTimerRunning,
               setIsTimerRunning,
+              timeFocused,
+              setTimeFocused,
             }}>
             <AutoStartPomodoroContext.Provider
               value={{ autoStartPomodoro, setAutoStartPomodoro }}>

@@ -7,6 +7,7 @@
   bottom: 0;
   position: fixed;
   background: rgba(0, 0, 0, 0.51);
+  z-index: 2;
 }
 
 .modalCreateTaskContent {
@@ -20,6 +21,7 @@
   width: 100%;
   min-height: 350px;
   border-radius: 10px;
+  z-index: 3;
 
   #modalHeader {
     position: relative;

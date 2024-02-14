@@ -92,12 +92,12 @@ const SignUp = () => {
                 placeholder="Password"
                 name="password"
               />
-              <p
+              {/* <p
                 style={{ color: "red" }}
                 className="passwordVisibility"
                 onClick={handlePasswordVisibility}>
                 yes
-              </p>
+              </p> */}
             </div>
             <div id="confirmPasswordContainer">
               <input
@@ -107,12 +107,12 @@ const SignUp = () => {
                 placeholder="Confirm password"
                 name="confirmPassword"
               />
-              <p
+              {/* <p
                 style={{ color: "red" }}
                 className="passwordVisibility"
                 onClick={handleConfirmPasswordVisibility}>
                 yes
-              </p>
+              </p> */}
             </div>
             <button
               type="submit"

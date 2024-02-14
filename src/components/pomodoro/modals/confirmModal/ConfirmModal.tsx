@@ -13,6 +13,7 @@ interface ConfirmModalProps {
   typeOfModal: typeOfModalTypes;
   setTypeOfModal: Dispatch<SetStateAction<typeOfModalTypes>>;
   deleteTask?: (id: string) => void;
+  handleTaskDone?: (id: string) => void;
   taskId: string | null;
   taskName: string;
   setOpenTask: Dispatch<SetStateAction<boolean>>;
@@ -25,6 +26,7 @@ const ConfirmModal: FC<ConfirmModalProps> = ({
   taskId,
   taskName,
   setOpenTask,
+  handleTaskDone,
 }) => {
   const { themeColor } = useContext(ThemeContext);
 
@@ -94,7 +96,9 @@ const ConfirmModal: FC<ConfirmModalProps> = ({
               </button>
               <button
                 id="confirmModalDoneButton"
-                onClick={() => console.log("done")}>
+                onClick={() => {
+                  setTypeOfModal(null), handleTaskDone(taskId);
+                }}>
                 <LittleClockSvg color="#FFF" />
                 Done
               </button>

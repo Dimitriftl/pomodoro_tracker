@@ -20,7 +20,7 @@ const Pomodoro = () => {
   const [timerBreak, setTimerBreak] = useState<boolean>(false); // display the time and the color for the break time
   const [timerLongBreak, setTimerLongBreak] = useState<boolean>(false); // display the time and the color for the long break time
   // States to set the differents time for each timer in the modal setting
-  const [minutesSetForFocus, setMinutesSetForFocus] = useState<number>(3300);
+  const [minutesSetForFocus, setMinutesSetForFocus] = useState<number>(1500);
   const [minutesSetForBreak, setMinutesSetForBreak] = useState<number>(300);
   const [minutesSetForLongBreak, setMinutesSetForLongBreak] =
     useState<number>(900);

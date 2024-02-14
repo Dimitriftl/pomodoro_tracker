@@ -8,6 +8,8 @@ import React, {
 } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import useSound from "use-sound";
+import checkSound from "../../../assets/check-sound.mp3";
 import {
   PauseSvg,
   PlaySvg,
@@ -64,6 +66,7 @@ interface TimerProps {
 }
 
 let interval: number;
+let intervalTimeFocused: number;
 
 const Timer: React.FC<TimerProps> = ({
   timerfocus,
@@ -87,6 +90,7 @@ const Timer: React.FC<TimerProps> = ({
   setNumberOfPomodoroDoneGlobaly,
 }) => {
   const { autoStartPomodoro } = useContext(AutoStartPomodoroContext);
+  const [currentTimeWorked, setCurrentTimeWorked] = useState<number>(0); // used to add the time spent on the task
 
   // states
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -95,38 +99,62 @@ const Timer: React.FC<TimerProps> = ({
 
   const { themeColor } = useContext(ThemeContext);
 
-  const { isTimerRunning, setIsTimerRunning, setIsTimerOver } = useContext<
-    TimerContextType | undefined
-  >(TimerContext);
+  const { isTimerRunning, setIsTimerRunning, setIsTimerOver, setTimeFocused } =
+    useContext<TimerContextType | undefined>(TimerContext);
+
+  console.log(timerfocus, "timerfocus");
 
   const startTimer = () => {
     setIsTimerRunning(true);
     countdowntimeInitialValue.current = countdownTime;
     interval = window.setInterval(() => {
       setCountdownTime((countdownTime) => countdownTime - 1);
-    }, 100);
+    }, 1000);
 
-    return () => window.clearInterval(interval);
+    return () => {
+      window.clearInterval(interval);
+    };
   };
+
+  const startTimeWorked = () => {
+    console.log("start time worked");
+
+    intervalTimeFocused = window.setInterval(() => {
+      setCurrentTimeWorked((currentTimeWorked) => currentTimeWorked + 1);
+    }, 1000);
+    return () => {
+      window.clearInterval(intervalTimeFocused);
+    };
+  };
+
+  console.log("CURRENT TIMER WORKED => ", currentTimeWorked);
 
   const stopTimer = () => {
     setIsTimerRunning(false);
+    setTimeFocused(currentTimeWorked); // used to add the time spent on the task
+    setCurrentTimeWorked(0);
     clearInterval(interval);
+    clearInterval(intervalTimeFocused);
   };
 
   const resetTimer = () => {
+    setTimeFocused(currentTimeWorked);
     setCountdownTime(minutesSetForFocus);
+    setCurrentTimeWorked(0);
     setIsTimerRunning(false);
     clearInterval(interval);
+    clearInterval(intervalTimeFocused);
   };
 
   const skipTimer = () => {
-    clearInterval(interval);
-    setIsTimerRunning(false);
-    setTimerFocus(true);
-    setTimerBreak(false);
     handleNewTimerValue(minutesSetForFocus);
+    clearInterval(interval);
+    setTimerFocus(true);
+    setIsTimerRunning(false);
+    setTimerBreak(false);
+    setTimerLongBreak(false);
     startTimer();
+    startTimeWorked();
     setIsTimerOver(false);
   };
 
@@ -139,32 +167,37 @@ const Timer: React.FC<TimerProps> = ({
     countdowntimeInitialValue.current = value;
   };
 
+  const [play] = useSound(checkSound);
+
   // handle the end of the timer et set the new timer
   useEffect(() => {
     if (countdownTime < 0) {
+      play();
       if (!autoStartPomodoro) {
         stopTimer();
       }
       if (timerfocus) {
+        clearInterval(intervalTimeFocused);
         setTimerFocus(false);
         setIsTimerOver(true); // used to implement the number of pomodoro done on the task selected and add the time spent on the task
+        toast("focus time complete! 🏆", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: themeColor === "light" ? "light" : "dark",
+        });
         if (numberOfPomodoroDoneGlobaly < 3) {
+          // if the number of pomodoro done is less than 3, we set the break time
           setNumberOfPomodoroDoneGlobaly(
             (numberOfPomodoroDoneGlobaly) => numberOfPomodoroDoneGlobaly + 1
           );
           // setCountdownTime(minutesSetForBreak);
           handleNewTimerValue(minutesSetForBreak);
           setTimerBreak(true);
-          toast("Focus is over well done!", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-            theme: themeColor === "light" ? "light" : "dark",
-          });
         } else {
           setNumberOfPomodoroDoneGlobaly(0);
           setTimerLongBreak(true);
@@ -174,10 +207,11 @@ const Timer: React.FC<TimerProps> = ({
         setIsTimerOver(false);
         setTimerBreak(false);
         setTimerFocus(true);
+        startTimeWorked();
         handleNewTimerValue(minutesSetForFocus);
-        toast("Break is over!", {
+        toast("Back to work! 💻", {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: false,
@@ -186,10 +220,18 @@ const Timer: React.FC<TimerProps> = ({
           theme: themeColor === "light" ? "light" : "dark",
         });
       } else {
-        setTimerLongBreak(false);
+        // if the timer is a long break
+        startTimeWorked();
+        setIsTimerOver(false);
         setTimerFocus(true);
+        setTimerLongBreak(false);
         handleNewTimerValue(minutesSetForFocus);
       }
+    }
+    if (isTimerRunning) {
+      document.title = `${minutes}:${seconds}`;
+    } else {
+      document.title = `Pomodoro Timer`;
     }
   }, [countdownTime]);
 
@@ -202,6 +244,8 @@ const Timer: React.FC<TimerProps> = ({
   const percentage = Math.round(
     (countdownTime / countdowntimeInitialValue.current) * 100
   );
+
+  console.log(percentage, "percentage");
 
   return (
     <div className="timerContainer">
@@ -248,7 +292,7 @@ const Timer: React.FC<TimerProps> = ({
             </div>
           ) : (
             <div className="button">
-              <Button func={startTimer}>
+              <Button func={startTimer} startTimeWorked={startTimeWorked}>
                 <PlaySvg theme={themeColor} />
               </Button>
             </div>
@@ -258,7 +302,7 @@ const Timer: React.FC<TimerProps> = ({
             <PomodoroSettingsSvg theme={themeColor} />
           </Button>
 
-          {timerBreak ? (
+          {timerBreak || timerLongBreak ? (
             <Button func={skipTimer}>
               <SkipSvg theme={themeColor} />
             </Button>

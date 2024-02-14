@@ -7,6 +7,7 @@
   bottom: 0;
   position: fixed;
   background: rgba(0, 0, 0, 0.51);
+  z-index: 2;
 }
 
 #confirmModalContainer {
@@ -23,6 +24,7 @@
   min-height: 200px;
   border-radius: 10px;
   background: var(--color-backgroud);
+  z-index: 3;
 
   /* confirm Modal css for done */
   .confirmModalHeader {
