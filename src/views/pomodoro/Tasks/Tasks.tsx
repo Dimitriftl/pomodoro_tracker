@@ -23,7 +23,7 @@ import {
   TimerContextType,
 } from "../../../utils/types/contextsTypes.ts";
 
-type typeOfModalTypes = "delete" | "done" | null;
+type typeOfModalTypes = "delete" | "done" | "giveUp" | null;
 type taskType = {
   _id: string;
   taskName: string;
@@ -32,6 +32,7 @@ type taskType = {
   numberOfPomodoroDone: number;
   taskDone: boolean;
   timeSpend: number;
+  status: string;
 };
 
 const Tasks = () => {
@@ -59,13 +60,13 @@ const Tasks = () => {
 
   useEffect(() => {
     if (isTimerOver && isUserLoggedIn) {
-      updateNumberOfPomodoro(taskIdFocused); // update the number of pomodoro done when the timer is over
+      updatePomodoroDoneAndTimeSpend(taskIdFocused); // update the number of pomodoro done, timeSpend of the user and time Spend on task when the timer  is over
     }
   }, [isTimerOver]);
 
   useEffect(() => {
-    // update timeSpend when the timer is over or when it is paused
-    if (timeFocused > 0 && isUserLoggedIn) {
+    // update timeSpend when the timer is paused
+    if (timeFocused > 0 && !isTimerOver && isUserLoggedIn) {
       updateTimeSpend(taskIdFocused);
     }
   }, [timeFocused]);
@@ -142,6 +143,8 @@ const Tasks = () => {
   const updateTimeSpend = async (id: string | null) => {
     //update user TotalTimeSpend in the database
 
+    console.log("update when time is paused");
+
     const headers = {
       authorization: `Bearer ${Cookies.get("accessToken")}`,
     };
@@ -161,11 +164,10 @@ const Tasks = () => {
         headers,
       })
       .then((res) => {
-        console.log(res.data, "res");
+        console.log(res.data, "total time spend response");
         user.totalTimeSpend = user.totalTimeSpend + timeFocused;
         userDataObject.user = user;
         localStorage.setItem("userData", JSON.stringify(userDataObject));
-        setEditTask(false);
       })
       .catch((error) => {
         return console.error(error);
@@ -182,15 +184,95 @@ const Tasks = () => {
       return;
     }
 
+    console.log("task in update time spend => ", task);
+
     const data = {
       ...task,
       timeSpend: task.timeSpend + timeFocused,
     };
 
     await axios
-      .put("http://localhost:3000/api/tasks/", data, { headers })
+      .put("http://localhost:3000/api/tasks/updateTimeSpend", data, { headers })
       .then((res) => {
-        console.log(res.data, "res");
+        console.log(res.data, "task time spend response");
+        const newTasksArray: Array<taskType | []> = tasksArray.map(
+          (item: taskType | []) => {
+            // check type to excude empty arrays (used for error handling ts)
+            if (Array.isArray(item)) {
+              return item;
+            }
+            if (task._id === item._id) {
+              return { ...item, timeSpend: item.timeSpend + timeFocused };
+            }
+            return item;
+          }
+        );
+        setTasksArray(newTasksArray);
+        userDataObject.tasks = newTasksArray;
+        localStorage.setItem("userData", JSON.stringify(userDataObject));
+        setEditTask(false);
+      })
+      .catch((error) => {
+        return console.error(error);
+      });
+  };
+
+  const updatePomodoroDoneAndTimeSpend = async (id: string | null) => {
+    const headers = {
+      authorization: `Bearer ${Cookies.get("accessToken")}`,
+    };
+
+    // get user data from local storage
+
+    const localUserData = localStorage.getItem("userData");
+    const userDataObject = JSON.parse(localUserData || "{}");
+    const user = userDataObject.user;
+
+    const userData = {
+      timeSpend: timeFocused,
+    };
+
+    await axios
+      .put("http://localhost:3000/api/users/user/timespend", userData, {
+        headers,
+      })
+      .then((res) => {
+        console.log(res.data, "total time spend response");
+        user.totalTimeSpend = user.totalTimeSpend + timeFocused;
+        userDataObject.user = user;
+        localStorage.setItem("userData", JSON.stringify(userDataObject));
+      })
+      .catch((error) => {
+        return console.error(error);
+      });
+
+    // update task if it exists
+    const task = tasksArray.find((task: taskType | []) => {
+      if (Array.isArray(task)) {
+        return null;
+      }
+      return task._id === id;
+    });
+    if (task === undefined) {
+      return;
+    }
+
+    console.log("task in update time spend => ", task);
+
+    const data = {
+      ...task,
+      timeSpend: task.timeSpend + timeFocused,
+      numberOfPomodoroDone: task.numberOfPomodoroDone + 1,
+    };
+
+    await axios
+      .put(
+        "http://localhost:3000/api/tasks/updatePomodoroDoneAndTimeSpend",
+        data,
+        { headers }
+      )
+      .then((res) => {
+        console.log(res.data, "task time spend response");
         const newTasksArray: Array<taskType | []> = tasksArray.map(
           (item: taskType | []) => {
             // check type to excude empty arrays (used for error handling ts)
@@ -212,8 +294,7 @@ const Tasks = () => {
         return console.error(error);
       });
   };
-
-  const updateNumberOfPomodoro = async (id: string | null) => {
+  const handleTaskDone = async (id: string | null) => {
     const task = tasksArray.find((task: taskType | []) => {
       if (Array.isArray(task)) {
         return null;
@@ -224,22 +305,15 @@ const Tasks = () => {
     if (task === undefined) {
       return;
     }
+
     const headers = {
       authorization: `Bearer ${Cookies.get("accessToken")}`,
     };
 
-    let data = {
+    const data = {
       ...task,
-      numberOfPomodoroDone: task.numberOfPomodoroDone + 1,
+      taskDone: true,
     };
-
-    // add a condition if the user want it to be automaticly done when the number of pomodoro is done
-    // if (data.numberOfPomodoroDone >= data.numberOfPomodoroSet) {
-    //   data = {
-    //     ...data,
-    //     taskDone: true,
-    //   };
-    // }
 
     await axios
       .put("http://localhost:3000/api/tasks/", data, { headers })
@@ -269,7 +343,7 @@ const Tasks = () => {
       });
   };
 
-  const handleTaskDone = async (id: string | null) => {
+  const handleTaskGiveUp = async (id: string | null) => {
     const task = tasksArray.find((task: taskType | []) => {
       if (Array.isArray(task)) {
         return null;
@@ -285,9 +359,9 @@ const Tasks = () => {
       authorization: `Bearer ${Cookies.get("accessToken")}`,
     };
 
-    let data = {
+    const data = {
       ...task,
-      taskDone: true,
+      status: "gaveUp",
     };
 
     await axios
@@ -338,7 +412,7 @@ const Tasks = () => {
         </button>
       )}
       {tasksArray
-        .filter((task) => task?.taskDone !== true)
+        .filter((task) => task?.taskDone !== true && task?.status !== "gaveUp")
         .map((task: taskType | [], index: number) => {
           // check type to excude empty arrays (used for error handling ts)
           if (Array.isArray(task)) {
@@ -351,7 +425,7 @@ const Tasks = () => {
                 task._id === taskIdFocused
                   ? setTaskIdFocused(null)
                   : checkIfTaskIsDone(task) === true
-                  ? null
+                  ? console.log("null")
                   : setTaskIdFocused(task._id);
                 setTaskName(task.taskName);
               }}
@@ -460,6 +534,13 @@ const Tasks = () => {
                             Delete
                           </button>
                           <button
+                            id="giveUpButton"
+                            onClick={(e) => {
+                              e.stopPropagation(), setTypeOfModal("giveUp");
+                            }}>
+                            Give up
+                          </button>
+                          <button
                             id="editButton"
                             onClick={(e) => {
                               e.stopPropagation(),
@@ -489,12 +570,15 @@ const Tasks = () => {
           );
         })}
       {modal && <ModalCreateTask modal={modal} setModal={setModal} />}
-      {(typeOfModal === "done" || typeOfModal === "delete") && (
+      {(typeOfModal === "done" ||
+        typeOfModal === "delete" ||
+        typeOfModal === "giveUp") && (
         <ConfirmModal
           typeOfModal={typeOfModal}
           setTypeOfModal={setTypeOfModal}
           deleteTask={deleteTask}
           handleTaskDone={handleTaskDone}
+          handleTaskGiveUp={handleTaskGiveUp}
           taskId={taskId}
           taskName={taskName}
           setOpenTask={setOpenTask}

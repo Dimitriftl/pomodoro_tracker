@@ -7,13 +7,14 @@ import {
 } from "../../../../assets/svg/svg.jsx";
 import { ThemeContext } from "../../../../context/MyProviders.js";
 
-type typeOfModalTypes = "delete" | "done" | null;
+type typeOfModalTypes = "delete" | "done" | "giveUp" | null;
 
 interface ConfirmModalProps {
   typeOfModal: typeOfModalTypes;
   setTypeOfModal: Dispatch<SetStateAction<typeOfModalTypes>>;
   deleteTask?: (id: string) => void;
   handleTaskDone?: (id: string) => void;
+  handleTaskGiveUp?: (id: string) => void;
   taskId: string | null;
   taskName: string;
   setOpenTask: Dispatch<SetStateAction<boolean>>;
@@ -27,6 +28,7 @@ const ConfirmModal: FC<ConfirmModalProps> = ({
   taskName,
   setOpenTask,
   handleTaskDone,
+  handleTaskGiveUp,
 }) => {
   const { themeColor } = useContext(ThemeContext);
 
@@ -49,8 +51,8 @@ const ConfirmModal: FC<ConfirmModalProps> = ({
                   delete
                 </span>{" "}
                 your task “<span style={{ fontWeight: "500" }}>{taskName}</span>
-                ” . <br />
-                Are you sure this is what you wanted to do ?{" "}
+                ”. <br />
+                Are you sure this is what you wanted to do?{" "}
               </p>
             </div>
             <div className="confirmModalFooter">
@@ -85,7 +87,7 @@ const ConfirmModal: FC<ConfirmModalProps> = ({
                 </span>{" "}
                 . <br />
                 The task will disappear from your tasks to focus on and will be
-                added to your dashboard are you sure you want to continue ?{" "}
+                added to your dashboard are you sure you want to continue?{" "}
               </p>
             </div>
             <div className="confirmModalFooter">
@@ -101,6 +103,35 @@ const ConfirmModal: FC<ConfirmModalProps> = ({
                 }}>
                 <LittleClockSvg color="#FFF" />
                 Done
+              </button>
+            </div>
+          </>
+        ) : typeOfModal === "giveUp" ? (
+          <>
+            <div className="confirmModalHeader">
+              <h2>Give up task</h2>
+            </div>
+            <div className="confirmModalContent">
+              <p>
+                You're about to give up with your task “
+                <span style={{ fontWeight: "500" }}>{taskName}</span>” on.{" "}
+                <br />
+                The task will disappear from your tasks to focus on and will be
+                added to your dashboard are you sure you want to continue?{" "}
+              </p>
+            </div>
+            <div className="confirmModalFooter">
+              <button
+                className="confirmModalCancelButton"
+                onClick={() => setTypeOfModal(null)}>
+                Cancel
+              </button>
+              <button
+                id="confirmModalDoneButton"
+                onClick={() => {
+                  setTypeOfModal(null), handleTaskGiveUp(taskId);
+                }}>
+                I'm sure
               </button>
             </div>
           </>

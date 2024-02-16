@@ -1,0 +1,14 @@
+// Import the SCSS file you want to test
+@import "/c:/Users/Dimitri/Desktop/Pomodoro_Tracker_folder/frontend/pomodoro_tracker/src/views/dashboard/index/index.scss";
+
+// Define a test case for the #dashboardContainer selector
+.test-#dashboardContainer {
+  // Test that the #dashboardContainer selector exists
+  @extend #dashboardContainer;
+}
+
+// Add more test cases for other selectors or styles in your SCSS file
+// ...
+
+// Add additional test cases as needed
+// ...
