@@ -49,16 +49,106 @@
     align-items: center;
     width: 100%;
     gap: 10px;
+
+    .arrowButton {
+      width: 30px;
+      height: 30px;
+      padding-top: 5px;
+      background-color: transparent;
+      border: none;
+    }
+
+    .reverse {
+      svg {
+        transform: rotate(180deg);
+      }
+    }
   }
 }
 
-#tasksWorkedDetailsContent {
+#tasksWorkedDetailsContainer {
   display: flex;
   flex: 10;
-  justify-content: center;
+  flex-wrap: wrap;
   align-items: center;
   max-height: 500px;
   background-color: var(--color-first-backgroud);
   border-radius: 12px;
   padding: 0 50px;
+  padding-top: 30px;
+  overflow-y: scroll;
+  gap: 20px;
+
+  .taskWorkedDetailsCard {
+    position: relative;
+    padding: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    background-color: var(--color-hightlight);
+    border-radius: 12px;
+    border: 1px solid var(--color-blue);
+
+    .bubbleInfo {
+      visibility: hidden;
+      position: absolute;
+      width: 300px;
+      min-height: 40px;
+      background-color: #1b1b1b;
+      color: #fff;
+      border-radius: 6px;
+      z-index: 2;
+    }
+
+    .taskNameContainer {
+      width: 30%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+
+      // background-color: green;
+    }
+
+    .taskDescriptionContainer {
+      display: flex;
+      align-items: center;
+      width: 40%;
+      height: 100%;
+      // background-color: turquoise;
+
+      &:hover {
+        .bubbleInfo {
+          visibility: visible;
+        }
+      }
+
+      .taskDescription {
+        position: relative;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+        cursor: pointer;
+        // background-color: red;
+      }
+    }
+
+    .taskTimeSpendContainer {
+      width: 20%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .taskPomodoroContainer {
+      width: 10%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: end;
+    }
+  }
 }

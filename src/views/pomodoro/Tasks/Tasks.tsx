@@ -22,18 +22,19 @@ import {
   Theme,
   TimerContextType,
 } from "../../../utils/types/contextsTypes.ts";
+import { taskType } from "../../../utils/types/globalTypes.ts";
 
 type typeOfModalTypes = "delete" | "done" | "giveUp" | null;
-type taskType = {
-  _id: string;
-  taskName: string;
-  description: string;
-  numberOfPomodoroSet: number;
-  numberOfPomodoroDone: number;
-  taskDone: boolean;
-  timeSpend: number;
-  status: string;
-};
+// type taskType = {
+//   _id: string;
+//   taskName: string;
+//   description: string;
+//   numberOfPomodoroSet: number;
+//   numberOfPomodoroDone: number;
+//   taskDone: boolean;
+//   timeSpend: number;
+//   status: string;
+// };
 
 const Tasks = () => {
   const [modal, setModal] = useState(false);

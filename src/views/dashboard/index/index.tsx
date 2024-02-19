@@ -2,19 +2,19 @@ import React, { useEffect, useState } from "react";
 import "./index.scss";
 import HoursWorkedDetails from "../../../components/hoursWorkedDetails/HoursWorkedDetails";
 import TaskWorkedDetails from "../../../components/tasksWorkedDetails/TaskWorkedDetails";
+import { taskType } from "../../../utils/types/contextsTypes";
 
 type detailsDisplayed = "hours" | "tasks";
 
 const Dashboard = () => {
   const [detailsDisplayed, setDetailsDisplayed] =
     useState<detailsDisplayed>("hours");
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState<Array<taskType>>([]);
   const [totalHours, setTotalHours] = useState<string>("0");
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("userData") || "{}");
     setTasks(userData.tasks);
-    console.log(typeof userData.user.totalTimeSpend);
     const hours = userData.user.totalTimeSpend / 60 / 60;
     const hoursReduced = hours.toFixed(0);
     setTotalHours(hoursReduced);
@@ -48,10 +48,10 @@ const Dashboard = () => {
         <div id="dashboardDetailsContainer">
           {detailsDisplayed === "hours" ? (
             <>
-              <HoursWorkedDetails />
+              <HoursWorkedDetails data={tasks} />
             </>
           ) : (
-            <TaskWorkedDetails />
+            <TaskWorkedDetails tasks={tasks} />
           )}
         </div>
       </div>

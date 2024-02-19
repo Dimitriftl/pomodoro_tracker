@@ -1,40 +1,24 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import "./taskWorkedDetails.scss";
 import Graph from "../graph/Graph";
+import { taskType } from "../../utils/types/globalTypes";
+import { RightArrowSvg } from "../../assets/svg/svg.jsx";
+
+type TaskWorkedDetailsPorps = {
+  tasks: Array<taskType>;
+};
 
 type pageSelected = "week" | "month" | "year";
 
-const TaskWorkedDetails = () => {
+const TaskWorkedDetails: FC<TaskWorkedDetailsPorps> = ({ tasks }) => {
   const [pageSelected, setPageSelected] = useState<pageSelected>("week");
 
-  const data = {
-    labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-    datasets: [
-      {
-        label: "Hours worked",
-        data: [12, 19, 3, 5, 0, 3, 10],
-        borderColor: "#678bff",
-        backgroundColor: (context: any) => {
-          const bgColor = ["#617dd9b4", "#678aff1f"];
-          if (!context.chart.chartArea) return null;
-          const {
-            ctx,
-            chartArea: { top, bottom },
-          } = context.chart;
-          const gradientBg = ctx.createLinearGradient(0, top, 0, bottom);
-          gradientBg.addColorStop(0, bgColor[0]);
-          gradientBg.addColorStop(1, bgColor[1]);
-          return gradientBg;
-        },
-        fill: true,
-      },
-    ],
-  };
+  console.log(tasks, "tasks");
 
-  const graphOptions = {
-    responsive: true,
-    tension: 0,
-    aspectRatio: 0,
+  const reduceMinute = (time: number) => {
+    const minutes = time / 60;
+    const minutesReduced = minutes.toFixed(0);
+    return minutesReduced;
   };
 
   return (
@@ -59,13 +43,41 @@ const TaskWorkedDetails = () => {
           </button>
         </div>
         <div id="tasksWorkedDetailsWeekHandler">
-          <button>Previous</button>
+          <button className="arrowButton reverse">
+            {" "}
+            <RightArrowSvg />
+          </button>
           <h3>Week 1</h3>
-          <button>Next</button>
+          <button className="arrowButton">
+            <RightArrowSvg />
+          </button>
         </div>
       </div>
-      <div id="tasksWorkedDetailsContent">
-        <Graph graphOptions={graphOptions} data={data} />
+      <div id="tasksWorkedDetailsContainer">
+        {tasks.map((task) => {
+          return (
+            <div className="taskWorkedDetailsCard">
+              <div className="taskNameContainer">
+                <span className="bubbleInfo">{task.description}</span>
+
+                <p>{task.taskName}</p>
+              </div>
+              <div className="taskDescriptionContainer">
+                <span className="bubbleInfo">{task.description}</span>
+                <p className="taskDescription">{task.description}</p>
+              </div>
+
+              <div className="taskTimeSpendContainer">
+                <p>{reduceMinute(task.timeSpend)} min</p>
+              </div>
+              <div className="taskPomodoroContainer">
+                <p>
+                  {task.numberOfPomodoroDone} / {task.numberOfPomodoroSet}
+                </p>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </>
   );
