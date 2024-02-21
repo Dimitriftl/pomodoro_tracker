@@ -13,6 +13,7 @@ import Cookies from "js-cookie";
 import { getUserData } from "./utils/auth.ts";
 import useVerifyToken from "./hooks/useVerifyToken.ts";
 import { TimerContextType } from "./utils/types/contextsTypes.ts";
+import { MenuSvg } from "./assets/svg/svg.jsx";
 // import { IsUserLoggedInTypes } from "./utils/types/globalTypes.ts";
 
 type Theme = "light" | "dark" | "system";
@@ -28,6 +29,7 @@ function App() {
   const navigate = useNavigate();
   const tokenExpired = useVerifyToken(token);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
+  const [navbarActive, setNavbarActive] = useState<boolean>(false);
 
   // local storage
   useEffect(() => {
@@ -80,7 +82,23 @@ function App() {
           setIsUserLoggedIn={setIsUserLoggedIn}>
           {location.pathname !== "/signin" &&
             location.pathname !== "/signup" && (
-              <Navbar setThemeColor={setThemeColor} themeColor={themeColor} />
+              <>
+                {navbarActive && (
+                  <div
+                    onClick={() => setNavbarActive(false)}
+                    id="overlay"></div>
+                )}
+                <button
+                  id="openNavbarButton"
+                  onClick={() => setNavbarActive(true)}>
+                  <MenuSvg color={"var(--color-text)"} />
+                </button>
+                <Navbar
+                  navbarActive={navbarActive}
+                  setThemeColor={setThemeColor}
+                  themeColor={themeColor}
+                />
+              </>
             )}
 
           <Routes>

@@ -3,9 +3,11 @@
 // container
 
 .navbarContainer {
+  position: relative;
   display: flex;
-  // background-color: var(--color-second-backgroud);
+  background-color: var(--color-second-backgroud);
   flex-wrap: wrap;
+  overflow-x: hidden;
   height: 100%;
   width: 70px;
   position: fixed;
@@ -37,30 +39,6 @@
     cursor: pointer;
   }
 
-  .switchThemeContainer.dark:hover {
-    background-color: #ffffff2e;
-  }
-
-  .switchThemeContainer.light:hover {
-    background-color: #f0f0f3;
-  }
-
-  .rightArrowContainer {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    right: -10px;
-    top: 90px;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background-color: var(--color-blue);
-    box-shadow: 3px 2px 4px rgba(0, 0, 0, 0.434);
-    transition: 300ms ease;
-  }
-
   .linkContainer {
     position: absolute;
     top: 30%;
@@ -90,10 +68,6 @@
       position: relative;
       font-size: 16px;
       font-weight: 500;
-      display: none;
-      animation-name: over;
-      animation-duration: 0.2s;
-      animation-fill-mode: forwards;
       color: var(--color-placeholder);
     }
   }
@@ -106,6 +80,7 @@
     position: relative;
     width: 100%;
     height: 56px;
+    gap: 10px;
     align-items: center;
     display: flex;
     padding-left: 25px;
@@ -141,58 +116,51 @@
       position: relative;
       font-size: 16px;
       font-weight: 500;
-      display: none;
-      animation-name: over;
-      animation-duration: 0.2s;
-      animation-fill-mode: forwards;
     }
   }
+}
+.logoutContainer {
+  display: flex;
+  // justify-content: center;
+  gap: 10px;
+  align-items: center;
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  height: 60px;
+  padding-left: 22px;
+  cursor: pointer;
 
-  .logout {
+  p {
     position: relative;
-    top: 50%;
-    width: 100%;
-    height: 60px;
-    padding-left: 22px;
-    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+  }
 
-    .svg {
-      position: relative;
-      top: 4px;
-    }
+  .svg {
+    position: relative;
+    top: 4px;
   }
 }
 
 .navbarContainer:hover {
   width: 200px;
+}
 
-  .accountSquareContainer {
-    p {
-      display: flex;
-    }
+// reponsive
+
+@media (max-width: 768px) {
+  .navbarContainer {
+    display: none;
+    width: 250px;
   }
 
-  .linkLougoutContent {
-    p {
-      display: flex;
-    }
+  .navbarContainerActive {
+    display: flex;
   }
-
-  .linkContent {
-    p {
-      display: flex;
-    }
-  }
-
-  .disabledLink {
-    p {
-      display: flex;
-    }
-  }
-
-  .rightArrowContainer {
-    transform: rotate(180deg);
-    box-shadow: -3px -2px 4px rgba(0, 0, 0, 0.434);
+  .navbarContainer:hover {
+    width: 250px;
   }
 }
 

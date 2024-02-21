@@ -10,22 +10,14 @@ import { Link, useLocation } from "react-router-dom";
 import {
   AccountSvg,
   DashboardSvg,
-  CalendarSvg,
   LogOutSvg,
-  PtLogo,
-  RightArrowSvg,
   TimerSvg,
   Moon,
   Sun,
 } from "../../assets/svg/svg";
-import userAccountPlaceholder from "../../assets/images/pt_account_logo.png";
 
 import "./Navbar.scss";
-import {
-  IsUserLoggedInContext,
-  TasksContext,
-  TimerContext,
-} from "../../context/MyProviders";
+import { IsUserLoggedInContext, TimerContext } from "../../context/MyProviders";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { TimerContextType } from "../../utils/types/contextsTypes";
@@ -33,10 +25,14 @@ type theme = "light" | "dark" | "system";
 interface NavbarProps {
   themeColor: theme;
   setThemeColor: Dispatch<SetStateAction<theme>>;
+  navbarActive: boolean;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
-  const { tasks } = useContext(TasksContext);
+const Navbar: React.FC<NavbarProps> = ({
+  setThemeColor,
+  themeColor,
+  navbarActive,
+}) => {
   const { isUserLoggedIn, setIsUserLoggedIn } = useContext(
     IsUserLoggedInContext
   );
@@ -47,7 +43,6 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
   const [currentLocation, setCurrentLocation] = useState<string>(
     location.pathname
   );
-  const token = Cookies.get("accessToken");
 
   const { isTimerRunning } = useContext<TimerContextType | undefined>(
     TimerContext
@@ -61,31 +56,19 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
     localStorage.setItem("theme", themeColor);
   }, [themeColor]);
 
-  // class that depends on theme color
-  const navbarClasses: {
-    container: string;
-    switchThemeContainer: string;
-    rightArrowContainer: string;
-    linkContent: string;
-    pageMarker: string;
-    logout: string;
-  } = {
-    container: "navbarContainer" + " " + "navbarBackground",
-    switchThemeContainer: "switchThemeContainer" + " " + themeColor,
-    rightArrowContainer: "rightArrowContainer" + " " + "backgroundBlue",
-    linkContent: "linkContent",
-    pageMarker: "pageMarker" + " " + themeColor,
-    logout: "linkContent logout" + " " + themeColor,
-  };
-
   return (
-    <div className={navbarClasses.container}>
+    <div
+      className={
+        navbarActive
+          ? "navbarContainer navbarContainerActive"
+          : "navbarContainer"
+      }>
       <div className="navbarContent">
         {/* <div className="Logo">
           <PtLogo />
         </div> */}
         <div
-          className={navbarClasses.switchThemeContainer}
+          className="switchThemeContainer"
           onClick={() =>
             themeColor === "dark"
               ? setThemeColor("light")
@@ -93,17 +76,14 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
           }>
           {themeColor === "dark" ? <Moon /> : <Sun />}
         </div>
-        <div className={navbarClasses.rightArrowContainer}>
-          <RightArrowSvg theme={themeColor} />
-        </div>
         <div className="linkContainer">
           {isUserLoggedIn && !isTimerRunning ? (
             <>
               <Link
                 className={
                   currentLocation === "/account"
-                    ? `${navbarClasses.linkContent} linkContentActive`
-                    : navbarClasses.linkContent
+                    ? `linkContent linkContentActive`
+                    : "linkContent"
                 }
                 to="/account">
                 <div
@@ -120,8 +100,8 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
               <Link
                 className={
                   currentLocation === "/dashboard"
-                    ? `${navbarClasses.linkContent} linkContentActive`
-                    : navbarClasses.linkContent
+                    ? `linkContent linkContentActive`
+                    : "linkContent"
                 }
                 to="/dashboard">
                 <div
@@ -138,8 +118,8 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
               <Link
                 className={
                   currentLocation === "/"
-                    ? `${navbarClasses.linkContent} linkContentActive`
-                    : navbarClasses.linkContent
+                    ? `linkContent linkContentActive`
+                    : "linkContent"
                 }
                 to="/">
                 <div
@@ -151,20 +131,6 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
                 </div>
                 <p>Pomodoro</p>
               </Link>
-
-              <div
-                className={navbarClasses.logout}
-                onClick={() => {
-                  Cookies.remove("accessToken");
-                  window.localStorage.removeItem("userData");
-                  setIsUserLoggedIn(false);
-                  navigate("/");
-                }}>
-                <div className="svg">
-                  <LogOutSvg theme={themeColor} />
-                </div>
-                <p>Disconnect</p>
-              </div>
             </>
           ) : (
             <>
@@ -190,8 +156,8 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
               <Link
                 className={
                   currentLocation === "/"
-                    ? `${navbarClasses.linkContent} linkContentActive`
-                    : navbarClasses.linkContent
+                    ? `linkContent linkContentActive`
+                    : "linkContent"
                 }
                 to="/">
                 <div
@@ -206,6 +172,19 @@ const Navbar: React.FC<NavbarProps> = ({ setThemeColor, themeColor }) => {
             </>
           )}
         </div>
+      </div>
+      <div
+        className="logoutContainer"
+        onClick={() => {
+          Cookies.remove("accessToken");
+          window.localStorage.removeItem("userData");
+          setIsUserLoggedIn(false);
+          navigate("/");
+        }}>
+        <div className="svg">
+          <LogOutSvg theme={themeColor} />
+        </div>
+        <p>Disconnect</p>
       </div>
     </div>
   );

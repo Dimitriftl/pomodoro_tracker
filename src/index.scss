@@ -109,4 +109,17 @@ body {
     background-color: var(--color-backgroud);
     box-shadow: var(--box-shadow-timer);
   }
+
+  #openNavbarButton {
+    padding-top: 6px;
+    z-index: 100;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: var(--color-second-backgroud);
+    border: 1px solid var(--color-blue);
+    border-radius: 6px;
+    width: 40px;
+    height: 40px;
+  }
 }
