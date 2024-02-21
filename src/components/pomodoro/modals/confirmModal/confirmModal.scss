@@ -19,7 +19,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   max-width: 510px;
-  width: 100%;
+  width: 95%;
   padding: 1rem;
   min-height: 200px;
   border-radius: 10px;
@@ -87,5 +87,11 @@
       background-color: var(--color-blue);
       font-weight: 500;
     }
+  }
+}
+
+@media (max-width: 350px) {
+  #confirmModalContainer {
+    max-width: 300px;
   }
 }
