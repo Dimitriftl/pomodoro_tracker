@@ -82,3 +82,29 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  #dashboardContainer {
+    padding: 30px 20px 30px 20px;
+  }
+  #dashboardContent {
+    padding: 10px;
+    gap: 10%;
+  }
+  #dashboardDetailsContainer {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 500px) {
+  #dashboardCardsContainer {
+    flex-direction: column;
+
+    h2 {
+      top: 0px !important;
+    }
+  }
+  #dashboardContainer {
+    padding: 50px 0 0 0;
+  }
+}

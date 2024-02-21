@@ -32,7 +32,7 @@ const Dashboard = () => {
             }
             onClick={() => setDetailsDisplayed("hours")}>
             <h2>Total hours worked</h2>
-            <h3>{totalHours} H</h3>
+            <h3>{totalHours}h</h3>
           </div>
           <div
             className={
