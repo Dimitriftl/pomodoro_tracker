@@ -169,3 +169,22 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  #signInContainer {
+    padding: 0;
+  }
+
+  #signInContent {
+    height: 100%;
+
+    #signInLeftPart {
+      display: none;
+    }
+
+    #signInRightPart {
+      width: 100%;
+      border-radius: 0;
+    }
+  }
+}

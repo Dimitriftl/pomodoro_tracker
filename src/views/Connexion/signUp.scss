@@ -194,3 +194,22 @@
     cursor: pointer;
   }
 }
+
+@media (max-width: 768px) {
+  #signUpContainer {
+    padding: 0;
+  }
+
+  #signUpContent {
+    height: 100%;
+
+    #signUpLeftPart {
+      display: none;
+    }
+
+    #signUpRightPart {
+      border-radius: 0;
+      width: 100%;
+    }
+  }
+}
