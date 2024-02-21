@@ -126,3 +126,21 @@
   background-clip: content-box, border-box;
   transition: 0.3s ease-in-out;
 }
+
+@media (max-width: 400px) {
+  .modalContent {
+    max-width: 335px;
+  }
+
+  .modalTitle {
+    h3 {
+      font-size: 24px;
+    }
+  }
+}
+
+@media (max-width: 350px) {
+  .modalContent {
+    max-width: 305px;
+  }
+}

@@ -8,12 +8,11 @@
   align-items: center;
 
   #logButtonsContainer {
-    position: absolute;
-    top: 20px;
-    right: 50px;
     display: flex;
     gap: 20px;
-    z-index: 10;
+    width: 100%;
+    justify-content: flex-end;
+    padding: 1rem;
 
     #signInButton {
       width: 180px;
@@ -38,6 +37,30 @@
       background-color: var(--color-backgroud);
       transition: background-color 0.2s ease-in-out;
       color: var(--color-text);
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  #logButtonsContainer {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    justify-content: flex-end;
+    padding: 1rem;
+
+    #signInButton {
+      width: 100px !important;
+      height: 38px;
+
+      font-size: 12px;
+    }
+
+    #signUpButton {
+      width: 100px !important;
+      height: 38px;
+
+      cursor: pointer;
     }
   }
 }
