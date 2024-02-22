@@ -26,31 +26,33 @@ const TaskWorkedDetails: FC<TaskWorkedDetailsPorps> = ({ tasks }) => {
       <div id="tasksWorkedDetailsHeader">
         <h2>Tasks details</h2>
         <div id="tasksWorkedDetailsHeaderButtons">
-          <button
-            onClick={() => setPageSelected("week")}
-            className={pageSelected === "week" ? "active" : ""}>
-            Week
-          </button>
-          <button
-            onClick={() => setPageSelected("month")}
-            className={pageSelected === "month" ? "active" : ""}>
-            Month
-          </button>
-          <button
-            onClick={() => setPageSelected("year")}
-            className={pageSelected === "year" ? "active" : ""}>
-            Year
-          </button>
-        </div>
-        <div id="tasksWorkedDetailsWeekHandler">
-          <button className="arrowButton reverse">
-            {" "}
-            <RightArrowSvg />
-          </button>
-          <h3>Week 1</h3>
-          <button className="arrowButton">
-            <RightArrowSvg />
-          </button>
+          <div id="tasksWorkedDetailsDateButtons">
+            <button
+              onClick={() => setPageSelected("week")}
+              className={pageSelected === "week" ? "active" : ""}>
+              Week
+            </button>
+            <button
+              onClick={() => setPageSelected("month")}
+              className={pageSelected === "month" ? "active" : ""}>
+              Month
+            </button>
+            <button
+              onClick={() => setPageSelected("year")}
+              className={pageSelected === "year" ? "active" : ""}>
+              Year
+            </button>
+          </div>
+          <div id="tasksWorkedDetailsWeekHandler">
+            <button className="arrowButton reverse">
+              {" "}
+              <RightArrowSvg />
+            </button>
+            <h3>Week 1</h3>
+            <button className="arrowButton">
+              <RightArrowSvg />
+            </button>
+          </div>
         </div>
       </div>
       <div id="tasksWorkedDetailsContainer">

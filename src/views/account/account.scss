@@ -236,25 +236,25 @@
   }
 }
 
-@media (max-width: 768px) {
+@media all and (max-width: 768px) {
   #accountContainer {
-    padding: 20px !important;
+    padding: 20px;
 
     #accountContent {
-      width: 95% !important;
-      height: 100% !important;
+      width: 95%;
+      height: 100%;
       border-radius: 0;
 
       #accountLeftPart {
-        width: 100% !important;
-        height: 35% !important;
+        width: 100%;
+        height: 35%;
         border-right: none;
       }
 
       #accountRightPart {
-        width: 100% !important;
-        height: 65% !important;
-        padding-top: 0 !important;
+        width: 100%;
+        height: 65%;
+        padding-top: 0;
       }
     }
   }

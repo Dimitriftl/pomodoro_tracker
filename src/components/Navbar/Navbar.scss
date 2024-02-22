@@ -151,7 +151,7 @@
 
 // reponsive
 
-@media (max-width: 768px) {
+@media all and (max-width: 768px) {
   .navbarContainer {
     display: none;
     width: 250px;

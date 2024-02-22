@@ -412,33 +412,36 @@ const HoursWorkedDetails: FC<HoursWorkedDetailsProps> = ({ data }) => {
     <>
       <div id="hoursWorkedDetailsHeader">
         <h2>Hours details</h2>
-        <div id="hoursWorkedDetailsHeaderButtons">
-          <button
-            onClick={() => {
-              setPageSelected("days"), organizeDataByTime();
-            }}
-            className={pageSelected === "days" ? "active" : ""}>
-            Week
-          </button>
-          <button
-            onClick={() => {
-              setPageSelected("weeks"), organizeDataByTime();
-            }}
-            className={pageSelected === "weeks" ? "active" : ""}>
-            Month
-          </button>
-          <button
-            onClick={() => {
-              setPageSelected("months"), organizeDataByTime();
-            }}
-            className={pageSelected === "months" ? "active" : ""}>
-            Year
-          </button>
-        </div>
-        <div id="hoursWorkedDetailsWeekHandler">
-          <button onClick={() => handlePrevious()}>Previous</button>
-          <h3>{displayCurrentDateSelected()}</h3>
-          <button onClick={() => handleNext()}>Next</button>
+
+        <div>
+          <div id="hoursWorkedDetailsHeaderButtons">
+            <button
+              onClick={() => {
+                setPageSelected("days"), organizeDataByTime();
+              }}
+              className={pageSelected === "days" ? "active" : ""}>
+              Week
+            </button>
+            <button
+              onClick={() => {
+                setPageSelected("weeks"), organizeDataByTime();
+              }}
+              className={pageSelected === "weeks" ? "active" : ""}>
+              Month
+            </button>
+            <button
+              onClick={() => {
+                setPageSelected("months"), organizeDataByTime();
+              }}
+              className={pageSelected === "months" ? "active" : ""}>
+              Year
+            </button>
+          </div>
+          <div id="hoursWorkedDetailsWeekHandler">
+            <button onClick={() => handlePrevious()}>Previous</button>
+            <h3>{displayCurrentDateSelected()}</h3>
+            <button onClick={() => handleNext()}>Next</button>
+          </div>
         </div>
       </div>
       <div id="hoursWorkedDetailsContent">

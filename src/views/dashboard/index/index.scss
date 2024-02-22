@@ -23,7 +23,7 @@
       gap: 3%;
 
       .cardSelected {
-        background-color: var(--color-hightlight) !important;
+        background-color: var(--color-hightlight);
       }
 
       .cardTotalInfo {
@@ -42,7 +42,7 @@
         cursor: pointer;
 
         .cardSelected {
-          background-color: var(--color-hightlight) !important;
+          background-color: var(--color-hightlight);
         }
 
         h2 {
@@ -84,7 +84,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media all and (max-width: 768px) {
   #dashboardContainer {
     padding: 30px 20px 30px 20px;
     gap: 10px;
@@ -94,20 +94,31 @@
     gap: 10%;
   }
   #dashboardDetailsContainer {
+    height: 570px;
   }
 }
 
-@media (max-width: 500px) {
+@media all and (max-width: 500px) {
   #dashboardCardsContainer {
-    flex-direction: column;
-
-    h2 {
-      top: 0px !important;
+    // flex-direction: column;
+    .cardTotalInfo {
+      height: 160px !important;
     }
+    h2 {
+      top: 0px;
+      font-size: 16px !important;
+    }
+    h3 {
+      font-size: 1.5rem !important;
+    }
+  }
+
+  #dashboardDetailsContainer {
+    height: 570px !important;
   }
   #dashboardContent {
     padding: 10px;
-    gap: 2% !important;
+    gap: 2%;
   }
   #dashboardContainer {
     padding: 50px 0 0 0;

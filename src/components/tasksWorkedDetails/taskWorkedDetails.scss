@@ -9,36 +9,41 @@
   }
 
   #tasksWorkedDetailsHeaderButtons {
-    position: absolute;
-    left: 0px;
-    top: 20px;
+    width: 100%;
     display: flex;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+    justify-content: space-between;
+    #tasksWorkedDetailsDateButtons {
+      position: absolute;
+      left: 0px;
+      top: 20px;
+      display: flex;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
 
-    .active {
-      background-color: var(--color-blue);
-      border-radius: 9px;
-      padding: 5px;
-      border: none;
-      color: #fff;
-
-      &:hover {
+      .active {
         background-color: var(--color-blue);
+        border-radius: 9px;
+        padding: 5px;
+        border: none;
+        color: #fff;
+
+        &:hover {
+          background-color: var(--color-blue);
+        }
       }
-    }
 
-    button {
-      width: 64px;
-      height: 34px;
-      border-radius: 9px;
-      border: 1px solid var(--color-blue);
-      color: var(--color-text);
+      button {
+        width: 64px;
+        height: 34px;
+        border-radius: 9px;
+        border: 1px solid var(--color-blue);
+        color: var(--color-text);
 
-      &:hover {
-        background-color: var(--color-hightlight);
+        &:hover {
+          background-color: var(--color-hightlight);
+        }
       }
     }
   }
@@ -154,32 +159,86 @@
   }
 }
 
-@media (max-width: 768px) {
+@media all and (max-width: 768px) {
   #tasksWorkedDetailsContainer {
-    padding: 0 20px;
+    padding: 0 10px;
     overflow-x: hidden;
+    justify-content: space-between;
+  }
+
+  #tasksWorkedDetailsDateButtons {
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+  }
+
+  #tasksWorkedDetailsWeekHandler {
+    display: flex;
+    justify-content: flex-end !important;
+    gap: 0px !important;
+    font-size: 12px !important;
   }
 
   .taskWorkedDetailsCard {
     flex-direction: column;
-    justify-content: center !important;
-    align-items: center !important;
-    min-height: 100px !important;
+    justify-content: center;
+    align-items: center;
+    min-height: 120px;
 
     .taskNameContainer {
-      width: 100% !important;
+      width: 100%;
     }
   }
 }
 
-@media (max-width: 400) {
+@media all and (max-width: 500px) {
   #tasksWorkedDetailsContainer {
-    padding: 0 20px;
+    padding: 0 10px;
     overflow-x: hidden;
   }
 
+  #tasksWorkedDetailsDateButtons {
+    button {
+      width: 50px !important;
+      height: 25px !important;
+      border-radius: 6px !important;
+      font-size: 12px !important;
+    }
+  }
+
   .taskWorkedDetailsCard {
-    flex-direction: column !important;
-    height: 200px !important;
+    flex-direction: column;
+    position: relative;
+    padding: 0 10px;
+    display: flex;
+    justify-content: none !important;
+    align-items: flex-start !important;
+    width: 100%;
+    height: auto !important;
+    background-color: var(--color-hightlight);
+    border-radius: 12px;
+    border: 1px solid var(--color-blue);
+
+    .taskNameContainer {
+      width: 100% !important;
+    }
+
+    .taskDescriptionContainer {
+      width: 100% !important;
+    }
+
+    .taskTimeSpendContainer {
+      width: 100% !important;
+      display: flex;
+      justify-content: flex-start !important;
+      align-items: flex-start !important;
+    }
+
+    .taskPomodoroContainer {
+      width: 100% !important;
+      display: flex;
+      align-items: flex-start !important;
+      justify-content: flex-start !important;
+    }
   }
 }

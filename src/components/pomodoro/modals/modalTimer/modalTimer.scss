@@ -127,7 +127,7 @@
   transition: 0.3s ease-in-out;
 }
 
-@media (max-width: 400px) {
+@media all and (max-width: 400px) {
   .modalContent {
     max-width: 335px;
   }
@@ -139,7 +139,7 @@
   }
 }
 
-@media (max-width: 350px) {
+@media all and (max-width: 350px) {
   .modalContent {
     max-width: 305px;
   }

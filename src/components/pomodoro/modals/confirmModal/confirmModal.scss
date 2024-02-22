@@ -90,7 +90,7 @@
   }
 }
 
-@media (max-width: 350px) {
+@media all and (max-width: 350px) {
   #confirmModalContainer {
     max-width: 300px;
   }
