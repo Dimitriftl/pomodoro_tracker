@@ -5,11 +5,12 @@
   align-items: center;
   height: 100vh;
   width: 100%;
+  padding: 30px 50px 30px 110px;
 
   #accountContent {
     width: 60%;
     max-width: 800px;
-    height: 800px;
+    min-height: 100%;
     display: flex;
     flex-wrap: wrap;
     background-color: var(--color-second-backgroud);
@@ -177,7 +178,7 @@
       align-items: center;
       width: 80%;
       border: 1px solid var(--color-line);
-    //   background-color: red;
+      //   background-color: red;
       padding: 10px;
 
       .inputContainerEditPassword {
@@ -230,6 +231,30 @@
           height: 25px;
           font-size: 12px;
         }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  #accountContainer {
+    padding: 20px !important;
+
+    #accountContent {
+      width: 95% !important;
+      height: 100% !important;
+      border-radius: 0;
+
+      #accountLeftPart {
+        width: 100% !important;
+        height: 35% !important;
+        border-right: none;
+      }
+
+      #accountRightPart {
+        width: 100% !important;
+        height: 65% !important;
+        padding-top: 0 !important;
       }
     }
   }

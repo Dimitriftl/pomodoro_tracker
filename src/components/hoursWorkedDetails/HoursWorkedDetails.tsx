@@ -41,16 +41,7 @@ interface organizedData {
 const HoursWorkedDetails: FC<HoursWorkedDetailsProps> = ({ data }) => {
   const [pageSelected, setPageSelected] = useState<pageSelectedType>("days");
   const [currentDate, setCurrentDate] = useState(new Date());
-  // const [labels, setLabels] = useState<Array<string>>([
-  //   "Mon",
-  //   "Tue",
-  //   "Wed",
-  //   "Thu",
-  //   "Fri",
-  //   "Sat",
-  //   "Sun",
-  // ]);
-  const defaultChartData = {
+  const [chartData, setChartData] = useState({
     labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
     datasets: [
       {
@@ -74,10 +65,7 @@ const HoursWorkedDetails: FC<HoursWorkedDetailsProps> = ({ data }) => {
         fill: true,
       },
     ],
-  };
-  const [chartData, setChartData] = useState(defaultChartData);
-
-  // console.log(currentDate, "currentDate");
+  });
 
   useEffect(() => {
     organizeDataByTime();
@@ -87,12 +75,41 @@ const HoursWorkedDetails: FC<HoursWorkedDetailsProps> = ({ data }) => {
 
   const organizeDataByTime = () => {
     const organizedData = {
-      days: {},
-      weeks: {},
-      months: {},
+      days: [],
+      weeks: [],
+      months: [],
     };
+    const compressedData: Array<
+      { creationDate: string | Date; timeSpend: number } | []
+    > = [];
+    if (data.length > 0) {
+      if (data.length > 0) {
+        let i = 0;
 
-    const filteredData = data.filter((task) => {
+        while (i < data.length) {
+          const currentDate = new Date(data[i]?.creationDate);
+          // Initial entry for the current date
+          const compressedEntry = {
+            creationDate: currentDate,
+            timeSpend: data[i].timeSpend,
+          };
+          // Find consecutive entries with the same date
+          let j = i + 1;
+          while (
+            j < data.length &&
+            currentDate.getDate() === new Date(data[j]?.creationDate).getDate()
+          ) {
+            compressedEntry.timeSpend += data[j].timeSpend;
+            j += 1;
+          }
+          // Update the main loop index
+          i = j;
+          compressedData.push(compressedEntry);
+        }
+      }
+    }
+
+    const filteredData = compressedData.filter((task) => {
       const taskDate = new Date(task.creationDate);
 
       switch (pageSelected) {
@@ -109,22 +126,24 @@ const HoursWorkedDetails: FC<HoursWorkedDetailsProps> = ({ data }) => {
       }
     });
 
-    if (pageSelected === "days") {
-      organizedData.days = filteredData.map((task) => {
-        return task.timeSpend;
-      });
-    } else if (pageSelected === "weeks") {
-      organizedData.weeks = filteredData.map((task) => {
-        return task.timeSpend;
-      });
-    } else if (pageSelected === "months") {
-      organizedData.months = filteredData.map((task) => {
-        return task.timeSpend;
-      });
-    }
-
     console.log("initialData => ", data);
     console.log("filteredData => ", filteredData);
+
+    filteredData.forEach((task) => {
+      const taskData = {
+        creationDate: task.creationDate,
+        timeSpend: task.timeSpend,
+      };
+      console.log(organizedData, "organizedData");
+
+      if (pageSelected === "days") {
+        return organizedData.days.push(taskData);
+      } else if (pageSelected === "weeks") {
+        return organizedData.weeks.push(taskData);
+      } else if (pageSelected === "months") {
+        return organizedData.months.push(taskData);
+      }
+    });
 
     // console.log(filteredData, "filteredData");
     let selectedData;
@@ -148,7 +167,16 @@ const HoursWorkedDetails: FC<HoursWorkedDetailsProps> = ({ data }) => {
       switch (pageSelected) {
         case "days":
           selectedData = organizedData.days;
-          labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+          labels = [
+            `Mon ${dayKey}`,
+            `Tue ${dayKey}`,
+            `Wed ${dayKey}`,
+            `Thu ${dayKey}`,
+            `Fri ${dayKey}`,
+            `Sat ${dayKey}`,
+            `Sun ${dayKey}`,
+          ];
+
           break;
         case "weeks":
           selectedData = organizedData.weeks;
@@ -177,25 +205,25 @@ const HoursWorkedDetails: FC<HoursWorkedDetailsProps> = ({ data }) => {
           break;
       }
 
-      if (!selectedData[dayKey]) {
-        selectedData[dayKey] = 0;
-      }
-      selectedData[dayKey] += task.timeSpend / 60; // Convertir en heures
+      // if (!selectedData[dayKey]) {
+      //   selectedData[dayKey] = 0;
+      // }
+      // selectedData[dayKey] += task.timeSpend / 60; // Convertir en heures
 
-      if (!selectedData[weekNumber]) {
-        selectedData[weekNumber] = 0;
-      }
-      selectedData[weekNumber] += task.timeSpend / 60;
+      // if (!selectedData[weekNumber]) {
+      //   selectedData[weekNumber] = 0;
+      // }
+      // selectedData[weekNumber] += task.timeSpend / 60;
 
-      if (!selectedData[monthKey]) {
-        selectedData[monthKey] = 0;
-      }
-      selectedData[monthKey] += task.timeSpend / 60;
+      // if (!selectedData[monthKey]) {
+      //   selectedData[monthKey] = 0;
+      // }
+      // selectedData[monthKey] += task.timeSpend / 60;
 
-      if (!selectedData[yearKey]) {
-        selectedData[yearKey] = 0;
-      }
-      selectedData[yearKey] += task.timeSpend / 60;
+      // if (!selectedData[yearKey]) {
+      //   selectedData[yearKey] = 0;
+      // }
+      // selectedData[yearKey] += task.timeSpend / 60;
     });
 
     setChartData({
@@ -207,10 +235,10 @@ const HoursWorkedDetails: FC<HoursWorkedDetailsProps> = ({ data }) => {
           label: `time worked in minutes`,
           data:
             pageSelected === "days"
-              ? Object.values(organizedData.days)
+              ? organizedData.days.map((data) => data.timeSpend)
               : pageSelected === "weeks"
-              ? Object.values(organizedData.weeks)
-              : Object.values(organizedData.months),
+              ? organizedData.weeks.map((data) => data.timeSpend)
+              : organizedData.months.map((data) => data.timeSpend),
           backgroundColor: (context) => {
             const bgColor = ["#617dd9b4", "#678aff1f"];
 
