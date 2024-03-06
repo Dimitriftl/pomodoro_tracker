@@ -12,7 +12,6 @@
     width: 100%;
     max-width: 1440px;
     height: 100%;
-    // background: red;
     padding: 10px;
     flex-direction: column;
     gap: 6%;
@@ -23,7 +22,7 @@
       gap: 3%;
 
       .cardSelected {
-        background-color: var(--color-hightlight);
+        background-color: var(--color-hightlight) !important;
       }
 
       .cardTotalInfo {
@@ -40,10 +39,6 @@
         box-shadow: var(--box-shadow-container);
         border-radius: 9px;
         cursor: pointer;
-
-        .cardSelected {
-          background-color: var(--color-hightlight);
-        }
 
         h2 {
           position: absolute;

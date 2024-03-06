@@ -26,33 +26,43 @@ ChartJS.register(
 import "./hoursWorkedDetails.scss";
 import Graph from "../graph/Graph";
 import { taskType } from "../../utils/types/globalTypes";
+import {
+  startOfWeek,
+  endOfWeek,
+  startOfMonth,
+  endOfMonth,
+  eachDayOfInterval,
+  eachMonthOfInterval,
+  eachYearOfInterval,
+  getWeek,
+  getMonth,
+  getYear,
+  getWeekYear,
+} from "date-fns";
 
-type pageSelectedType = "days" | "weeks" | "months";
+import { RightArrowSvg } from "../../assets/svg/svg.jsx";
+
+type pageSelectedType = "week" | "month" | "year";
 
 type HoursWorkedDetailsProps = {
   data: Array<taskType>;
 };
 
-interface organizedData {
-  weeks: object;
-  days: object;
-  years: object;
-}
-
 const HoursWorkedDetails: FC<HoursWorkedDetailsProps> = ({ data }) => {
-  const [pageSelected, setPageSelected] = useState<pageSelectedType>("days");
+  const [pageSelected, setPageSelected] = useState<pageSelectedType>("week");
   const [currentDate, setCurrentDate] = useState(new Date());
   const [chartData, setChartData] = useState({
     labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
     datasets: [
       {
         label: "Hours worked",
-        data: [12, 19, 3, 5, 0, 3, 10, 8, 18, 5, 7, 9, 2, 1],
+        data: [12, 19, 3, 5, 0, 3, 10],
         borderColor: "#678bff",
         backgroundColor: (context) => {
           const bgColor = ["#617dd9b4", "#678aff1f"];
 
           if (!context.chart.chartArea) return null;
+
           const {
             ctx,
             data,
@@ -67,24 +77,247 @@ const HoursWorkedDetails: FC<HoursWorkedDetailsProps> = ({ data }) => {
       },
     ],
   });
+  const startOfWeekDate = startOfWeek(currentDate);
+  const endOfWeekDate = endOfWeek(currentDate);
+  const [chartHeaderDate, setChartHeaderDate] = useState<any>(
+    `${startOfWeekDate.getDate()}/${
+      startOfWeekDate.getMonth() + 1
+    }/${startOfWeekDate.getFullYear()} - ${endOfWeekDate.getDate()}/${
+      endOfWeekDate.getMonth() + 1
+    }/${endOfWeekDate.getFullYear()}`
+  );
 
-  useEffect(() => {}, [data, pageSelected]);
+  const compressedData: Array<
+    { creationDate: string | Date; timeSpend: number } | []
+  > = [];
 
-  // console.log("DATA => ", data)
+  const dataCompression = () => {
+    let i = 0;
+    while (i < data.length) {
+      const currentDate = new Date(data[i]?.creationDate);
+      // Initial entry for the current date
+      const compressedEntry = {
+        creationDate: currentDate,
+        timeSpend: data[i].timeSpend,
+      };
+
+      // Find consecutive entries with the same date
+      let j = i + 1;
+      while (
+        j < data.length &&
+        currentDate.getDate() === new Date(data[j]?.creationDate).getDate()
+      ) {
+        compressedEntry.timeSpend += data[j].timeSpend;
+        j += 1;
+      }
+      // Update the main loop index
+      i = j;
+      compressedData.push(compressedEntry);
+    }
+  };
+
+  // useEffect update current date
+  useEffect(() => {
+    switch (pageSelected) {
+      case "week": {
+        setChartHeaderDate(
+          `${startOfWeekDate.getDate()}/${
+            startOfWeekDate.getMonth() + 1
+          }/${startOfWeekDate.getFullYear()} - ${endOfWeekDate.getDate()}/${
+            endOfWeekDate.getMonth() + 1
+          }/${endOfWeekDate.getFullYear()}`
+        );
+        break;
+      }
+      case "month": {
+        const monthDate = new Date(
+          currentDate.getFullYear(),
+          currentDate.getMonth(),
+          currentDate.getDate()
+        );
+
+        setChartHeaderDate(
+          `${monthDate.getDate()}/${
+            monthDate.getMonth() + 1
+          }/${monthDate.getFullYear()}`
+        );
+        break;
+      }
+      case "year": {
+        const startOfYearDate = new Date(currentDate.getFullYear(), 0, 1);
+        const endOfYearDate = new Date(currentDate.getFullYear(), 11, 31);
+
+        setChartHeaderDate(
+          `${startOfYearDate.getDate()}/${
+            startOfYearDate.getMonth() + 1
+          }/${startOfYearDate.getFullYear()} - ${endOfYearDate.getDate()}/${
+            endOfYearDate.getMonth() + 1
+          }/${endOfYearDate.getFullYear()}`
+        );
+        break;
+      }
+      default:
+        setChartHeaderDate(getWeek(currentDate));
+        break;
+    }
+  }, [currentDate]);
+
+  const handlePrevious = () => {
+    // Logique pour passer à la période précédente
+    // Mettre à jour chartData avec les nouvelles données
+    switch (pageSelected) {
+      case "week":
+        setCurrentDate(
+          (prevDate) =>
+            new Date(
+              prevDate.getFullYear(),
+              prevDate.getMonth(),
+              prevDate.getDate() - 7
+            )
+        );
+
+        break;
+      case "month":
+        setCurrentDate(
+          (prevDate) =>
+            new Date(
+              prevDate.getFullYear(),
+              prevDate.getMonth() - 1,
+              prevDate.getDate()
+            )
+        );
+        break;
+      case "year":
+        setCurrentDate(
+          (prevDate) =>
+            new Date(
+              prevDate.getFullYear(),
+              prevDate.getMonth() - 1,
+              prevDate.getDate()
+            )
+        );
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleNext = () => {
+    switch (pageSelected) {
+      case "week":
+        setCurrentDate(
+          (prevDate) =>
+            new Date(
+              prevDate.getFullYear(),
+              prevDate.getMonth(),
+              prevDate.getDate() + 7
+            )
+        );
+        break;
+      case "month":
+        setCurrentDate(
+          (prevDate) =>
+            new Date(
+              prevDate.getFullYear(),
+              prevDate.getMonth() + 1,
+              prevDate.getDate()
+            )
+        );
+        break;
+      case "year":
+        setCurrentDate(
+          (prevDate) =>
+            new Date(
+              prevDate.getFullYear(),
+              prevDate.getMonth() + 1,
+              prevDate.getDate()
+            )
+        );
+        break;
+      default:
+        break;
+    }
+  };
+
+  const generateLabelsAndData = (compressedData) => {
+    let labels: any[] = [];
+    let filteredData = [];
+
+    switch (pageSelected) {
+      case "week":
+        labels = eachDayOfInterval({
+          start: startOfWeek(currentDate),
+          end: endOfWeek(currentDate),
+        });
+        break;
+      case "month":
+        labels = eachDayOfInterval({
+          start: startOfMonth(currentDate),
+          end: endOfMonth(currentDate),
+        });
+        break;
+      case "year":
+        labels = eachMonthOfInterval({
+          start: startOfMonth(currentDate),
+          end: endOfMonth(currentDate),
+        });
+        break;
+      default:
+        break;
+    }
+
+    filteredData = labels.map((date) => {
+      const dataForDate =
+        compressedData.length !== 0 &&
+        compressedData.find(
+          (item) =>
+            item.creationDate.toLocaleDateString() === date.toLocaleDateString()
+        );
+
+      return dataForDate ? dataForDate.timeSpend : 0; // Utilisez la valeur de votre donnée ou une valeur par défaut
+    });
+
+    return { labels, filteredData };
+  };
+
+  useEffect(() => {
+    dataCompression();
+    const { labels, filteredData } = generateLabelsAndData(compressedData);
+
+    setChartData({
+      labels: labels.map((label) => label.toLocaleDateString()), // Formatage de la date selon vos besoins
+      datasets: [
+        {
+          label: "minutes worked",
+          data: filteredData.map((data) => Math.floor(data / 60)),
+          borderColor: "#678bff",
+          backgroundColor: (context) => {
+            const bgColor = ["#617dd9b4", "#678aff1f"];
+
+            if (!context.chart.chartArea) return null;
+            const {
+              ctx,
+              data,
+              chartArea: { top, bottom },
+            } = context.chart;
+            const gradientBg = ctx.createLinearGradient(0, top, 0, bottom);
+            gradientBg.addColorStop(0, bgColor[0]);
+            gradientBg.addColorStop(1, bgColor[1]);
+            return gradientBg;
+          },
+          fill: true,
+        },
+      ],
+    });
+  }, [data, pageSelected, currentDate]);
 
   const graphOptions = {
     responsive: true,
     tension: 0.4,
     aspectRatio: 0, // change the width of the graph
     scales: {
-      x: {
-        type: "time",
-        time: {
-          unit: "day",
-        },
-      },
       y: {
-        beginAtZero: true,
+        beginAtZero: true, // Définit l'échelle Y pour commencer à zéro
       },
     },
   };
@@ -93,36 +326,58 @@ const HoursWorkedDetails: FC<HoursWorkedDetailsProps> = ({ data }) => {
     <>
       <div id="hoursWorkedDetailsHeader">
         <h2>Hours details</h2>
-
-        <div>
-          <div id="hoursWorkedDetailsHeaderButtons">
-            <button
-              onClick={() => {
-                // setPageSelected("days"), organizeDataByTime();
-              }}
-              className={pageSelected === "days" ? "active" : ""}>
-              Week
-            </button>
-            <button
-              onClick={() => {
-                // setPageSelected("weeks"), organizeDataByTime();
-              }}
-              className={pageSelected === "weeks" ? "active" : ""}>
-              Month
-            </button>
-            <button
-              onClick={() => {
-                // setPageSelected("months"), organizeDataByTime();
-              }}
-              className={pageSelected === "months" ? "active" : ""}>
-              Year
-            </button>
-          </div>
-          <div id="hoursWorkedDetailsWeekHandler">
-            <button onClick={() => {}}>Previous</button>
-            <h3>YEAH</h3>
-            <button onClick={() => {}}>Next</button>
-          </div>
+        <div id="hoursWorkedDetailsHeaderButtons">
+          <button
+            onClick={() => {
+              setPageSelected("week"),
+                setChartHeaderDate(
+                  `${startOfWeekDate.getDate()}/${
+                    startOfWeekDate.getMonth() + 1
+                  }/${startOfWeekDate.getFullYear()} - ${endOfWeekDate.getDate()}/${
+                    endOfWeekDate.getMonth() + 1
+                  }/${endOfWeekDate.getFullYear()}`
+                );
+            }}
+            className={pageSelected === "week" ? "active" : ""}>
+            Week
+          </button>
+          <button
+            onClick={() => {
+              setPageSelected("month"),
+                setChartHeaderDate(
+                  `${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`
+                );
+            }}
+            className={pageSelected === "month" ? "active" : ""}>
+            Month
+          </button>
+          <button
+            onClick={() => {
+              setPageSelected("year"),
+                setChartHeaderDate(
+                  `${currentDate.getDate()}/${
+                    currentDate.getMonth() + 1
+                  }/${currentDate.getFullYear()} - ${currentDate.getDate()}/${
+                    currentDate.getMonth() + 1
+                  }/${currentDate.getFullYear()}`
+                );
+            }}
+            className={pageSelected === "year" ? "active" : ""}>
+            Year
+          </button>
+        </div>
+        <div id="hoursWorkedDetailsWeekHandler">
+          <button
+            className="arrowButton reverse"
+            onClick={() => handlePrevious()}>
+            {" "}
+            <RightArrowSvg />
+          </button>
+          <h3>{chartHeaderDate}</h3>
+          <button className="arrowButton" onClick={() => handleNext()}>
+            {" "}
+            <RightArrowSvg />
+          </button>
         </div>
       </div>
       <div id="hoursWorkedDetailsContent">
