@@ -113,9 +113,8 @@ const ConfirmModal: FC<ConfirmModalProps> = ({
             </div>
             <div className="confirmModalContent">
               <p>
-                You're about to give up with your task “
-                <span style={{ fontWeight: "500" }}>{taskName}</span>” on.{" "}
-                <br />
+                You're about to give up your task “
+                <span style={{ fontWeight: "500" }}>{taskName}</span>”. <br />
                 The task will disappear from your tasks to focus on and will be
                 added to your dashboard are you sure you want to continue?{" "}
               </p>

@@ -10,7 +10,6 @@
   #accountContent {
     width: 60%;
     max-width: 800px;
-    min-height: 100%;
     display: flex;
     flex-wrap: wrap;
     background-color: var(--color-second-backgroud);
@@ -20,7 +19,7 @@
   #accountHeader {
     display: flex;
     align-items: center;
-    padding-left: 40px;
+    justify-content: center;
     height: 15%;
     width: 100%;
     border-bottom: 1px solid var(--color-line);
@@ -29,11 +28,10 @@
   #accountLeftPart {
     display: flex;
     flex-direction: column;
-    padding-top: 5%;
+    padding-top: 2%;
     // justify-content: center;
     align-items: center;
     width: 35%;
-    height: 85%;
     gap: 20px;
     border-right: 1px solid var(--color-line);
     // background-color: blue;
@@ -105,7 +103,7 @@
   }
   #accountRightPart {
     display: flex;
-    padding-top: 10%;
+    padding-top: 2%;
     flex-direction: column;
     // justify-content: center;
     align-items: center;
@@ -155,13 +153,11 @@
       justify-content: center;
       align-items: center;
       border: none;
-      border-radius: 6px;
+      border-radius: 3px;
       width: 60px;
       height: 25px;
       gap: 5px;
-      position: absolute;
-      bottom: 20px;
-      right: 0px;
+
       font-size: 12px;
 
       img {
@@ -171,15 +167,20 @@
     }
 
     #editPasswordContainer {
-      position: relative;
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 80%;
-      border: 1px solid var(--color-line);
-      //   background-color: red;
+      width: 90%;
+      max-width: 400px;
+      background-color: var(--color-second-backgroud);
+      border-radius: 9px;
       padding: 10px;
+      z-index: 3;
 
       .inputContainerEditPassword {
         display: flex;
@@ -219,6 +220,18 @@
         display: flex;
         justify-content: flex-end;
 
+        #accountEditPasswordCancel {
+          border-radius: 3px;
+          width: 60px;
+          height: 25px;
+          font-size: 12px;
+          border: 1px solid var(--color-red);
+          outline: none;
+          background-color: transparent;
+          color: var(--color-text);
+          font-weight: 500;
+        }
+
         button {
           background-color: var(--color-blue);
           color: white;
@@ -226,7 +239,7 @@
           justify-content: center;
           align-items: center;
           border: none;
-          border-radius: 6px;
+          border-radius: 3px;
           width: 60px;
           height: 25px;
           font-size: 12px;
@@ -240,9 +253,15 @@
   #accountContainer {
     padding: 20px;
 
+    #accountLeftPart {
+      #accountImgContainer {
+        width: 120px;
+        height: 120px;
+      }
+    }
+
     #accountContent {
       width: 95%;
-      height: 100%;
       border-radius: 0;
 
       #accountLeftPart {
@@ -253,8 +272,23 @@
 
       #accountRightPart {
         width: 100%;
-        height: 65%;
+        height: auto;
         padding-top: 0;
+
+        .inputContainer {
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 10px 0;
+          gap: 5px;
+        }
+        input {
+          width: 100%;
+        }
+
+        .inputContainer:last-child {
+          flex-direction: row;
+          gap: 50px;
+        }
       }
     }
   }
