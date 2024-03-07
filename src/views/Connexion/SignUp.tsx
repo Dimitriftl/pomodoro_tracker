@@ -30,8 +30,6 @@ const SignUp = () => {
     setIsConfirmPasswordVisible(!isConfirmPasswordVisible);
   };
 
-  const passwordRegex = `/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[~!@#$%^&*()_+{}|:"<>?/]).{8,}$/`;
-
   const navigate = useNavigate();
   return (
     <div id="signUpContainer">

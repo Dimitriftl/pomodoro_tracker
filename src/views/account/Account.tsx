@@ -1,19 +1,109 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./account.scss";
 import editSvg from "../../assets/svg/accountPage/edit.svg";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { passwordType } from "../../utils/types/globalTypes";
+import { EyeSvg, EyeOffSvg } from "../../assets/svg/svg";
+import Loader from "../../components/loader/Loader";
+import { ToastContainer, toast } from "react-toastify";
+import { ThemeContext } from "../../context/MyProviders";
 
 const Account = () => {
   const localUserData = localStorage.getItem("userData");
   const userDataObject = JSON.parse(localUserData || "{}");
-  const [editPassword, setEditPassword] = useState<boolean>(false);
   const [email, setEmail] = useState(userDataObject?.user?.email);
   const [name, setName] = useState(userDataObject?.user?.name);
+  // password related
+  const [displayPasswordModal, setDisplayPasswordModal] =
+    useState<boolean>(false);
+  const [displayPassword, setDisplayPassword] = useState<passwordType>(null);
+  const [currentPassword, setCurrentPassword] = useState<string>("");
+  const [newPassword, setNewPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  console.log(email);
+  const { themeColor } = useContext(ThemeContext);
+
+  const updatePassword = (e: any) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const headers = {
+      authorization: `Bearer ${Cookies.get("accessToken")}`,
+    };
+
+    const passwordData = {
+      currentPassword: currentPassword,
+      newPassword: newPassword,
+    };
+
+    axios
+      .put(
+        "http://localhost:3000/api/users/user/updatepassword",
+        passwordData,
+        {
+          headers,
+        }
+      )
+      .then((res) => {
+        setIsLoading(false);
+        setError(false);
+        setErrorMessage(null);
+        setDisplayPasswordModal(false);
+        toast("password successfully modified.", {
+          position: "top-right",
+          theme: themeColor === "light" ? "light" : "dark",
+        });
+        console.log("success");
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        setError(true);
+        setErrorMessage(error.response.data.error);
+        console.error(error.response.data.error);
+      });
+  };
+
+  const handleDisplayPassword = (typeOfPassword: passwordType) => {
+    switch (typeOfPassword) {
+      case "currentPassword": {
+        if (displayPassword === "currentPassword") {
+          setDisplayPassword(null);
+        } else setDisplayPassword("currentPassword");
+
+        break;
+      }
+      case "newPassword": {
+        if (displayPassword === "newPassword") {
+          setDisplayPassword(null);
+        } else setDisplayPassword("newPassword");
+        break;
+      }
+      case "confirmPassword": {
+        if (displayPassword === "confirmPassword") {
+          setDisplayPassword(null);
+        } else setDisplayPassword("confirmPassword");
+        break;
+      }
+    }
+  };
+
+  const handleDisabled = () => {
+    if (
+      currentPassword.length > 0 &&
+      newPassword.length > 0 &&
+      confirmPassword === newPassword
+    ) {
+      return false;
+    } else return true;
+  };
 
   // TODO : quand le back sera fait valider la modification de données à la volé avec un debounce de 3s ou ajouter un bouton valider à la place
   return (
     <div id="accountContainer">
+      <ToastContainer />
       <div id="accountContent">
         <div id="accountHeader">
           <h2>Account informations</h2>
@@ -56,32 +146,105 @@ const Account = () => {
             <p className="inputLabel">Password</p>
             <button
               id="accountEditPasswordButton"
-              onClick={() => setEditPassword(!editPassword)}>
+              onClick={() => setDisplayPasswordModal(!displayPasswordModal)}>
               <img src={editSvg} alt="" /> edit
             </button>
           </div>
           {
             /* edit password container */
-            editPassword && (
+            displayPasswordModal && (
               <>
-                <div id="overlay"></div>
+                <div
+                  onClick={() => setDisplayPasswordModal(false)}
+                  id="overlay"></div>
                 <div id="editPasswordContainer">
-                  <div className="inputContainerEditPassword">
-                    <p className="inputLabel">New password</p>
-                    <input type="password" placeholder="***************" />
-                  </div>
-                  <div className="inputContainerEditPassword">
-                    <p className="inputLabel">Confirm password</p>
-                    <input type="password" placeholder="***************" />
-                  </div>
-                  <div id="editPasswordbuttonsContainer">
-                    <button
-                      id="accountEditPasswordCancel"
-                      onClick={() => setEditPassword(false)}>
-                      Cancel
-                    </button>
-                    <button id="accountEditPasswordSave">Save</button>
-                  </div>
+                  {error && <p id="errorMessage">{errorMessage}</p>}
+                  <form onSubmit={(e) => updatePassword(e)}>
+                    <div className="inputContainerEditPassword">
+                      <p className="inputLabel">Current password</p>
+                      <div className="inputContainer">
+                        <input
+                          required
+                          type={
+                            displayPassword === "currentPassword"
+                              ? "text"
+                              : "password"
+                          }
+                          onChange={(e) => setCurrentPassword(e.target.value)}
+                          placeholder="***************"
+                        />
+                        <span
+                          onClick={() =>
+                            handleDisplayPassword("currentPassword")
+                          }>
+                          {displayPassword === "currentPassword" ? (
+                            <EyeSvg color="var(--color-text)" />
+                          ) : (
+                            <EyeOffSvg color="var(--color-text)" />
+                          )}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="inputContainerEditPassword">
+                      <p className="inputLabel">New password</p>
+                      <div className="inputContainer">
+                        <input
+                          required
+                          type={
+                            displayPassword === "newPassword"
+                              ? "text"
+                              : "password"
+                          }
+                          onChange={(e) => setNewPassword(e.target.value)}
+                          placeholder="***************"
+                        />
+                        <span
+                          onClick={() => handleDisplayPassword("newPassword")}>
+                          {displayPassword === "newPassword" ? (
+                            <EyeSvg color="var(--color-text)" />
+                          ) : (
+                            <EyeOffSvg color="var(--color-text)" />
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="inputContainerEditPassword">
+                      <p className="inputLabel">Confirm password</p>
+                      <div className="inputContainer">
+                        <input
+                          required
+                          type={
+                            displayPassword === "confirmPassword"
+                              ? "text"
+                              : "password"
+                          }
+                          onChange={(e) => setConfirmPassword(e.target.value)}
+                          placeholder="***************"
+                        />
+                        <span
+                          onClick={() =>
+                            handleDisplayPassword("confirmPassword")
+                          }>
+                          {displayPassword === "confirmPassword" ? (
+                            <EyeSvg color="var(--color-text)" />
+                          ) : (
+                            <EyeOffSvg color="var(--color-text)" />
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                    <div id="editPasswordbuttonsContainer">
+                      <button
+                        onClick={() => setDisplayPasswordModal(false)}
+                        id="accountEditPasswordCancel">
+                        Cancel
+                      </button>
+                      <button disabled={handleDisabled()} type="submit">
+                        {isLoading ? <Loader color="white" /> : "Confirm"}
+                      </button>
+                    </div>
+                  </form>
                 </div>
               </>
             )

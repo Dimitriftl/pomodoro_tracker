@@ -9,3 +9,9 @@ export type taskType = {
   status: string;
   creationDate: string;
 };
+
+export type passwordType =
+  | "currentPassword"
+  | "newPassword"
+  | "confirmPassword"
+  | null;
