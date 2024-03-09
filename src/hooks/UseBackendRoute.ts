@@ -54,7 +54,7 @@ export const useBackendRoute = () => {
             setError(false);
           }
           await axios
-            .post(`${apiBaseUrl}/api/users/login`, data)
+            .post(`${apiBaseUrl}/users/login`, data)
             .then((res) => {
               const token = res.data.token;
               Cookies.set("accessToken", token, { expires: 7 });
@@ -75,6 +75,8 @@ export const useBackendRoute = () => {
             })
             .catch(function (error) {
               setError(true);
+              console.log(error.response);
+
               setErrorMessage(error.response.data.msg);
             });
         }
