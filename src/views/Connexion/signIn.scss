@@ -98,10 +98,14 @@
 
   #errorMessage {
     position: absolute;
-    top: 200px;
+    top: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: rgb(211, 11, 11);
     font-size: 16px;
     font-weight: 500;
+    width: 95%;
     margin-bottom: 10px;
   }
 

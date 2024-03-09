@@ -29,10 +29,24 @@ export const useBackendRoute = () => {
       | pomodoroRelatedTypes
       | accountRelatedTypes,
     data: any,
-    onSuccess?: () => void
+    onSuccess?: () => void // callback function used to execute code in the calling file if response is success
   ) => {
     switch (functionName) {
       case "signUp":
+        {
+          await axios
+            .post(`${apiBaseUrl}/users/signup`, data)
+            .then(() => {
+              if (onSuccess) {
+                onSuccess();
+              }
+            })
+            .catch((error) => {
+              setError(true);
+              setErrorMessage(error.response.data.error);
+              console.error(error.response.data.error);
+            });
+        }
         break;
       case "signIn":
         {
@@ -40,7 +54,7 @@ export const useBackendRoute = () => {
             setError(false);
           }
           await axios
-            .post("http://localhost:3000/api/users/login", data)
+            .post(`${apiBaseUrl}/api/users/login`, data)
             .then((res) => {
               const token = res.data.token;
               Cookies.set("accessToken", token, { expires: 7 });
@@ -56,7 +70,7 @@ export const useBackendRoute = () => {
             })
             .then(() => {
               if (onSuccess) {
-                onSuccess(); // Appel de la fonction de rappel onSuccess
+                onSuccess();
               }
             })
             .catch(function (error) {

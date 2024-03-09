@@ -7,6 +7,7 @@ import mediumCircle from "../../assets/svg/loginPage/mediumCircle.svg";
 import tinyCircle from "../../assets/svg/loginPage/timyCircle.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useBackendRoute } from "../../hooks/UseBackendRoute";
 
 const SignUp = () => {
   interface FormElements {
@@ -15,12 +16,13 @@ const SignUp = () => {
     password: HTMLInputElement;
     confirmPassword: HTMLInputElement;
   }
-
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
     useState<boolean>(false);
   const [passwordValue, setPasswordValue] = useState<string>("");
   const [confirmPasswordValue, setConfirmPasswordValue] = useState<string>("");
+
+  const { apiCall, error, errorMessage } = useBackendRoute();
 
   const handlePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
@@ -28,6 +30,19 @@ const SignUp = () => {
 
   const handleConfirmPasswordVisibility = () => {
     setIsConfirmPasswordVisible(!isConfirmPasswordVisible);
+  };
+
+  const handleSubmit = async (e: React.FormEvent<FormElements>) => {
+    e.preventDefault();
+    const formElements = e.currentTarget;
+    const data = {
+      name: formElements.name.value,
+      email: formElements.email.value,
+      password: formElements.password.value,
+      confirmedPassword: formElements.confirmPassword.value,
+      role: "user",
+    };
+    await apiCall("signUp", data, () => navigate("/signin"));
   };
 
   const navigate = useNavigate();
@@ -50,29 +65,13 @@ const SignUp = () => {
           </div>
         </div>
         <div id="signUpRightPart">
+          {error && <p id="errorMessage">{errorMessage}</p>}
           <div id="signUpHeader">
             <h2>Inscription</h2>
           </div>
           <form
-            onSubmit={(event: React.FormEvent<FormElements>) => {
-              event.preventDefault();
-              const formElements = event.currentTarget;
-              const data = {
-                name: formElements.name.value,
-                email: formElements.email.value,
-                password: formElements.password.value,
-                confirmedPassword: formElements.confirmPassword.value,
-                role: "user",
-              };
-              axios
-                .post("http://localhost:3000/api/users/signup", data)
-                .then((res) => {
-                  if (res.data.error) {
-                    alert(res.data.error);
-                  } else {
-                    navigate("/");
-                  }
-                });
+            onSubmit={(e: React.FormEvent<FormElements>) => {
+              handleSubmit(e);
             }}>
             <input
               type="text"

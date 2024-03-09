@@ -86,6 +86,7 @@
 }
 
 #signUpRightPart {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -94,6 +95,19 @@
   height: 100%;
   background-color: rgb(255, 255, 255);
   border-radius: 0 18px 18px 0;
+
+  #errorMessage {
+    position: absolute;
+    top: 18%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(211, 11, 11);
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    width: 95%;
+  }
 
   #signUpHeader {
     position: relative;
