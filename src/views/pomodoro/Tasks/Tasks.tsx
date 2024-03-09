@@ -50,7 +50,7 @@ const Tasks = () => {
   const { isUserLoggedIn } = useContext<IsUserLoggedInTypes>(
     IsUserLoggedInContext
   );
-  const { isTimerOver, isTimerRunning, timeFocused } = useContext(TimerContext);
+  const { isTimerOver, timeFocused } = useContext(TimerContext);
 
   useEffect(() => {
     // get tasks from the local storage when the component is mounted
@@ -401,7 +401,7 @@ const Tasks = () => {
   };
 
   return (
-    <div className="tasksContainer ">
+    <div className="tasksContainer">
       <h2>Task to focus on.</h2>
       {isUserLoggedIn ? (
         <button onClick={() => setModal(!modal)} id="openModalButton">

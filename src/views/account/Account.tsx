@@ -8,6 +8,7 @@ import { EyeSvg, EyeOffSvg } from "../../assets/svg/svg";
 import Loader from "../../components/loader/Loader";
 import { ToastContainer, toast } from "react-toastify";
 import { ThemeContext } from "../../context/MyProviders";
+import { useBackendRoute } from "../../hooks/UseBackendRoute";
 
 const Account = () => {
   const localUserData = localStorage.getItem("userData");
@@ -22,85 +23,34 @@ const Account = () => {
   const [newPassword, setNewPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
   const { themeColor } = useContext(ThemeContext);
+  const { apiCall, success, error, errorMessage } = useBackendRoute();
 
   const updatePassword = async (e: any) => {
     e.preventDefault();
     setIsLoading(true);
-    const headers = {
-      authorization: `Bearer ${Cookies.get("accessToken")}`,
-    };
 
     const passwordData = {
       currentPassword: currentPassword,
       newPassword: newPassword,
     };
 
-    await axios
-      .put(
-        "http://localhost:3000/api/users/user/updatepassword",
-        passwordData,
-        {
-          headers,
-        }
-      )
-      .then((res) => {
-        setIsLoading(false);
-        setError(false);
-        setErrorMessage(null);
-        setDisplayPasswordModal(false);
-
-        toast("password successfully modified.", {
-          position: "top-right",
-          theme: themeColor === "light" ? "light" : "dark",
-        });
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        setError(true);
-        setErrorMessage(error.response.data.error);
-        console.error(error.response.data.error);
-      });
+    await apiCall("updatePassword", passwordData);
+    setIsLoading(false);
+    if (success) {
+      setDisplayPasswordModal(false);
+    }
   };
 
   const updateUserInformations = async (e: any) => {
     e.preventDefault();
     setIsLoading(true);
-
-    const headers = {
-      authorization: `Bearer ${Cookies.get("accessToken")}`,
-    };
-
-    const userData = {
+    const data = {
       name: name,
       email: email,
     };
-
-    await axios
-      .put("http://localhost:3000/api/users/user", userData, {
-        headers,
-      })
-      .then((res) => {
-        setIsLoading(false);
-        setError(false);
-        setErrorMessage(null);
-        userDataObject.user.name = name;
-        userDataObject.user.email = email;
-        localStorage.setItem("userData", JSON.stringify(userDataObject));
-        toast("informations successfully modified.", {
-          position: "top-right",
-          theme: themeColor === "light" ? "light" : "dark",
-        });
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        setError(true);
-        setErrorMessage(error);
-        console.error(error);
-      });
+    await apiCall("updateUserInformations", data);
+    setIsLoading(false);
   };
 
   const handleDisplayPassword = (typeOfPassword: passwordType) => {
