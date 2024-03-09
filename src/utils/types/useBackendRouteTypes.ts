@@ -3,6 +3,7 @@ export type registerRelatedTypes = "signUp" | "signIn";
 export type pomodoroRelatedTypes =
   | "updatePomodoroDoneAndTimeSpend"
   | "updateTimeSpend"
+  | "updateTaskTimeSpend"
   | "createTask"
   | "editTask"
   | "giveUpTask"

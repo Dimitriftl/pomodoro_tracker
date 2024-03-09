@@ -7,11 +7,8 @@ import React, {
 } from "react";
 import "./modalCreateTask.scss";
 import { ThemeContext } from "../../../../context/MyProviders";
-import { CrossSvg, ClockSvg } from "../../../../assets/svg/svg";
-import ListOfHoursStart from "./listOfHoursStart/ListOfHours";
-import ListOfHoursEnd from "./listOfHoursEnd/ListOfHoursEnd";
-import axios from "axios";
-import Cookies from "js-cookie";
+import { CrossSvg } from "../../../../assets/svg/svg";
+import { useBackendRoute } from "../../../../hooks/UseBackendRoute";
 
 type modalProps = {
   modal: boolean;
@@ -30,9 +27,8 @@ const ModalCreateTask = ({ modal, setModal }) => {
   const [numberOfPomodoro, setNumberOfPomodoro] = useState<number | undefined>(
     3
   );
-  const token = Cookies.get("accessToken");
+  const { apiCall } = useBackendRoute();
   // hours list modals
-
   // handle la fermerture du modal avec la touche escape / esc
   useEffect(() => {
     const handleKeyPress = (e) => {
@@ -59,19 +55,7 @@ const ModalCreateTask = ({ modal, setModal }) => {
     setNumberOfPomodoro(result);
   };
 
-  const updateLocalStorage = (data: any) => {
-    const localUserData = localStorage.getItem("userData");
-    const userDataObject = JSON.parse(localUserData || "{}");
-    const tasksArray = userDataObject.tasks || [];
-    const newAtasksArray = [...tasksArray, data];
-    // Met à jour la propriété "tasks"
-    userDataObject.tasks = newAtasksArray;
-    const newUserDataString = JSON.stringify(userDataObject);
-    // Met à jour le contenu du localStorage
-    localStorage.setItem("userData", newUserDataString);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
       taskName: taskName,
@@ -79,20 +63,9 @@ const ModalCreateTask = ({ modal, setModal }) => {
       numberOfPomodoroSet: numberOfPomodoro,
     };
 
-    axios
-      .post("http://localhost:3000/api/tasks/", data, {
-        headers: {
-          authorization: `Bearer ${Cookies.get("accessToken")}`,
-        },
-      })
-      .then((res) => {
-        console.log(res.data, "create task response");
-        updateLocalStorage(res.data);
-        setModal(!modal);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    await apiCall("createTask", data, () => {
+      setModal(!modal);
+    });
   };
 
   return (

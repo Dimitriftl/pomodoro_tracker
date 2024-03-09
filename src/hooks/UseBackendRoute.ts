@@ -28,8 +28,9 @@ export const useBackendRoute = () => {
       | registerRelatedTypes
       | pomodoroRelatedTypes
       | accountRelatedTypes,
-    data: any,
-    onSuccess?: () => void // callback function used to execute code in the calling file if response is success
+    data?: any,
+    onSuccess?: () => void, // callback function used to execute code in the calling file if response is success
+    params?: any
   ) => {
     switch (functionName) {
       case "signUp":
@@ -81,19 +82,144 @@ export const useBackendRoute = () => {
             });
         }
         break;
-      case "updatePomodoroDoneAndTimeSpend":
-        break;
       case "updateTimeSpend":
+        {
+          await axios
+            .put(`${apiBaseUrl}/users/user/timespend`, data, {
+              headers,
+            })
+            .then((res) => {
+              console.log(res.data, "total time spend response");
+              if (onSuccess) {
+                onSuccess();
+              }
+            })
+            .catch((error) => {
+              return console.error(error);
+            });
+        }
+        break;
+      case "updatePomodoroDoneAndTimeSpend":
+        {
+          await axios
+            .put(`${apiBaseUrl}/tasks/updatePomodoroDoneAndTimeSpend`, data, {
+              headers,
+            })
+            .then((res) => {
+              console.log(res.data, "task time spend response");
+              if (onSuccess) {
+                onSuccess();
+              }
+            })
+            .catch((error) => {
+              return console.error(error);
+            });
+        }
+        break;
+      case "updateTaskTimeSpend":
+        {
+          await axios
+            .put("http://localhost:3000/api/tasks/updateTimeSpend", data, {
+              headers,
+            })
+            .then((res) => {
+              console.log(res.data, "task time spend response");
+              if (onSuccess) {
+                onSuccess();
+              }
+            })
+            .catch((error) => {
+              return console.error(error);
+            });
+        }
         break;
       case "createTask":
+        {
+          await axios
+            .post(`${apiBaseUrl}/tasks/`, data, {
+              headers: {
+                authorization: `Bearer ${Cookies.get("accessToken")}`,
+              },
+            })
+            .then((res) => {
+              const data = res.data;
+              console.log(res.data, "create task response");
+              const localUserData = localStorage.getItem("userData");
+              const userDataObject = JSON.parse(localUserData || "{}");
+              const tasksArray = userDataObject.tasks || [];
+              const newAtasksArray = [...tasksArray, data];
+              // Met à jour la propriété "tasks"
+              userDataObject.tasks = newAtasksArray;
+              const newUserDataString = JSON.stringify(userDataObject);
+              // Met à jour le contenu du localStorage
+              localStorage.setItem("userData", newUserDataString);
+
+              if (onSuccess) {
+                onSuccess();
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
         break;
       case "editTask":
+        {
+          await axios
+            .put(`${apiBaseUrl}/tasks/`, data, { headers })
+            .then((res) => {
+              if (onSuccess) {
+                onSuccess();
+              }
+            })
+            .catch((error) => {
+              return console.error(error);
+            });
+        }
         break;
       case "giveUpTask":
+        {
+          await axios
+            .put(`${apiBaseUrl}/tasks/`, data, { headers })
+            .then((res) => {
+              console.log(res.data, "res");
+              if (onSuccess) {
+                onSuccess();
+              }
+            })
+            .catch((error) => {
+              return console.error(error);
+            });
+        }
         break;
       case "deleteTask":
+        {
+          await axios
+            .delete(`${apiBaseUrl}/tasks/${params}`, { headers })
+            .then((res) => {
+              if (onSuccess) {
+                onSuccess();
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
         break;
       case "taskDone":
+        {
+          await axios
+            .put(`${apiBaseUrl}/tasks/`, data, { headers })
+            .then((res) => {
+              console.log(res.data, "res");
+              if (onSuccess) {
+                onSuccess();
+              }
+            })
+            .catch((error) => {
+              return console.error(error);
+            });
+        }
         break;
       case "updatePassword":
         {

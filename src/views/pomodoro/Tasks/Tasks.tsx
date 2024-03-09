@@ -13,7 +13,6 @@ import {
   ThemeContext,
   TimerContext,
 } from "../../../context/MyProviders.js";
-import axios from "axios";
 import Cookies from "js-cookie";
 import ConfirmModal from "../../../components/pomodoro/modals/confirmModal/ConfirmModal.js";
 import {
@@ -23,18 +22,10 @@ import {
   TimerContextType,
 } from "../../../utils/types/contextsTypes.ts";
 import { taskType } from "../../../utils/types/globalTypes.ts";
+import { useBackendRoute } from "../../../hooks/UseBackendRoute.ts";
+import { callback } from "chart.js/helpers";
 
 type typeOfModalTypes = "delete" | "done" | "giveUp" | null;
-// type taskType = {
-//   _id: string;
-//   taskName: string;
-//   description: string;
-//   numberOfPomodoroSet: number;
-//   numberOfPomodoroDone: number;
-//   taskDone: boolean;
-//   timeSpend: number;
-//   status: string;
-// };
 
 const Tasks = () => {
   const [modal, setModal] = useState(false);
@@ -51,6 +42,8 @@ const Tasks = () => {
     IsUserLoggedInContext
   );
   const { isTimerOver, timeFocused } = useContext(TimerContext);
+
+  const { apiCall } = useBackendRoute();
 
   useEffect(() => {
     // get tasks from the local storage when the component is mounted
@@ -73,15 +66,10 @@ const Tasks = () => {
   }, [timeFocused]);
 
   const deleteTask = async (id: string) => {
-    const headers = {
-      authorization: `Bearer ${Cookies.get("accessToken")}`,
-    };
-
-    await axios
-      .delete(`http://localhost:3000/api/tasks/${id}`, { headers })
-      .then((res) => {
-        console.log(res.data, "delete task response");
-
+    await apiCall(
+      "deleteTask",
+      null,
+      () => {
         // delete task from the local storage
         const localUserData = localStorage.getItem("userData");
         const userDataObject = JSON.parse(localUserData || "{}");
@@ -92,66 +80,47 @@ const Tasks = () => {
         localStorage.setItem("userData", JSON.stringify(userDataObject));
         setTasksArray(newTasksArray);
         setTypeOfModal(null);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      },
+      id
+    );
   };
 
   const editTaskFunction = async (task: taskType) => {
-    const headers = {
-      authorization: `Bearer ${Cookies.get("accessToken")}`,
-    };
-
     const data = {
       ...task,
       description: taskDescription,
       taskName: taskName,
     };
 
-    await axios
-      .put("http://localhost:3000/api/tasks/", data, { headers })
-      .then((res) => {
-        console.log(res.data, "res");
-        const newTasksArray: Array<taskType | []> = tasksArray.map(
-          (item: taskType | []) => {
-            // check type to excude empty arrays (used for error handling ts)
-            if (Array.isArray(item)) {
-              return item;
-            }
-            if (task._id === item._id) {
-              return {
-                ...task,
-                taskName: taskName,
-                description: taskDescription,
-              };
-            }
+    await apiCall("editTask", data, () => {
+      const newTasksArray: Array<taskType | []> = tasksArray.map(
+        (item: taskType | []) => {
+          // check type to excude empty arrays (used for error handling ts)
+          if (Array.isArray(item)) {
             return item;
           }
-        );
-        setTasksArray(newTasksArray);
-        const localUserData = localStorage.getItem("userData");
-        const userDataObject = JSON.parse(localUserData || "{}");
-        userDataObject.tasks = newTasksArray;
-        localStorage.setItem("userData", JSON.stringify(userDataObject));
-        setEditTask(false);
-      })
-      .catch((error) => {
-        return console.error(error);
-      });
+          if (task._id === item._id) {
+            return {
+              ...task,
+              taskName: taskName,
+              description: taskDescription,
+            };
+          }
+          return item;
+        }
+      );
+      setTasksArray(newTasksArray);
+      const localUserData = localStorage.getItem("userData");
+      const userDataObject = JSON.parse(localUserData || "{}");
+      userDataObject.tasks = newTasksArray;
+      localStorage.setItem("userData", JSON.stringify(userDataObject));
+      setEditTask(false);
+    });
   };
 
   const updateTimeSpend = async (id: string | null) => {
     //update user TotalTimeSpend in the database
-
-    console.log("update when time is paused");
-
-    const headers = {
-      authorization: `Bearer ${Cookies.get("accessToken")}`,
-    };
-
     // get user data from local storage
-
     const localUserData = localStorage.getItem("userData");
     const userDataObject = JSON.parse(localUserData || "{}");
     const user = userDataObject.user;
@@ -160,19 +129,11 @@ const Tasks = () => {
       timeSpend: timeFocused,
     };
 
-    await axios
-      .put("http://localhost:3000/api/users/user/timespend", userData, {
-        headers,
-      })
-      .then((res) => {
-        console.log(res.data, "total time spend response");
-        user.totalTimeSpend = user.totalTimeSpend + timeFocused;
-        userDataObject.user = user;
-        localStorage.setItem("userData", JSON.stringify(userDataObject));
-      })
-      .catch((error) => {
-        return console.error(error);
-      });
+    await apiCall("updateTimeSpend", userData, () => {
+      user.totalTimeSpend = user.totalTimeSpend + timeFocused;
+      userDataObject.user = user;
+      localStorage.setItem("userData", JSON.stringify(userDataObject));
+    });
 
     // update task if it exists
     const task = tasksArray.find((task: taskType | []) => {
@@ -192,37 +153,27 @@ const Tasks = () => {
       timeSpend: task.timeSpend + timeFocused,
     };
 
-    await axios
-      .put("http://localhost:3000/api/tasks/updateTimeSpend", data, { headers })
-      .then((res) => {
-        console.log(res.data, "task time spend response");
-        const newTasksArray: Array<taskType | []> = tasksArray.map(
-          (item: taskType | []) => {
-            // check type to excude empty arrays (used for error handling ts)
-            if (Array.isArray(item)) {
-              return item;
-            }
-            if (task._id === item._id) {
-              return { ...item, timeSpend: item.timeSpend + timeFocused };
-            }
+    await apiCall("updateTaskTimeSpend", data, () => {
+      const newTasksArray: Array<taskType | []> = tasksArray.map(
+        (item: taskType | []) => {
+          // check type to excude empty arrays (used for error handling ts)
+          if (Array.isArray(item)) {
             return item;
           }
-        );
-        setTasksArray(newTasksArray);
-        userDataObject.tasks = newTasksArray;
-        localStorage.setItem("userData", JSON.stringify(userDataObject));
-        setEditTask(false);
-      })
-      .catch((error) => {
-        return console.error(error);
-      });
+          if (task._id === item._id) {
+            return { ...item, timeSpend: item.timeSpend + timeFocused };
+          }
+          return item;
+        }
+      );
+      setTasksArray(newTasksArray);
+      userDataObject.tasks = newTasksArray;
+      localStorage.setItem("userData", JSON.stringify(userDataObject));
+      setEditTask(false);
+    });
   };
 
   const updatePomodoroDoneAndTimeSpend = async (id: string | null) => {
-    const headers = {
-      authorization: `Bearer ${Cookies.get("accessToken")}`,
-    };
-
     // get user data from local storage
 
     const localUserData = localStorage.getItem("userData");
@@ -233,19 +184,11 @@ const Tasks = () => {
       timeSpend: timeFocused,
     };
 
-    await axios
-      .put("http://localhost:3000/api/users/user/timespend", userData, {
-        headers,
-      })
-      .then((res) => {
-        console.log(res.data, "total time spend response");
-        user.totalTimeSpend = user.totalTimeSpend + timeFocused;
-        userDataObject.user = user;
-        localStorage.setItem("userData", JSON.stringify(userDataObject));
-      })
-      .catch((error) => {
-        return console.error(error);
-      });
+    apiCall("updateTimeSpend", userData, () => {
+      user.totalTimeSpend = user.totalTimeSpend + timeFocused;
+      userDataObject.user = user;
+      localStorage.setItem("userData", JSON.stringify(userDataObject));
+    });
 
     // update task if it exists
     const task = tasksArray.find((task: taskType | []) => {
@@ -257,8 +200,6 @@ const Tasks = () => {
     if (task === undefined) {
       return;
     }
-
-    console.log("task in update time spend => ", task);
 
     const data = {
       ...task,
@@ -266,34 +207,24 @@ const Tasks = () => {
       numberOfPomodoroDone: task.numberOfPomodoroDone + 1,
     };
 
-    await axios
-      .put(
-        "http://localhost:3000/api/tasks/updatePomodoroDoneAndTimeSpend",
-        data,
-        { headers }
-      )
-      .then((res) => {
-        console.log(res.data, "task time spend response");
-        const newTasksArray: Array<taskType | []> = tasksArray.map(
-          (item: taskType | []) => {
-            // check type to excude empty arrays (used for error handling ts)
-            if (Array.isArray(item)) {
-              return item;
-            }
-            if (task._id === item._id) {
-              return data;
-            }
+    await apiCall("updatePomodoroDoneAndTimeSpend", data, () => {
+      const newTasksArray: Array<taskType | []> = tasksArray.map(
+        (item: taskType | []) => {
+          // check type to excude empty arrays (used for error handling ts)
+          if (Array.isArray(item)) {
             return item;
           }
-        );
-        setTasksArray(newTasksArray);
-        userDataObject.tasks = newTasksArray;
-        localStorage.setItem("userData", JSON.stringify(userDataObject));
-        setEditTask(false);
-      })
-      .catch((error) => {
-        return console.error(error);
-      });
+          if (task._id === item._id) {
+            return data;
+          }
+          return item;
+        }
+      );
+      setTasksArray(newTasksArray);
+      userDataObject.tasks = newTasksArray;
+      localStorage.setItem("userData", JSON.stringify(userDataObject));
+      setEditTask(false);
+    });
   };
   const handleTaskDone = async (id: string | null) => {
     const task = tasksArray.find((task: taskType | []) => {
@@ -306,42 +237,31 @@ const Tasks = () => {
     if (task === undefined) {
       return;
     }
-
-    const headers = {
-      authorization: `Bearer ${Cookies.get("accessToken")}`,
-    };
-
     const data = {
       ...task,
       taskDone: true,
     };
 
-    await axios
-      .put("http://localhost:3000/api/tasks/", data, { headers })
-      .then((res) => {
-        console.log(res.data, "res");
-        const newTasksArray: Array<taskType | []> = tasksArray.map(
-          (item: taskType | []) => {
-            // check type to excude empty arrays (used for error handling ts)
-            if (Array.isArray(item)) {
-              return item;
-            }
-            if (task._id === item._id) {
-              return data;
-            }
+    await apiCall("taskDone", data, () => {
+      const newTasksArray: Array<taskType | []> = tasksArray.map(
+        (item: taskType | []) => {
+          // check type to excude empty arrays (used for error handling ts)
+          if (Array.isArray(item)) {
             return item;
           }
-        );
-        setTasksArray(newTasksArray);
-        const localUserData = localStorage.getItem("userData");
-        const userDataObject = JSON.parse(localUserData || "{}");
-        userDataObject.tasks = newTasksArray;
-        localStorage.setItem("userData", JSON.stringify(userDataObject));
-        setEditTask(false);
-      })
-      .catch((error) => {
-        return console.error(error);
-      });
+          if (task._id === item._id) {
+            return data;
+          }
+          return item;
+        }
+      );
+      setTasksArray(newTasksArray);
+      const localUserData = localStorage.getItem("userData");
+      const userDataObject = JSON.parse(localUserData || "{}");
+      userDataObject.tasks = newTasksArray;
+      localStorage.setItem("userData", JSON.stringify(userDataObject));
+      setEditTask(false);
+    });
   };
 
   const handleTaskGiveUp = async (id: string | null) => {
@@ -356,41 +276,31 @@ const Tasks = () => {
       return;
     }
 
-    const headers = {
-      authorization: `Bearer ${Cookies.get("accessToken")}`,
-    };
-
     const data = {
       ...task,
       status: "gaveUp",
     };
 
-    await axios
-      .put("http://localhost:3000/api/tasks/", data, { headers })
-      .then((res) => {
-        console.log(res.data, "res");
-        const newTasksArray: Array<taskType | []> = tasksArray.map(
-          (item: taskType | []) => {
-            // check type to excude empty arrays (used for error handling ts)
-            if (Array.isArray(item)) {
-              return item;
-            }
-            if (task._id === item._id) {
-              return data;
-            }
+    await apiCall("giveUpTask", data, () => {
+      const newTasksArray: Array<taskType | []> = tasksArray.map(
+        (item: taskType | []) => {
+          // check type to excude empty arrays (used for error handling ts)
+          if (Array.isArray(item)) {
             return item;
           }
-        );
-        setTasksArray(newTasksArray);
-        const localUserData = localStorage.getItem("userData");
-        const userDataObject = JSON.parse(localUserData || "{}");
-        userDataObject.tasks = newTasksArray;
-        localStorage.setItem("userData", JSON.stringify(userDataObject));
-        setEditTask(false);
-      })
-      .catch((error) => {
-        return console.error(error);
-      });
+          if (task._id === item._id) {
+            return data;
+          }
+          return item;
+        }
+      );
+      setTasksArray(newTasksArray);
+      const localUserData = localStorage.getItem("userData");
+      const userDataObject = JSON.parse(localUserData || "{}");
+      userDataObject.tasks = newTasksArray;
+      localStorage.setItem("userData", JSON.stringify(userDataObject));
+      setEditTask(false);
+    });
   };
 
   const checkIfTaskIsDone = (task: taskType) => {
