@@ -10,6 +10,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { IsUserLoggedInContext } from "../../context/MyProviders";
 import Loader from "../../components/loader/Loader";
+import { useBackendRoute } from "../../hooks/UseBackendRoute";
 
 interface FormElements extends HTMLFormControlsCollection {
   email: HTMLInputElement;
@@ -24,8 +25,7 @@ const SignIn = () => {
   const token = Cookies.get("accessToken");
   const { setIsUserLoggedIn } = useContext(IsUserLoggedInContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const { apiCall, error, errorMessage, success } = useBackendRoute();
 
   const navigate = useNavigate();
 
@@ -42,39 +42,20 @@ const SignIn = () => {
     }, 500);
   }, [token, isLoading]);
 
-  const handleSubmit = (event: React.FormEvent<SignInFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<SignInFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
-    if (error) {
-      setError(false);
-    }
+
     const formElements = event.currentTarget.elements;
     const data = {
       email: formElements.email.value,
       password: formElements.password.value,
     };
-    axios
-      .post("http://localhost:3000/api/users/login", data)
-      .then((res) => {
-        const token = res.data.token;
-        Cookies.set("accessToken", token, { expires: 7 });
-
-        let dataToLocalStorage = {
-          user: res.data.data.user,
-          tasks: res.data.data.tasks,
-        };
-        localStorage.setItem("userData", JSON.stringify(dataToLocalStorage));
-        setIsUserLoggedIn(true);
-        setIsLoading(false);
-      })
-      .then(() => {
-        navigate("/");
-      })
-      .catch(function (error) {
-        setIsLoading(false);
-        setError(true);
-        setErrorMessage(error.response.data.msg);
-      });
+    await apiCall("signIn", data, () => {
+      setIsUserLoggedIn(true);
+      navigate("/");
+    });
+    setIsLoading(false);
   };
 
   return (
@@ -108,7 +89,6 @@ const SignIn = () => {
               required
               autoFocus
               placeholder="Email"
-              onClick={() => setError(false)}
             />
             <input
               className={error ? "warning" : ""}
@@ -116,7 +96,6 @@ const SignIn = () => {
               required
               name="password"
               placeholder="Password"
-              onClick={() => setError(false)}
             />
             <button
               disabled={isLoading}

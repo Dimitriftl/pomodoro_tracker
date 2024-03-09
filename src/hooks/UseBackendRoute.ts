@@ -14,7 +14,6 @@ export const useBackendRoute = () => {
   const userDataObject = JSON.parse(localUserData || "{}");
   const [responseData, setReponseData] = useState<any>(null);
   const [error, setError] = useState<boolean>(false);
-  const [success, setSucces] = useState<boolean | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { themeColor } = useContext(ThemeContext);
 
@@ -29,12 +28,42 @@ export const useBackendRoute = () => {
       | registerRelatedTypes
       | pomodoroRelatedTypes
       | accountRelatedTypes,
-    data
+    data: any,
+    onSuccess?: () => void
   ) => {
     switch (functionName) {
       case "signUp":
         break;
       case "signIn":
+        {
+          if (error) {
+            setError(false);
+          }
+          await axios
+            .post("http://localhost:3000/api/users/login", data)
+            .then((res) => {
+              const token = res.data.token;
+              Cookies.set("accessToken", token, { expires: 7 });
+
+              const dataToLocalStorage = {
+                user: res.data.data.user,
+                tasks: res.data.data.tasks,
+              };
+              localStorage.setItem(
+                "userData",
+                JSON.stringify(dataToLocalStorage)
+              );
+            })
+            .then(() => {
+              if (onSuccess) {
+                onSuccess(); // Appel de la fonction de rappel onSuccess
+              }
+            })
+            .catch(function (error) {
+              setError(true);
+              setErrorMessage(error.response.data.msg);
+            });
+        }
         break;
       case "updatePomodoroDoneAndTimeSpend":
         break;
@@ -59,15 +88,18 @@ export const useBackendRoute = () => {
             .then((res) => {
               setError(false);
               setErrorMessage(null);
-              setSucces(true);
+
+              if (onSuccess) {
+                onSuccess(); // Appel de la fonction de rappel onSuccess
+              }
 
               toast("password successfully modified.", {
                 position: "top-right",
                 theme: themeColor === "light" ? "light" : "dark",
               });
             })
+
             .catch((error) => {
-              setSucces(false);
               setError(true);
               setErrorMessage(error.response.data.error);
               console.error(error.response.data.error);
@@ -102,5 +134,5 @@ export const useBackendRoute = () => {
         break;
     }
   };
-  return { apiCall, responseData, error, errorMessage, success };
+  return { apiCall, responseData, error, errorMessage };
 };

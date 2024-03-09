@@ -35,11 +35,15 @@ const Account = () => {
       newPassword: newPassword,
     };
 
-    await apiCall("updatePassword", passwordData);
-    setIsLoading(false);
-    if (success) {
-      setDisplayPasswordModal(false);
+    try {
+      await apiCall("updatePassword", passwordData, () => {
+        setDisplayPasswordModal(false);
+      });
+    } catch (error) {
+      console.error(error);
     }
+
+    setIsLoading(false);
   };
 
   const updateUserInformations = async (e: any) => {
