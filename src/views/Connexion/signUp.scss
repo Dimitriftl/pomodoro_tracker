@@ -209,6 +209,12 @@
   }
 }
 
+.displayPasswordContainer {
+  position: absolute;
+  right: -5px;
+  bottom: 5px;
+}
+
 @media all and (max-width: 768px) {
   #signUpContainer {
     padding: 0;

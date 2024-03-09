@@ -127,6 +127,11 @@
     flex-direction: column;
     gap: 8vh;
 
+    .passwordContainer {
+      position: relative;
+      width: 100%;
+    }
+
     .warning {
       color: rgb(211, 11, 11);
       border-color: rgb(211, 11, 11);
@@ -138,6 +143,7 @@
       color: #1e1f26;
       border-color: var(--color-blue);
       padding-bottom: 10px;
+      width: 100%;
       &::placeholder {
         color: #a9a9a9;
       }

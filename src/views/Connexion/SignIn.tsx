@@ -11,6 +11,7 @@ import Cookies from "js-cookie";
 import { IsUserLoggedInContext } from "../../context/MyProviders";
 import Loader from "../../components/loader/Loader";
 import { useBackendRoute } from "../../hooks/UseBackendRoute";
+import { EyeSvg, EyeOffSvg } from "../../assets/svg/svg";
 
 interface FormElements extends HTMLFormControlsCollection {
   email: HTMLInputElement;
@@ -25,9 +26,14 @@ const SignIn = () => {
   const token = Cookies.get("accessToken");
   const { setIsUserLoggedIn } = useContext(IsUserLoggedInContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { apiCall, error, errorMessage, success } = useBackendRoute();
+  const { apiCall, error, errorMessage } = useBackendRoute();
+  const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 
   const navigate = useNavigate();
+
+  const handlePasswordVisibility = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
 
   // if token exists, redirect to home page
   useEffect(() => {
@@ -90,13 +96,24 @@ const SignIn = () => {
               autoFocus
               placeholder="Email"
             />
-            <input
-              className={error ? "warning" : ""}
-              type="password"
-              required
-              name="password"
-              placeholder="Password"
-            />
+            <div className="passwordContainer">
+              <input
+                className={error ? "warning" : ""}
+                type={isPasswordVisible ? "text" : "password"}
+                required
+                name="password"
+                placeholder="Password"
+              />
+              <span
+                className="displayPasswordContainer"
+                onClick={() => handlePasswordVisibility()}>
+                {isPasswordVisible ? (
+                  <EyeSvg color="#383838" />
+                ) : (
+                  <EyeOffSvg color="#383838" />
+                )}
+              </span>
+            </div>
             <button
               disabled={isLoading}
               type="submit"

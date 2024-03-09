@@ -6,6 +6,7 @@ import bigCircle from "../../assets/svg/loginPage/BigCircle.svg";
 import mediumCircle from "../../assets/svg/loginPage/mediumCircle.svg";
 import tinyCircle from "../../assets/svg/loginPage/timyCircle.svg";
 import { useNavigate } from "react-router-dom";
+import { EyeSvg, EyeOffSvg } from "../../assets/svg/svg";
 import axios from "axios";
 import { useBackendRoute } from "../../hooks/UseBackendRoute";
 
@@ -89,12 +90,16 @@ const SignUp = () => {
                 placeholder="Password"
                 name="password"
               />
-              {/* <p
-                style={{ color: "red" }}
-                className="passwordVisibility"
-                onClick={handlePasswordVisibility}>
-                yes
-              </p> */}
+
+              <span
+                className="displayPasswordContainer"
+                onClick={() => handlePasswordVisibility()}>
+                {isPasswordVisible ? (
+                  <EyeSvg color="#383838" />
+                ) : (
+                  <EyeOffSvg color="#383838" />
+                )}
+              </span>
             </div>
             <div id="confirmPasswordContainer">
               <input
@@ -104,12 +109,15 @@ const SignUp = () => {
                 placeholder="Confirm password"
                 name="confirmPassword"
               />
-              {/* <p
-                style={{ color: "red" }}
-                className="passwordVisibility"
-                onClick={handleConfirmPasswordVisibility}>
-                yes
-              </p> */}
+              <span
+                className="displayPasswordContainer"
+                onClick={() => handleConfirmPasswordVisibility()}>
+                {isConfirmPasswordVisible ? (
+                  <EyeSvg color="#383838" />
+                ) : (
+                  <EyeOffSvg color="#383838" />
+                )}
+              </span>
             </div>
             <button
               type="submit"
