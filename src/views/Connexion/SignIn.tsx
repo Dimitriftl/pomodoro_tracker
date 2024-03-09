@@ -6,7 +6,6 @@ import bigCircle from "../../assets/svg/loginPage/BigCircle.svg";
 import mediumCircle from "../../assets/svg/loginPage/mediumCircle.svg";
 import tinyCircle from "../../assets/svg/loginPage/timyCircle.svg";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import Cookies from "js-cookie";
 import { IsUserLoggedInContext } from "../../context/MyProviders";
 import Loader from "../../components/loader/Loader";

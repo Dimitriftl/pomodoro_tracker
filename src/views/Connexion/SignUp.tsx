@@ -7,7 +7,6 @@ import mediumCircle from "../../assets/svg/loginPage/mediumCircle.svg";
 import tinyCircle from "../../assets/svg/loginPage/timyCircle.svg";
 import { useNavigate } from "react-router-dom";
 import { EyeSvg, EyeOffSvg } from "../../assets/svg/svg";
-import axios from "axios";
 import { useBackendRoute } from "../../hooks/UseBackendRoute";
 
 const SignUp = () => {

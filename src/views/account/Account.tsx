@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import "./account.scss";
 import editSvg from "../../assets/svg/accountPage/edit.svg";
-import axios from "axios";
 import Cookies from "js-cookie";
 import { passwordType } from "../../utils/types/globalTypes";
 import { EyeSvg, EyeOffSvg } from "../../assets/svg/svg";
