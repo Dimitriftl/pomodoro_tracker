@@ -12,8 +12,8 @@ import { ThemeContext } from "../../context/MyProviders";
 const Account = () => {
   const localUserData = localStorage.getItem("userData");
   const userDataObject = JSON.parse(localUserData || "{}");
-  const [email, setEmail] = useState(userDataObject?.user?.email);
-  const [name, setName] = useState(userDataObject?.user?.name);
+  const [email, setEmail] = useState<string>(userDataObject?.user?.email);
+  const [name, setName] = useState<string>(userDataObject?.user?.name);
   // password related
   const [displayPasswordModal, setDisplayPasswordModal] =
     useState<boolean>(false);
@@ -27,7 +27,7 @@ const Account = () => {
 
   const { themeColor } = useContext(ThemeContext);
 
-  const updatePassword = (e: any) => {
+  const updatePassword = async (e: any) => {
     e.preventDefault();
     setIsLoading(true);
     const headers = {
@@ -39,7 +39,7 @@ const Account = () => {
       newPassword: newPassword,
     };
 
-    axios
+    await axios
       .put(
         "http://localhost:3000/api/users/user/updatepassword",
         passwordData,
@@ -52,17 +52,54 @@ const Account = () => {
         setError(false);
         setErrorMessage(null);
         setDisplayPasswordModal(false);
+
         toast("password successfully modified.", {
           position: "top-right",
           theme: themeColor === "light" ? "light" : "dark",
         });
-        console.log("success");
       })
       .catch((error) => {
         setIsLoading(false);
         setError(true);
         setErrorMessage(error.response.data.error);
         console.error(error.response.data.error);
+      });
+  };
+
+  const updateUserInformations = async (e: any) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    const headers = {
+      authorization: `Bearer ${Cookies.get("accessToken")}`,
+    };
+
+    const userData = {
+      name: name,
+      email: email,
+    };
+
+    await axios
+      .put("http://localhost:3000/api/users/user", userData, {
+        headers,
+      })
+      .then((res) => {
+        setIsLoading(false);
+        setError(false);
+        setErrorMessage(null);
+        userDataObject.user.name = name;
+        userDataObject.user.email = email;
+        localStorage.setItem("userData", JSON.stringify(userDataObject));
+        toast("informations successfully modified.", {
+          position: "top-right",
+          theme: themeColor === "light" ? "light" : "dark",
+        });
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        setError(true);
+        setErrorMessage(error);
+        console.error(error);
       });
   };
 
@@ -90,7 +127,18 @@ const Account = () => {
     }
   };
 
-  const handleDisabled = () => {
+  const handleDisabledForInformations = () => {
+    if (
+      email === userDataObject?.user?.email &&
+      name === userDataObject?.user?.name
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const handleDisabledForPassword = () => {
     if (
       currentPassword.length > 0 &&
       newPassword.length > 0 &&
@@ -124,25 +172,30 @@ const Account = () => {
           </div>
         </div>
         <div id="accountRightPart">
-          <div className="inputContainer">
-            <p className="inputLabel">Name</p>
-            <input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              type="text"
-              placeholder="John Doe"
-            />
-          </div>
-          <div className="inputContainer">
-            <p className="inputLabel">Email</p>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="John.doe@mail.com"
-            />
-          </div>
-          <div className="inputContainer">
+          <form onSubmit={(e) => updateUserInformations(e)}>
+            <div className="inputContainer">
+              <p className="inputLabel">Name</p>
+              <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                type="text"
+                placeholder="John Doe"
+              />
+            </div>
+            <div className="inputContainer">
+              <p className="inputLabel">Email</p>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="John.doe@mail.com"
+              />
+            </div>
+            <button disabled={handleDisabledForInformations()} type="submit">
+              Save
+            </button>
+          </form>
+          <div className="editPasswordContainer">
             <p className="inputLabel">Password</p>
             <button
               id="accountEditPasswordButton"
@@ -151,7 +204,7 @@ const Account = () => {
             </button>
           </div>
           {
-            /* edit password container */
+            /* edit password modal */
             displayPasswordModal && (
               <>
                 <div
@@ -240,7 +293,9 @@ const Account = () => {
                         id="accountEditPasswordCancel">
                         Cancel
                       </button>
-                      <button disabled={handleDisabled()} type="submit">
+                      <button
+                        disabled={handleDisabledForPassword()}
+                        type="submit">
                         {isLoading ? <Loader color="white" /> : "Confirm"}
                       </button>
                     </div>
