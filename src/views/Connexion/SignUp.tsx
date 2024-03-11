@@ -77,7 +77,7 @@ const SignUp = () => {
               type="text"
               required
               autoFocus
-              placeholder="name"
+              placeholder="Name"
               name="name"
             />
             <input type="text" required placeholder="Email" name="email" />

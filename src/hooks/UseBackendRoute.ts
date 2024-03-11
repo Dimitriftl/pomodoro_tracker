@@ -267,7 +267,7 @@ export const useBackendRoute = () => {
             })
             .catch((error) => {
               setError(true);
-              setErrorMessage(error);
+              setErrorMessage(error.response.data.error);
               console.error(error);
             });
         }

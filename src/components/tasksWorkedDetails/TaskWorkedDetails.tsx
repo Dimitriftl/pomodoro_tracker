@@ -285,7 +285,7 @@ const TaskWorkedDetails: FC<TaskWorkedDetailsPorps> = ({ tasks }) => {
                       <p className="taskWorkedDesc">{task?.description}</p>
                     </div>
                     <div className="taskWorkedFooter">
-                      <>{new Date(task.creationDate).getDate()}</>
+                      <>{new Date(task.creationDate).toLocaleDateString()}</>
                     </div>
                   </>
                 </div>

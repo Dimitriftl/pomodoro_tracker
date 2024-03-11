@@ -83,7 +83,7 @@ const SignIn = () => {
         </div>
         <div id="signInRightPart">
           <div id="signInHeader">
-            <h2>connection</h2>
+            <h2>Connection</h2>
           </div>
           {error && <p id="errorMessage">{errorMessage}</p>}
           <form onSubmit={(event) => handleSubmit(event)}>

@@ -20,12 +20,10 @@ const ModalCreateTask = ({ modal, setModal }) => {
   const { themeColor } = useContext(ThemeContext);
   const areaMaxLength = 200;
   // tasks states
-  const [taskName, setTaskName] = useState<string>("travailler projet d'ecole");
-  const [description, setDescription] = useState<string>(
-    "Tasks créée depuis le front"
-  );
+  const [taskName, setTaskName] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
   const [numberOfPomodoro, setNumberOfPomodoro] = useState<number | undefined>(
-    3
+    undefined
   );
   const { apiCall } = useBackendRoute();
   // hours list modals

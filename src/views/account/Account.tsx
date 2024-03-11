@@ -23,7 +23,9 @@ const Account = () => {
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { themeColor } = useContext(ThemeContext);
-  const { apiCall, success, error, errorMessage } = useBackendRoute();
+  const { apiCall, error, errorMessage } = useBackendRoute();
+
+  console.log(error, errorMessage, "errorrrrr");
 
   const updatePassword = async (e: any) => {
     e.preventDefault();
@@ -101,7 +103,6 @@ const Account = () => {
     } else return true;
   };
 
-  // TODO : quand le back sera fait valider la modification de données à la volé avec un debounce de 3s ou ajouter un bouton valider à la place
   return (
     <div id="accountContainer">
       <ToastContainer />
@@ -125,6 +126,7 @@ const Account = () => {
           </div>
         </div>
         <div id="accountRightPart">
+          {error && <p id="errorMessage">{errorMessage}</p>}
           <form onSubmit={(e) => updateUserInformations(e)}>
             <div className="inputContainer">
               <p className="inputLabel">Name</p>

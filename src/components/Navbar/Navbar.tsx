@@ -173,19 +173,21 @@ const Navbar: React.FC<NavbarProps> = ({
           )}
         </div>
       </div>
-      <div
-        className="logoutContainer"
-        onClick={() => {
-          Cookies.remove("accessToken");
-          window.localStorage.removeItem("userData");
-          setIsUserLoggedIn(false);
-          navigate("/");
-        }}>
-        <div className="svg">
-          <LogOutSvg theme={themeColor} />
+      {isUserLoggedIn && (
+        <div
+          className="logoutContainer"
+          onClick={() => {
+            Cookies.remove("accessToken");
+            window.localStorage.removeItem("userData");
+            setIsUserLoggedIn(false);
+            navigate("/");
+          }}>
+          <div className="svg">
+            <LogOutSvg theme={themeColor} />
+          </div>
+          <p>Disconnect</p>
         </div>
-        <p>Disconnect</p>
-      </div>
+      )}
     </div>
   );
 };
