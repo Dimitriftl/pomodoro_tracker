@@ -1,20 +1,13 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import "./taskWorkedDetails.scss";
 import Graph from "../graph/Graph";
 import { taskType } from "../../utils/types/globalTypes";
 import { RightArrowSvg } from "../../assets/svg/svg.jsx";
-import {
-  startOfWeek,
-  endOfWeek,
-  startOfMonth,
-  endOfMonth,
-  eachDayOfInterval,
-  eachMonthOfInterval,
-  eachYearOfInterval,
-  getWeek,
-  getMonth,
-  getYear,
-} from "date-fns";
+import { startOfWeek, endOfWeek, getWeek } from "date-fns";
+
+import { ArrowSvg } from "../../assets/svg/svg";
+import { Theme, ThemeContextTypes } from "../../utils/types/contextsTypes.js";
+import { ThemeContext } from "../../context/MyProviders.js";
 
 type TaskWorkedDetailsPorps = {
   tasks: Array<taskType>;
@@ -34,12 +27,16 @@ const TaskWorkedDetails: FC<TaskWorkedDetailsPorps> = ({ tasks }) => {
       endOfWeekDate.getMonth() + 1
     }/${endOfWeekDate.getFullYear()}`
   );
+  const [taskId, setTaskId] = useState<string | null>(null); // used for dropdown the proper task
+  const [openTask, setOpenTask] = useState<boolean>(false);
 
-  const reduceMinute = (time: number) => {
-    const minutes = time / 60;
-    const minutesReduced = minutes.toFixed(0);
-    return minutesReduced;
-  };
+  const { themeColor } = useContext<ThemeContextTypes | Theme>(ThemeContext);
+
+  // const reduceMinute = (time: number) => {
+  //   const minutes = time / 60;
+  //   const minutesReduced = minutes.toFixed(0);
+  //   return minutesReduced;
+  // };
 
   const handlePrevious = () => {
     // Logique pour passer à la période précédente
@@ -230,37 +227,67 @@ const TaskWorkedDetails: FC<TaskWorkedDetailsPorps> = ({ tasks }) => {
               onClick={() => handlePrevious()}
               className="arrowButton reverse">
               {" "}
-              <RightArrowSvg />
+              <RightArrowSvg color={"var(--color-text)"} />
             </button>
             <h3>{headerDate}</h3>
             <button onClick={() => handleNext()} className="arrowButton">
-              <RightArrowSvg />
+              <RightArrowSvg color={"var(--color-text)"} />
             </button>
           </div>
         </div>
       </div>
       <div id="tasksWorkedDetailsContainer">
         {filteredTask().length > 0 ? (
-          filteredTask().map((task) => {
+          filteredTask().map((task, index) => {
             return (
-              <div className="taskWorkedDetailsCard">
-                <div className="taskNameContainer">
-                  <span className="bubbleInfo">{task.description}</span>
+              <div
+                key={index}
+                className={
+                  openTask && taskId === task._id
+                    ? "taskWorkedContainer taskWorkedDropDowned"
+                    : "taskWorkedContainer"
+                }>
+                {task.taskDone ? (
+                  <div className="activePastilleWorked"></div>
+                ) : (
+                  <div className="activePastilleWorked giveUpPastilleWorked"></div>
+                )}
 
-                  <p>{task.taskName}</p>
-                </div>
-                <div className="taskDescriptionContainer">
-                  <span className="bubbleInfo">{task.description}</span>
-                  <p className="taskDescription">{task.description}</p>
-                </div>
+                <div
+                  className="taskWorkedHeader"
+                  style={{
+                    paddingLeft: "1.8rem",
+                  }}>
+                  <p>{task?.taskName}</p>
 
-                <div className="taskTimeSpendContainer">
-                  <p>{reduceMinute(task.timeSpend)} min</p>
+                  <div className="taskWorkedHeaderRight">
+                    <p>
+                      {task?.numberOfPomodoroDone}/{task?.numberOfPomodoroSet}
+                    </p>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation(),
+                          setTaskId(task._id),
+                          setOpenTask(!openTask);
+                      }}
+                      id="taskWorkedArrowButton">
+                      <ArrowSvg theme={themeColor} />
+                    </button>
+                  </div>
                 </div>
-                <div className="taskPomodoroContainer">
-                  <p>
-                    {task.numberOfPomodoroDone} / {task.numberOfPomodoroSet}
-                  </p>
+                <div
+                  className="taskWorkedDropDownContainer"
+                  style={{
+                    paddingLeft: "1rem",
+                  }}>
+                  <>
+                    <div className="taskWorkedMain">
+                      <p className="taskWorkedDesc">{task?.description}</p>
+                    </div>
+                    <div className="taskWorkedFooter">
+                      <>{new Date(task.creationDate).getDate()}</>
+                    </div>
+                  </>
                 </div>
               </div>
             );

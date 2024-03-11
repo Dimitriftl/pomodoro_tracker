@@ -76,6 +76,7 @@
   flex: 10;
   height: 500px;
   flex-direction: column;
+  align-items: center;
   max-height: 500px;
   background-color: var(--color-first-backgroud);
   border-radius: 12px;
@@ -84,76 +85,109 @@
   overflow-y: auto;
   gap: 20px;
 
-  .taskWorkedDetailsCard {
+  .taskWorkedContainer {
     position: relative;
-    padding: 0 10px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    flex-wrap: wrap;
     align-items: center;
     width: 100%;
-    min-height: 60px;
-    background-color: var(--color-hightlight);
+    max-width: 1000px;
+    max-height: 80px;
+    min-height: 80px;
     border-radius: 12px;
-    border: 1px solid var(--color-blue);
+    background: var(--color-backgroud);
+    box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: height 0.2s linear;
+    font-size: 16px;
+    overflow: hidden;
 
-    .bubbleInfo {
-      visibility: hidden;
+    .activePastilleWorked {
       position: absolute;
-      width: 300px;
-      min-height: 40px;
-      background-color: #1b1b1b;
-      color: #fff;
-      border-radius: 6px;
-      z-index: 2;
+      left: 0;
+      border-radius: 12px 0 0 12px;
+      height: 100%;
+      width: 14px;
+      background-color: var(--color-green);
+      box-shadow: var(--box-shadow-pastille-done);
     }
 
-    .taskNameContainer {
-      width: 30%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-
-      // background-color: green;
+    .giveUpPastilleWorked {
+      background-color: var(--color-red);
+      box-shadow: var(--box-shadow-pastille-red);
     }
 
-    .taskDescriptionContainer {
+    .taskWorkedHeader {
+      width: 100%;
+      min-height: 80px;
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      width: 40%;
-      height: 100%;
-      // background-color: turquoise;
+      padding: 1rem;
 
-      &:hover {
-        .bubbleInfo {
-          visibility: visible;
+      .taskWorkedHeaderRight {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+      }
+
+      #taskWorkedArrowButton {
+        padding-top: 1px;
+        width: 36px;
+        height: 36px;
+        border-radius: 6px;
+        border: 2px solid var(--color-backgroud);
+        outline: none;
+
+        svg {
+          transition: 300ms ease;
+        }
+
+        &:hover {
+          background-color: var(--color-backgroud);
+          border: none;
         }
       }
+    }
 
-      .taskDescription {
-        position: relative;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+    .taskWorkedDropDownContainer {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+      min-height: 100px;
+      flex-direction: column;
+      justify-content: space-between;
+      .taskWorkedMain {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 100%;
-        cursor: pointer;
-        // background-color: red;
+        min-height: 50px;
+        max-height: 140px;
+        padding: 0 10px;
+        flex-direction: column;
+
+        .taskWorkedDesc {
+          display: flex;
+          width: 100%;
+          height: 85px;
+          background-color: var(--color-second-backgroud);
+          border-radius: 6px;
+          padding: 10px;
+          overflow-y: auto;
+          font-size: 14px;
+        }
       }
-    }
-
-    .taskTimeSpendContainer {
-      width: 20%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .taskPomodoroContainer {
-      width: 10%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: end;
+      .taskWorkedFooter {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        padding: 0 10px;
+        min-height: 50px;
+        gap: 20px;
+      }
     }
   }
   #noTaskFounded {
@@ -164,6 +198,31 @@
     height: 100%;
     font-size: 1.5rem;
     color: var(--color-text);
+  }
+}
+
+.taskWorkedDropDowned {
+  min-height: 230px !important;
+
+  #taskWorkedArrowButton {
+    svg {
+      transition: 300ms ease;
+      rotate: 180deg;
+    }
+  }
+
+  .taskWorkedDropDownContainer {
+    display: flex;
+  }
+
+  .taskWorkedMain {
+    display: flex;
+  }
+  .taskWorkedDesc {
+    display: flex;
+  }
+  .taskWorkedFooter {
+    display: flex;
   }
 }
 

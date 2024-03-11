@@ -10,4 +10,7 @@ export type pomodoroRelatedTypes =
   | "deleteTask"
   | "taskDone";
 
-export type accountRelatedTypes = "updatePassword" | "updateUserInformations";
+export type accountRelatedTypes =
+  | "updatePassword"
+  | "updateUserInformations"
+  | "deleteUser";

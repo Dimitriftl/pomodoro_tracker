@@ -38,6 +38,8 @@ import {
   getMonth,
   getYear,
   getWeekYear,
+  startOfYear,
+  endOfYear,
 } from "date-fns";
 
 import { RightArrowSvg } from "../../assets/svg/svg.jsx";
@@ -106,6 +108,31 @@ const HoursWorkedDetails: FC<HoursWorkedDetailsProps> = ({ data }) => {
       while (
         j < data.length &&
         currentDate.getDate() === new Date(data[j]?.creationDate).getDate()
+      ) {
+        compressedEntry.timeSpend += data[j].timeSpend;
+        j += 1;
+      }
+      // Update the main loop index
+      i = j;
+      compressedData.push(compressedEntry);
+    }
+  };
+
+  const dataCompressionForYear = () => {
+    let i = 0;
+    while (i < data.length) {
+      const currentDate = new Date(data[i]?.creationDate);
+      // Initial entry for the current date
+      const compressedEntry = {
+        creationDate: currentDate,
+        timeSpend: data[i].timeSpend,
+      };
+
+      // Find consecutive entries with the same date
+      let j = i + 1;
+      while (
+        j < data.length &&
+        currentDate.getMonth() === new Date(data[j]?.creationDate).getMonth()
       ) {
         compressedEntry.timeSpend += data[j].timeSpend;
         j += 1;
@@ -191,8 +218,8 @@ const HoursWorkedDetails: FC<HoursWorkedDetailsProps> = ({ data }) => {
         setCurrentDate(
           (prevDate) =>
             new Date(
-              prevDate.getFullYear(),
-              prevDate.getMonth() - 1,
+              prevDate.getFullYear() - 1,
+              prevDate.getMonth(),
               prevDate.getDate()
             )
         );
@@ -201,6 +228,8 @@ const HoursWorkedDetails: FC<HoursWorkedDetailsProps> = ({ data }) => {
         break;
     }
   };
+
+  console.log(currentDate, "currentDate");
 
   const handleNext = () => {
     switch (pageSelected) {
@@ -228,8 +257,8 @@ const HoursWorkedDetails: FC<HoursWorkedDetailsProps> = ({ data }) => {
         setCurrentDate(
           (prevDate) =>
             new Date(
-              prevDate.getFullYear(),
-              prevDate.getMonth() + 1,
+              prevDate.getFullYear() + 1,
+              prevDate.getMonth(),
               prevDate.getDate()
             )
         );
@@ -242,6 +271,7 @@ const HoursWorkedDetails: FC<HoursWorkedDetailsProps> = ({ data }) => {
   const generateLabelsAndData = (compressedData) => {
     let labels: any[] = [];
     let filteredData = [];
+    let filteredDataForYear = [];
 
     switch (pageSelected) {
       case "week":
@@ -258,8 +288,8 @@ const HoursWorkedDetails: FC<HoursWorkedDetailsProps> = ({ data }) => {
         break;
       case "year":
         labels = eachMonthOfInterval({
-          start: startOfMonth(currentDate),
-          end: endOfMonth(currentDate),
+          start: startOfYear(currentDate),
+          end: endOfYear(currentDate),
         });
         break;
       default:
@@ -274,22 +304,39 @@ const HoursWorkedDetails: FC<HoursWorkedDetailsProps> = ({ data }) => {
             item.creationDate.toLocaleDateString() === date.toLocaleDateString()
         );
 
-      return dataForDate ? dataForDate.timeSpend : 0; // Utilisez la valeur de votre donnée ou une valeur par défaut
+      return dataForDate ? dataForDate.timeSpend : 0;
     });
 
-    return { labels, filteredData };
+    filteredDataForYear = labels.map((date) => {
+      const dataForDate =
+        compressedData.length !== 0 &&
+        compressedData.find(
+          (item) => item.creationDate.getMonth() === date.getMonth()
+        );
+
+      return dataForDate ? dataForDate.timeSpend : 0;
+    });
+
+    return { labels, filteredData, filteredDataForYear };
   };
 
   useEffect(() => {
+    if (pageSelected === "year") {
+      dataCompressionForYear();
+    } else;
     dataCompression();
-    const { labels, filteredData } = generateLabelsAndData(compressedData);
+    const { labels, filteredData, filteredDataForYear } =
+      generateLabelsAndData(compressedData);
 
     setChartData({
       labels: labels.map((label) => label.toLocaleDateString()), // Formatage de la date selon vos besoins
       datasets: [
         {
           label: "minutes worked",
-          data: filteredData.map((data) => Math.floor(data / 60)),
+          data:
+            pageSelected === "year"
+              ? filteredDataForYear.map((data) => Math.floor(data / 60))
+              : filteredData.map((data) => Math.floor(data / 60)),
           borderColor: "#678bff",
           backgroundColor: (context) => {
             const bgColor = ["#617dd9b4", "#678aff1f"];
@@ -371,12 +418,12 @@ const HoursWorkedDetails: FC<HoursWorkedDetailsProps> = ({ data }) => {
             className="arrowButton reverse"
             onClick={() => handlePrevious()}>
             {" "}
-            <RightArrowSvg />
+            <RightArrowSvg color={"var(--color-text)"} />
           </button>
           <h3>{chartHeaderDate}</h3>
           <button className="arrowButton" onClick={() => handleNext()}>
             {" "}
-            <RightArrowSvg />
+            <RightArrowSvg color={"var(--color-text)"} />
           </button>
         </div>
       </div>
