@@ -229,8 +229,6 @@ const HoursWorkedDetails: FC<HoursWorkedDetailsProps> = ({ data }) => {
     }
   };
 
-  console.log(currentDate, "currentDate");
-
   const handleNext = () => {
     switch (pageSelected) {
       case "week":

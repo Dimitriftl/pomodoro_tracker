@@ -67,7 +67,7 @@ const SignUp = () => {
         <div id="signUpRightPart">
           {error && <p id="errorMessage">{errorMessage}</p>}
           <div id="signUpHeader">
-            <h2>Inscription</h2>
+            <h2>Sign up</h2>
           </div>
           <form
             onSubmit={(e: React.FormEvent<FormElements>) => {

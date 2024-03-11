@@ -146,8 +146,6 @@ const Tasks = () => {
       return;
     }
 
-    console.log("task in update time spend => ", task);
-
     const data = {
       ...task,
       timeSpend: task.timeSpend + timeFocused,
@@ -336,7 +334,7 @@ const Tasks = () => {
                 task._id === taskIdFocused
                   ? setTaskIdFocused(null)
                   : checkIfTaskIsDone(task) === true
-                  ? console.log("null")
+                  ? null
                   : setTaskIdFocused(task._id);
                 setTaskName(task.taskName);
               }}

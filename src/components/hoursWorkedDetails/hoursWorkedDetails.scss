@@ -79,3 +79,50 @@
   border-radius: 12px;
   padding: 0 50px;
 }
+
+@media all and (max-width: 768px) {
+  #hoursWorkedDetailsContainer {
+    padding: 0 10px;
+    overflow-x: hidden;
+  }
+
+  #hoursWorkedDetailsDateButtons {
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+  }
+
+  #hoursWorkedDetailsWeekHandler {
+    display: flex;
+    justify-content: flex-end !important;
+    gap: 0px !important;
+    font-size: 12px !important;
+  }
+
+  .taskWorkedDetailsCard {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 120px !important;
+
+    .taskNameContainer {
+      width: 100%;
+    }
+  }
+}
+
+@media all and (max-width: 500px) {
+  #hoursWorkedDetailsContainer {
+    padding: 0 10px;
+    overflow-x: hidden;
+  }
+
+  #hoursWorkedDetailsHeaderButtons {
+    button {
+      width: 50px !important;
+      height: 25px !important;
+      border-radius: 6px !important;
+      font-size: 12px !important;
+    }
+  }
+}

@@ -182,7 +182,6 @@ export const useBackendRoute = () => {
           await axios
             .put(`${apiBaseUrl}/tasks/`, data, { headers })
             .then((res) => {
-              console.log(res.data, "res");
               if (onSuccess) {
                 onSuccess();
               }
@@ -274,8 +273,6 @@ export const useBackendRoute = () => {
         break;
       case "updateProfilePicture":
         {
-          console.log("some happend");
-
           await axios
             .post(`${apiBaseUrl}/users/upload`, data, {
               headers,

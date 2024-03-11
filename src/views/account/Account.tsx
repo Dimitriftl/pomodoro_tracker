@@ -120,13 +120,16 @@ const Account = () => {
     });
   };
 
+  // useEffect used to make the call to back end once the user chosed a file
   useEffect(() => {
     handleUploadPicture();
   }, [file]);
 
+  // used to simulate a click on the input file which is display: none
   const selectFile = () => {
     document.getElementById("inputTypeFileLocal")?.click();
   };
+
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
@@ -160,7 +163,11 @@ const Account = () => {
               </div>
             </div>
             <img
-              src={`http://localhost:3000/images/${profilePicture}`}
+              src={
+                profilePicture
+                  ? `http://localhost:3000/images/${profilePicture}`
+                  : "https://via.placeholder.com/150"
+              }
               alt="user profile picture"
             />
           </div>
