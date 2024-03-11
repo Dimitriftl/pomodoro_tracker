@@ -39,28 +39,27 @@
       color: var(--color-text);
     }
   }
-}
+  @media all and (max-width: 500px) {
+    #logButtonsContainer {
+      display: flex;
+      gap: 20px;
+      width: 100%;
+      justify-content: flex-end;
+      padding: 1rem;
 
-@media all and (max-width: 500px) {
-  #logButtonsContainer {
-    display: flex;
-    gap: 20px;
-    width: 100%;
-    justify-content: flex-end;
-    padding: 1rem;
+      #signInButton {
+        width: 100px;
+        height: 38px;
 
-    #signInButton {
-      width: 100px;
-      height: 38px;
+        font-size: 12px;
+      }
 
-      font-size: 12px;
-    }
+      #signUpButton {
+        width: 100px;
+        height: 38px;
 
-    #signUpButton {
-      width: 100px;
-      height: 38px;
-
-      cursor: pointer;
+        cursor: pointer;
+      }
     }
   }
 }

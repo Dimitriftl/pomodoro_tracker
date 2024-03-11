@@ -67,62 +67,58 @@
       }
     }
   }
-}
 
-#hoursWorkedDetailsContent {
-  display: flex;
-  flex: 10;
-  justify-content: center;
-  align-items: center;
-  height: 500px;
-  background-color: var(--color-first-backgroud);
-  border-radius: 12px;
-  padding: 0 50px;
-}
+  @media all and (max-width: 768px) {
+    #hoursWorkedDetailsContainer {
+      padding: 0 10px;
+      overflow-x: hidden;
+    }
 
-@media all and (max-width: 768px) {
-  #hoursWorkedDetailsContainer {
-    padding: 0 10px;
-    overflow-x: hidden;
-  }
+    #hoursWorkedDetailsDateButtons {
+      position: relative;
+      top: 0;
+      left: 0;
+    }
 
-  #hoursWorkedDetailsDateButtons {
-    position: relative !important;
-    top: 0 !important;
-    left: 0 !important;
-  }
+    #hoursWorkedDetailsWeekHandler {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0px;
+      font-size: 12px;
+    }
 
-  #hoursWorkedDetailsWeekHandler {
-    display: flex;
-    justify-content: flex-end !important;
-    gap: 0px !important;
-    font-size: 12px !important;
-  }
+    .taskWorkedDetailsCard {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 120px;
 
-  .taskWorkedDetailsCard {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 120px !important;
-
-    .taskNameContainer {
-      width: 100%;
+      .taskNameContainer {
+        width: 100%;
+      }
     }
   }
-}
 
-@media all and (max-width: 500px) {
-  #hoursWorkedDetailsContainer {
-    padding: 0 10px;
-    overflow-x: hidden;
-  }
+  @media all and (max-width: 500px) {
+    #hoursWorkedDetailsContainer {
+      padding: 0 10px;
+      overflow-x: hidden;
+    }
 
-  #hoursWorkedDetailsHeaderButtons {
-    button {
-      width: 50px !important;
-      height: 25px !important;
-      border-radius: 6px !important;
-      font-size: 12px !important;
+    #hoursWorkedDetailsHeaderButtons {
+      button {
+        width: 50px;
+        height: 25px;
+        border-radius: 6px;
+        font-size: 12px;
+      }
+    }
+    #hoursWorkedDetailsWeekHandler {
+      // font-size: 9px;
+
+      h3 {
+        width: 120px;
+      }
     }
   }
 }

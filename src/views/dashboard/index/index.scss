@@ -77,19 +77,37 @@
       gap: 25px;
     }
   }
+
+  #hoursWorkedDetailsContent {
+    display: flex;
+    flex: 10;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    background-color: var(--color-first-backgroud);
+    border-radius: 12px;
+    padding: 0 50px;
+  }
+
+  @media all and (max-width: 500px) {
+    #hoursWorkedDetailsContent {
+      padding: 0;
+    }
+  }
 }
 
 @media all and (max-width: 768px) {
   #dashboardContainer {
     padding: 30px 20px 30px 20px;
     gap: 10px;
-  }
-  #dashboardContent {
-    padding: 10px;
-    gap: 10%;
-  }
-  #dashboardDetailsContainer {
-    height: 570px;
+
+    #dashboardContent {
+      padding: 10px;
+      gap: 10%;
+    }
+    #dashboardDetailsContainer {
+      height: 570px;
+    }
   }
 }
 
@@ -109,7 +127,7 @@
   }
 
   #dashboardDetailsContainer {
-    height: 570px !important;
+    flex: none !important;
   }
   #dashboardContent {
     padding: 10px;
