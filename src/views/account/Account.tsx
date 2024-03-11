@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./account.scss";
 import editSvg from "../../assets/svg/accountPage/edit.svg";
 import Cookies from "js-cookie";
@@ -16,6 +16,9 @@ const Account = () => {
   const userDataObject = JSON.parse(localUserData || "{}");
   const [email, setEmail] = useState<string>(userDataObject?.user?.email);
   const [name, setName] = useState<string>(userDataObject?.user?.name);
+  const [profilePicture, setProfilePicture] = useState(
+    userDataObject.user.profilePicture
+  );
   // password related
   const [displayPasswordModal, setDisplayPasswordModal] =
     useState<boolean>(false);
@@ -28,6 +31,8 @@ const Account = () => {
   const { apiCall, error, errorMessage } = useBackendRoute();
   const [openModalDeleteAccount, setOpenModalDeleteAccount] =
     useState<typeOfModalTypes>(null);
+  //profile picture
+  const [file, setFile] = useState<string>("");
 
   const { setIsUserLoggedIn } = useContext(IsUserLoggedInContext);
   const navigate = useNavigate();
@@ -115,6 +120,29 @@ const Account = () => {
     });
   };
 
+  useEffect(() => {
+    handleUploadPicture();
+  }, [file]);
+
+  const selectFile = () => {
+    document.getElementById("inputTypeFileLocal")?.click();
+  };
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  const handleUploadPicture = async () => {
+    if (!file) {
+      return null;
+    } else {
+      const formData = new FormData();
+      formData.append("profilePicture", file);
+      await apiCall("updateProfilePicture", formData, (imageName) => {
+        setProfilePicture(imageName);
+      });
+    }
+  };
+
   return (
     <div id="accountContainer">
       <ToastContainer />
@@ -125,17 +153,23 @@ const Account = () => {
         <div id="accountLeftPart">
           <h3>Profile picture</h3>
           <div id="accountImgContainer">
-            <div id="accountImgoverlay">
+            <div id="accountImgoverlay" onClick={() => selectFile()}>
               <div id="accountImgoverlayText">
                 <img id="editIcon" src={editSvg} alt="edit icon" />
                 <p>Upload a new picture</p>
               </div>
             </div>
             <img
-              src="https://via.placeholder.com/150"
+              src={`http://localhost:3000/images/${profilePicture}`}
               alt="user profile picture"
             />
           </div>
+          <input
+            type="file"
+            accept=".jpg, .png, .jpeg"
+            onChange={(e) => handleFileChange(e)}
+            id="inputTypeFileLocal"
+          />
         </div>
         <div id="accountRightPart">
           {error && <p id="errorMessage">{errorMessage}</p>}

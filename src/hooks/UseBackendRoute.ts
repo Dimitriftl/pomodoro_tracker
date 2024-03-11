@@ -29,7 +29,7 @@ export const useBackendRoute = () => {
       | pomodoroRelatedTypes
       | accountRelatedTypes,
     data?: any,
-    onSuccess?: () => void, // callback function used to execute code in the calling file if response is success
+    onSuccess?: (params?: any) => void, // callback function used to execute code in the calling file if response is success
     params?: any
   ) => {
     switch (functionName) {
@@ -261,6 +261,35 @@ export const useBackendRoute = () => {
               userDataObject.user.email = data.email;
               localStorage.setItem("userData", JSON.stringify(userDataObject));
               toast("informations modified successfully.", {
+                position: "top-right",
+                theme: themeColor === "light" ? "light" : "dark",
+              });
+            })
+            .catch((error) => {
+              setError(true);
+              setErrorMessage(error.response.data.error);
+              console.error(error);
+            });
+        }
+        break;
+      case "updateProfilePicture":
+        {
+          console.log("some happend");
+
+          await axios
+            .post(`${apiBaseUrl}/users/upload`, data, {
+              headers,
+            })
+            .then((res) => {
+              setError(false);
+              setErrorMessage(null);
+              res.data.data;
+              userDataObject.user.profilePicture = res.data.data.profilePicture;
+              localStorage.setItem("userData", JSON.stringify(userDataObject));
+              if (onSuccess) {
+                onSuccess(res.data.data.profilePicture);
+              }
+              toast("profile picture updated successfully.", {
                 position: "top-right",
                 theme: themeColor === "light" ? "light" : "dark",
               });

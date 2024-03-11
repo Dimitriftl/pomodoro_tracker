@@ -13,4 +13,5 @@ export type pomodoroRelatedTypes =
 export type accountRelatedTypes =
   | "updatePassword"
   | "updateUserInformations"
+  | "updateProfilePicture"
   | "deleteUser";
