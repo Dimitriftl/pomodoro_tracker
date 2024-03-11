@@ -15,3 +15,5 @@ export type passwordType =
   | "newPassword"
   | "confirmPassword"
   | null;
+
+export type typeOfModalTypes = "delete" | "done" | "giveUp" | "account" | null;

@@ -6,8 +6,7 @@ import {
   TimerSvg,
 } from "../../../../assets/svg/svg.jsx";
 import { ThemeContext } from "../../../../context/MyProviders.js";
-
-type typeOfModalTypes = "delete" | "done" | "giveUp" | null;
+import { typeOfModalTypes } from "../../../../utils/types/globalTypes.ts";
 
 interface ConfirmModalProps {
   typeOfModal: typeOfModalTypes;
@@ -15,9 +14,10 @@ interface ConfirmModalProps {
   deleteTask?: (id: string) => void;
   handleTaskDone?: (id: string) => void;
   handleTaskGiveUp?: (id: string) => void;
-  taskId: string | null;
-  taskName: string;
-  setOpenTask: Dispatch<SetStateAction<boolean>>;
+  handleDeleteAccount?: () => void;
+  taskId?: string | null;
+  taskName?: string;
+  setOpenTask?: Dispatch<SetStateAction<boolean>>;
 }
 
 const ConfirmModal: FC<ConfirmModalProps> = ({
@@ -29,6 +29,7 @@ const ConfirmModal: FC<ConfirmModalProps> = ({
   setOpenTask,
   handleTaskDone,
   handleTaskGiveUp,
+  handleDeleteAccount,
 }) => {
   const { themeColor } = useContext(ThemeContext);
 
@@ -131,6 +132,37 @@ const ConfirmModal: FC<ConfirmModalProps> = ({
                   setTypeOfModal(null), handleTaskGiveUp(taskId);
                 }}>
                 I'm sure
+              </button>
+            </div>
+          </>
+        ) : typeOfModal === "account" ? (
+          <>
+            <div className="confirmModalHeader">
+              <h2>Delete my account</h2>
+            </div>
+            <div className="confirmModalContent">
+              <p>
+                You're about to{" "}
+                <span style={{ color: "var(--color-red)", fontWeight: "500" }}>
+                  delete your account
+                </span>{" "}
+                . <br />
+                You'll lose all your informations and stats, are you sure to
+                continue ?
+              </p>
+            </div>
+            <div className="confirmModalFooter">
+              <button
+                className="confirmModalCancelButton"
+                onClick={() => setTypeOfModal(null)}>
+                Cancel
+              </button>
+              <button
+                id="confirmModalDeleteButton"
+                onClick={() => {
+                  setTypeOfModal(null), handleDeleteAccount();
+                }}>
+                Delete
               </button>
             </div>
           </>

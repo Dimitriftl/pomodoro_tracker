@@ -2,12 +2,14 @@ import React, { useContext, useState } from "react";
 import "./account.scss";
 import editSvg from "../../assets/svg/accountPage/edit.svg";
 import Cookies from "js-cookie";
-import { passwordType } from "../../utils/types/globalTypes";
+import { passwordType, typeOfModalTypes } from "../../utils/types/globalTypes";
 import { EyeSvg, EyeOffSvg } from "../../assets/svg/svg";
 import Loader from "../../components/loader/Loader";
 import { ToastContainer, toast } from "react-toastify";
-import { ThemeContext } from "../../context/MyProviders";
+import { IsUserLoggedInContext, ThemeContext } from "../../context/MyProviders";
 import { useBackendRoute } from "../../hooks/UseBackendRoute";
+import ConfirmModal from "../../components/pomodoro/modals/confirmModal/ConfirmModal";
+import { useNavigate } from "react-router-dom";
 
 const Account = () => {
   const localUserData = localStorage.getItem("userData");
@@ -24,8 +26,11 @@ const Account = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { themeColor } = useContext(ThemeContext);
   const { apiCall, error, errorMessage } = useBackendRoute();
+  const [openModalDeleteAccount, setOpenModalDeleteAccount] =
+    useState<typeOfModalTypes>(null);
 
-  console.log(error, errorMessage, "errorrrrr");
+  const { setIsUserLoggedIn } = useContext(IsUserLoggedInContext);
+  const navigate = useNavigate();
 
   const updatePassword = async (e: any) => {
     e.preventDefault();
@@ -103,6 +108,13 @@ const Account = () => {
     } else return true;
   };
 
+  const handleDeleteAccount = () => {
+    apiCall("deleteUser", null, () => {
+      setIsUserLoggedIn(false);
+      navigate("/");
+    });
+  };
+
   return (
     <div id="accountContainer">
       <ToastContainer />
@@ -156,6 +168,13 @@ const Account = () => {
               id="accountEditPasswordButton"
               onClick={() => setDisplayPasswordModal(!displayPasswordModal)}>
               <img src={editSvg} alt="" /> edit
+            </button>
+          </div>
+          <div id="deleteAccountContainer">
+            <button
+              onClick={() => setOpenModalDeleteAccount("account")}
+              id="deleteAccountButton">
+              Delete my account
             </button>
           </div>
           {
@@ -259,6 +278,13 @@ const Account = () => {
               </>
             )
           }
+          {openModalDeleteAccount === "account" && (
+            <ConfirmModal
+              setTypeOfModal={setOpenModalDeleteAccount}
+              typeOfModal="account"
+              handleDeleteAccount={handleDeleteAccount}
+            />
+          )}
         </div>
       </div>
     </div>

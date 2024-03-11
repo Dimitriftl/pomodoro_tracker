@@ -260,12 +260,43 @@ export const useBackendRoute = () => {
               userDataObject.user.name = data.name;
               userDataObject.user.email = data.email;
               localStorage.setItem("userData", JSON.stringify(userDataObject));
-              toast("informations successfully modified.", {
+              toast("informations modified successfully.", {
                 position: "top-right",
                 theme: themeColor === "light" ? "light" : "dark",
               });
             })
             .catch((error) => {
+              setError(true);
+              setErrorMessage(error.response.data.error);
+              console.error(error);
+            });
+        }
+        break;
+      case "deleteUser":
+        {
+          await axios
+            .delete(`${apiBaseUrl}/users/user`, {
+              headers,
+            })
+            .then((res) => {
+              setError(false);
+              setErrorMessage(null);
+              Cookies.remove("accessToken");
+              window.localStorage.removeItem("userData");
+
+              if (onSuccess) {
+                onSuccess();
+              }
+              toast("Account Deleted.", {
+                position: "top-right",
+                theme: themeColor === "light" ? "light" : "dark",
+              });
+            })
+            .catch((error) => {
+              toast("Something went wrong", {
+                position: "top-right",
+                theme: themeColor === "light" ? "light" : "dark",
+              });
               setError(true);
               setErrorMessage(error.response.data.error);
               console.error(error);
