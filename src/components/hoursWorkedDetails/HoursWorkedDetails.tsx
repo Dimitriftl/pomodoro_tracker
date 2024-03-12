@@ -1,5 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
-import { Line } from "react-chartjs-2";
+import { FC, useEffect, useState } from "react";
 import "chartjs-adapter-date-fns";
 import {
   Chart as ChartJS,
@@ -33,11 +32,7 @@ import {
   endOfMonth,
   eachDayOfInterval,
   eachMonthOfInterval,
-  eachYearOfInterval,
   getWeek,
-  getMonth,
-  getYear,
-  getWeekYear,
   startOfYear,
   endOfYear,
 } from "date-fns";
@@ -67,7 +62,7 @@ const HoursWorkedDetails: FC<HoursWorkedDetailsProps> = ({ data }) => {
 
           const {
             ctx,
-            data,
+
             chartArea: { top, bottom },
           } = context.chart;
           const gradientBg = ctx.createLinearGradient(0, top, 0, bottom);

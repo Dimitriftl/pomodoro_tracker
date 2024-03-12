@@ -1,12 +1,8 @@
 import React, { Dispatch, FC, SetStateAction, useContext } from "react";
 import "./confirmModal.scss";
-import {
-  WarningSvg,
-  LittleClockSvg,
-  TimerSvg,
-} from "../../../../assets/svg/svg.jsx";
-import { ThemeContext } from "../../../../context/MyProviders.js";
-import { typeOfModalTypes } from "../../../../utils/types/globalTypes.ts";
+import { WarningSvg, LittleClockSvg, TimerSvg } from "../../assets/svg/svg.jsx";
+import { ThemeContext } from "../../context/MyProviders.js";
+import { typeOfModalTypes } from "../../utils/types/globalTypes.ts";
 
 interface ConfirmModalProps {
   typeOfModal: typeOfModalTypes;

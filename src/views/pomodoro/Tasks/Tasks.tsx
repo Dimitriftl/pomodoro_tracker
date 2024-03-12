@@ -14,7 +14,7 @@ import {
   TimerContext,
 } from "../../../context/MyProviders.js";
 import Cookies from "js-cookie";
-import ConfirmModal from "../../../components/pomodoro/modals/confirmModal/ConfirmModal.js";
+import ConfirmModal from "../../../components/confirmModal/ConfirmModal.js";
 import {
   IsUserLoggedInTypes,
   ThemeContextTypes,
