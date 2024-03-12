@@ -1,5 +1,5 @@
 import React from "react";
-import "./timerbutton.scss";
+import "./timerButton.scss";
 
 type ButtonProps = {
   children: React.ReactNode;

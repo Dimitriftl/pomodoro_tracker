@@ -28,6 +28,7 @@ const Account = () => {
   const [file, setFile] = useState<string>("");
 
   const { setIsUserLoggedIn } = useContext(IsUserLoggedInContext);
+  const imgBaseUrl = import.meta.env.VITE_IMG_URL;
   const navigate = useNavigate();
 
   const updateUserInformations = async (e: any) => {
@@ -103,7 +104,7 @@ const Account = () => {
             <img
               src={
                 profilePicture
-                  ? `http://localhost:3000/images/${profilePicture}`
+                  ? `${imgBaseUrl}${profilePicture}`
                   : "https://via.placeholder.com/150"
               }
               alt="user profile picture"

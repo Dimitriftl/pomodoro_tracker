@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import "./SignIn.scss";
+import "./signIn.scss";
 import rightCornerShape from "../../assets/svg/loginPage/loginRightCornerShape.svg";
 import leftCornerShape from "../../assets/svg/loginPage/loginLeftCornerShape.svg";
 import bigCircle from "../../assets/svg/loginPage/BigCircle.svg";
