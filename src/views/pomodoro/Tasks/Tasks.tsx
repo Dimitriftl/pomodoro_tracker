@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./tasks.scss";
 import ModalCreateTask from "../../../components/pomodoro/modals/modalCreateTask/ModalCreateTask";
 import {
@@ -13,24 +13,23 @@ import {
   ThemeContext,
   TimerContext,
 } from "../../../context/MyProviders.js";
-import Cookies from "js-cookie";
 import ConfirmModal from "../../../components/confirmModal/ConfirmModal.js";
 import {
   IsUserLoggedInTypes,
   ThemeContextTypes,
   Theme,
-  TimerContextType,
 } from "../../../utils/types/contextsTypes.ts";
 import { taskType } from "../../../utils/types/globalTypes.ts";
 import { useBackendRoute } from "../../../hooks/UseBackendRoute.ts";
-import { callback } from "chart.js/helpers";
 
 type typeOfModalTypes = "delete" | "done" | "giveUp" | null;
 
 const Tasks = () => {
   const [modal, setModal] = useState(false);
   const [tasksArray, setTasksArray] = useState<Array<taskType | []>>([]);
-  const { themeColor } = useContext<ThemeContextTypes | Theme>(ThemeContext);
+  const { themeColor }: any = useContext<ThemeContextTypes | Theme>(
+    ThemeContext
+  );
   const [taskId, setTaskId] = useState<string | null>(null); // used for dropdown the proper task
   const [openTask, setOpenTask] = useState<boolean>(false);
   const [taskIdFocused, setTaskIdFocused] = useState<string | null>(null); // used to focus the pomodoro
@@ -137,18 +136,17 @@ const Tasks = () => {
 
     // update task if it exists
     const task = tasksArray.find((task: taskType | []) => {
-      if (Array.isArray(task)) {
-        return null;
-      }
-      return task._id === id;
+      return !Array.isArray(task) && task._id === id;
     });
-    if (task === undefined) {
-      return;
+
+    if (task === undefined || Array.isArray(task)) {
+      // used to prevent ts errors
+      return null;
     }
 
     const data = {
       ...task,
-      timeSpend: task.timeSpend + timeFocused,
+      timeSpend: task?.timeSpend + timeFocused,
     };
 
     await apiCall("updateTaskTimeSpend", data, () => {
@@ -199,6 +197,11 @@ const Tasks = () => {
       return;
     }
 
+    if (Array.isArray(task)) {
+      return false;
+      // this bloc prevent typescript's errors in data bellow, it verify if task is an array
+    }
+
     const data = {
       ...task,
       timeSpend: task.timeSpend + timeFocused,
@@ -243,6 +246,10 @@ const Tasks = () => {
     await apiCall("taskDone", data, () => {
       const newTasksArray: Array<taskType | []> = tasksArray.map(
         (item: taskType | []) => {
+          if (Array.isArray(task)) {
+            return;
+            // this bloc prevent typescript's errors in data bellow, it verify if task is an array
+          }
           // check type to excude empty arrays (used for error handling ts)
           if (Array.isArray(item)) {
             return item;
@@ -265,7 +272,7 @@ const Tasks = () => {
   const handleTaskGiveUp = async (id: string | null) => {
     const task = tasksArray.find((task: taskType | []) => {
       if (Array.isArray(task)) {
-        return null;
+        return task;
       }
       return task._id === id;
     });
@@ -286,6 +293,12 @@ const Tasks = () => {
           if (Array.isArray(item)) {
             return item;
           }
+          if (Array.isArray(task)) {
+            return task;
+            // this bloc prevent typescript's errors in data bellow, it verify if task is an array
+          }
+
+          // return the data
           if (task._id === item._id) {
             return data;
           }
@@ -321,7 +334,12 @@ const Tasks = () => {
         </button>
       )}
       {tasksArray
-        .filter((task) => task?.taskDone !== true && task?.status !== "gaveUp")
+        .filter(
+          (task) =>
+            !Array.isArray(task) &&
+            task?.taskDone !== true &&
+            task?.status !== "gaveUp"
+        )
         .map((task: taskType | [], index: number) => {
           // check type to excude empty arrays (used for error handling ts)
           if (Array.isArray(task)) {

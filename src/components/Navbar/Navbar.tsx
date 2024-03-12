@@ -20,11 +20,10 @@ import "./Navbar.scss";
 import { IsUserLoggedInContext, TimerContext } from "../../context/MyProviders";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import { TimerContextType } from "../../utils/types/contextsTypes";
-type theme = "light" | "dark" | "system";
+import { Theme, TimerContextType } from "../../utils/types/contextsTypes";
 interface NavbarProps {
-  themeColor: theme;
-  setThemeColor: Dispatch<SetStateAction<theme>>;
+  themeColor: Theme;
+  setThemeColor: Dispatch<SetStateAction<Theme>>;
   navbarActive: boolean;
 }
 

@@ -21,8 +21,6 @@ interface ModalThemeProps {
   minutesSetForLongBreak: number;
   setMinutesSetForLongBreak: Dispatch<SetStateAction<number>>;
 
-  setInitinialTimerValue: Dispatch<SetStateAction<number>>;
-
   countdowntimeInitialValue: React.MutableRefObject<number>;
 }
 
@@ -36,7 +34,7 @@ const ModalTimer: React.FC<ModalThemeProps> = ({
   setMinutesSetForLongBreak,
   countdowntimeInitialValue,
 }) => {
-  const { autoStartPomodoro, setAutoStartPomodoro } = useContext(
+  const { autoStartPomodoro, setAutoStartPomodoro }: any = useContext(
     AutoStartPomodoroContext
   );
 

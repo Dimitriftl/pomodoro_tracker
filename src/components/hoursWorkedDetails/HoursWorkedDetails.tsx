@@ -337,7 +337,6 @@ const HoursWorkedDetails: FC<HoursWorkedDetailsProps> = ({ data }) => {
             if (!context.chart.chartArea) return null;
             const {
               ctx,
-              data,
               chartArea: { top, bottom },
             } = context.chart;
             const gradientBg = ctx.createLinearGradient(0, top, 0, bottom);

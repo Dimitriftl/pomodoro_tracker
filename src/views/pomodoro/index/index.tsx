@@ -1,15 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Timer from "../Timer/Timer";
 import "./index.scss";
 import Tasks from "../Tasks/Tasks";
-import {
-  IsUserLoggedInContext,
-  ThemeContext,
-} from "../../../context/MyProviders";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { IsUserLoggedInContext } from "../../../context/MyProviders";
+import { useNavigate } from "react-router-dom";
 
 const Pomodoro = () => {
-  const { themeColor } = useContext(ThemeContext);
   const { isUserLoggedIn } = useContext(IsUserLoggedInContext);
 
   const navigate = useNavigate();

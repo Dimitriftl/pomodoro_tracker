@@ -1,23 +1,12 @@
-import React, {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { useContext, useEffect, useState } from "react";
 import "./modalCreateTask.scss";
 import { ThemeContext } from "../../../../context/MyProviders";
 import { CrossSvg } from "../../../../assets/svg/svg";
 import { useBackendRoute } from "../../../../hooks/UseBackendRoute";
 
-type modalProps = {
-  modal: boolean;
-  setMdoal: Dispatch<SetStateAction<boolean>>;
-};
-
 const ModalCreateTask = ({ modal, setModal }) => {
   // context state
-  const { themeColor } = useContext(ThemeContext);
+  const { themeColor }: any = useContext(ThemeContext);
   const areaMaxLength = 200;
   // tasks states
   const [taskName, setTaskName] = useState<string>("");

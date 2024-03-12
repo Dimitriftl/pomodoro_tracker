@@ -1,6 +1,6 @@
 import { ThemeContext } from "../../context/MyProviders";
 import "./switch.scss";
-import { Dispatch, SetStateAction, useContext, useEffect } from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
 
 interface SwitchProps {
   autoStartPomodoro: boolean;
@@ -11,7 +11,7 @@ const Switch: React.FC<SwitchProps> = ({
   autoStartPomodoro,
   setAutoStartPomodoro,
 }) => {
-  const { themeColor } = useContext(ThemeContext);
+  const { themeColor }: any = useContext(ThemeContext);
 
   const classes = {
     switch: "switch" + " " + themeColor,

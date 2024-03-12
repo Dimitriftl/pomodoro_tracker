@@ -16,7 +16,6 @@ import {
   PomodoroSettingsSvg,
   ResetSvg,
   SkipSvg,
-  Blop,
 } from "../../../assets/svg/svg";
 import "./timer.scss";
 import ModalTimer from "../../../components/pomodoro/modals/modalTimer/ModalTimer";
@@ -29,7 +28,12 @@ import Button from "../../../components/pomodoro/Button/TimerButton";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { TimerContextType } from "../../../utils/types/contextsTypes";
+import {
+  AutoStartPomodoroContextType,
+  Theme,
+  ThemeContextTypes,
+  TimerContextType,
+} from "../../../utils/types/contextsTypes";
 interface TimerProps {
   isTimerRunning: boolean;
   setIsTimerRunning: Dispatch<SetStateAction<boolean>>;
@@ -83,21 +87,24 @@ const Timer: React.FC<TimerProps> = ({
   setMinutesSetForLongBreak,
   countdownTime,
   setCountdownTime,
-  minutesWithoutZero,
   minutes,
   seconds,
   numberOfPomodoroDoneGlobaly,
   setNumberOfPomodoroDoneGlobaly,
 }) => {
-  const { autoStartPomodoro } = useContext(AutoStartPomodoroContext);
+  const { autoStartPomodoro }: any = useContext<
+    boolean | AutoStartPomodoroContextType
+  >(AutoStartPomodoroContext);
   const [currentTimeWorked, setCurrentTimeWorked] = useState<number>(0); // used to add the time spent on the task
 
   // states
   const [openModal, setOpenModal] = useState<boolean>(false);
 
-  let countdowntimeInitialValue = useRef<number>(countdownTime); // initial value of the timer used for the percentage of the progress bar
+  const countdowntimeInitialValue = useRef<number>(countdownTime); // initial value of the timer used for the percentage of the progress bar
 
-  const { themeColor } = useContext(ThemeContext);
+  const { themeColor }: any = useContext<Theme | ThemeContextTypes>(
+    ThemeContext
+  );
 
   const { isTimerRunning, setIsTimerRunning, setIsTimerOver, setTimeFocused } =
     useContext<TimerContextType | undefined>(TimerContext);

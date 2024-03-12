@@ -1,6 +1,5 @@
-import React, { FC, useContext, useEffect, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import "./taskWorkedDetails.scss";
-import Graph from "../graph/Graph";
 import { taskType } from "../../utils/types/globalTypes";
 import { RightArrowSvg } from "../../assets/svg/svg.jsx";
 import { startOfWeek, endOfWeek, getWeek } from "date-fns";
@@ -30,7 +29,9 @@ const TaskWorkedDetails: FC<TaskWorkedDetailsPorps> = ({ tasks }) => {
   const [taskId, setTaskId] = useState<string | null>(null); // used for dropdown the proper task
   const [openTask, setOpenTask] = useState<boolean>(false);
 
-  const { themeColor } = useContext<ThemeContextTypes | Theme>(ThemeContext);
+  const { themeColor }: any = useContext<ThemeContextTypes | Theme>(
+    ThemeContext
+  );
 
   // const reduceMinute = (time: number) => {
   //   const minutes = time / 60;
@@ -191,12 +192,12 @@ const TaskWorkedDetails: FC<TaskWorkedDetailsPorps> = ({ tasks }) => {
 
   // Fonction pour obtenir le numéro de semaine
   const getWeekNumber = (date) => {
-    const d = new Date(
+    const d: any = new Date(
       Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
     );
-    const dayNum = d.getUTCDay() || 7;
+    const dayNum: any = d.getUTCDay() || 7;
     d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    const yearStart: any = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
     return Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
   };
 

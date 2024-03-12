@@ -1,7 +1,5 @@
-import React from "react";
 import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
 
 const useVerifyToken = (token: string) => {
   // if token does not exist

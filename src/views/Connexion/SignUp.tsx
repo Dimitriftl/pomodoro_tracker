@@ -70,7 +70,7 @@ const SignUp = () => {
             <h2>Sign up</h2>
           </div>
           <form
-            onSubmit={(e: React.FormEvent<FormElements>) => {
+            onSubmit={(e: any) => {
               handleSubmit(e);
             }}>
             <input

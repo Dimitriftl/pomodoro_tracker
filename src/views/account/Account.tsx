@@ -21,7 +21,6 @@ const Account = () => {
   const [displayPasswordModal, setDisplayPasswordModal] =
     useState<boolean>(false);
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { apiCall, error, errorMessage } = useBackendRoute();
   const [openModalDeleteAccount, setOpenModalDeleteAccount] =
     useState<typeOfModalTypes>(null);
@@ -33,13 +32,12 @@ const Account = () => {
 
   const updateUserInformations = async (e: any) => {
     e.preventDefault();
-    setIsLoading(true);
+
     const data = {
       name: name,
       email: email,
     };
     await apiCall("updateUserInformations", data);
-    setIsLoading(false);
   };
 
   const handleDisabledForInformations = () => {
@@ -65,7 +63,7 @@ const Account = () => {
     handleUploadPicture();
   }, [file]);
 
-  // used to simulate a click on the input file which is display: none
+  // used to simulate a click on the input file which is displayed none
   const selectFile = () => {
     document.getElementById("inputTypeFileLocal")?.click();
   };

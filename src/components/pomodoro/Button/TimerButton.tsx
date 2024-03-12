@@ -4,8 +4,8 @@ import "./timerbutton.scss";
 type ButtonProps = {
   children: React.ReactNode;
   func: () => void;
-  isTimerRunning: boolean;
-  startTimeWorked: () => void;
+  isTimerRunning?: boolean;
+  startTimeWorked?: () => void;
 };
 
 const Button: React.FC<ButtonProps> = ({

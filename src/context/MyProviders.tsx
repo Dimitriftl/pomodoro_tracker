@@ -6,9 +6,11 @@ import {
   useEffect,
 } from "react";
 import {
+  AutoStartPomodoroContextType,
   IsUserLoggedInTypes,
   Theme,
-  ThemeContextTypes,
+  // ThemeContextTypes,
+  TimerContextType,
 } from "../utils/types/contextsTypes";
 
 type MyProvidersProps = {
@@ -32,14 +34,11 @@ const IsUserLoggedInContext = createContext<IsUserLoggedInTypes | undefined>(
 // theme context -------------------------------------
 
 // context creation
-const ThemeContext = createContext<ThemeContextTypes | Theme>("dark");
+const ThemeContext = createContext<Theme>("dark");
 
 // auto start pomodoro context -------------------------------------
 // Types
-type AutoStartPomodoroContextType = {
-  autoStartPomodoro: boolean;
-  setAutoStartPomodoro: (autoStartPomodoro: boolean) => void;
-};
+
 // context creation
 const AutoStartPomodoroContext = createContext<
   AutoStartPomodoroContextType | boolean
@@ -55,7 +54,7 @@ type TasksContextType = {
 // context creation
 const TasksContext = createContext<TasksContextType | undefined>(undefined);
 
-const TimerContext = createContext<boolean | undefined>(undefined);
+const TimerContext = createContext<TimerContextType | undefined>(undefined);
 
 const MyProviders: React.FC<MyProvidersProps> = ({
   children,
@@ -88,7 +87,7 @@ const MyProviders: React.FC<MyProvidersProps> = ({
   const [timeFocused, setTimeFocused] = useState<number>(0); // used to add the time spent on the task
 
   return (
-    <ThemeContext.Provider value={{ themeColor }}>
+    <ThemeContext.Provider value={themeColor}>
       <IsUserLoggedInContext.Provider
         value={{ isUserLoggedIn, setIsUserLoggedIn }}>
         <TasksContext.Provider value={{ tasks, setTasks }}>

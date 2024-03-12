@@ -1,4 +1,4 @@
-import React, { Dispatch, FC, SetStateAction, useContext } from "react";
+import { Dispatch, FC, SetStateAction, useContext } from "react";
 import "./confirmModal.scss";
 import { WarningSvg, LittleClockSvg, TimerSvg } from "../../assets/svg/svg.jsx";
 import { ThemeContext } from "../../context/MyProviders.js";
@@ -27,7 +27,7 @@ const ConfirmModal: FC<ConfirmModalProps> = ({
   handleTaskGiveUp,
   handleDeleteAccount,
 }) => {
-  const { themeColor } = useContext(ThemeContext);
+  const { themeColor }: any = useContext(ThemeContext);
 
   return (
     <>

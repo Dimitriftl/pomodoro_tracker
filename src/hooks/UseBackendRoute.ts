@@ -14,7 +14,7 @@ export const useBackendRoute = () => {
   const userDataObject = JSON.parse(localUserData || "{}");
   const [error, setError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const { themeColor } = useContext(ThemeContext);
+  const { themeColor }: any = useContext(ThemeContext);
 
   const apiBaseUrl = import.meta.env.VITE_API_URL;
 

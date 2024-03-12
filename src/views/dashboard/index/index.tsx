@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./index.scss";
 import HoursWorkedDetails from "../../../components/hoursWorkedDetails/HoursWorkedDetails";
 import TaskWorkedDetails from "../../../components/tasksWorkedDetails/TaskWorkedDetails";
-import { taskType } from "../../../utils/types/contextsTypes";
+import { taskType } from "../../../utils/types/globalTypes";
 
 type detailsDisplayed = "hours" | "tasks";
 

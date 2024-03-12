@@ -15,4 +15,11 @@ export type TimerContextType = {
   setIsTimerOver?: React.Dispatch<React.SetStateAction<boolean>>;
   isTimerRunning?: boolean;
   setIsTimerRunning?: React.Dispatch<React.SetStateAction<boolean>>;
+  setTimeFocused?: React.Dispatch<React.SetStateAction<number>>;
+  timeFocused?: number;
+};
+
+export type AutoStartPomodoroContextType = {
+  autoStartPomodoro: boolean;
+  setAutoStartPomodoro: (autoStartPomodoro: boolean) => void;
 };

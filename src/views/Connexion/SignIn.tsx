@@ -86,7 +86,7 @@ const SignIn = () => {
             <h2>Connection</h2>
           </div>
           {error && <p id="errorMessage">{errorMessage}</p>}
-          <form onSubmit={(event) => handleSubmit(event)}>
+          <form onSubmit={(event: any) => handleSubmit(event)}>
             <input
               className={error ? "warning" : ""}
               type="text"
