@@ -12,7 +12,6 @@ import axios from "axios";
 export const useBackendRoute = () => {
   const localUserData = localStorage.getItem("userData");
   const userDataObject = JSON.parse(localUserData || "{}");
-  const [responseData, setReponseData] = useState<any>(null);
   const [error, setError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { themeColor } = useContext(ThemeContext);
@@ -119,7 +118,7 @@ export const useBackendRoute = () => {
       case "updateTaskTimeSpend":
         {
           await axios
-            .put("http://localhost:3000/api/tasks/updateTimeSpend", data, {
+            .put(`${apiBaseUrl}/tasks/updateTimeSpend`, data, {
               headers,
             })
             .then((res) => {
@@ -167,7 +166,7 @@ export const useBackendRoute = () => {
         {
           await axios
             .put(`${apiBaseUrl}/tasks/`, data, { headers })
-            .then((res) => {
+            .then(() => {
               if (onSuccess) {
                 onSuccess();
               }
@@ -181,7 +180,7 @@ export const useBackendRoute = () => {
         {
           await axios
             .put(`${apiBaseUrl}/tasks/`, data, { headers })
-            .then((res) => {
+            .then(() => {
               if (onSuccess) {
                 onSuccess();
               }
@@ -195,7 +194,7 @@ export const useBackendRoute = () => {
         {
           await axios
             .delete(`${apiBaseUrl}/tasks/${params}`, { headers })
-            .then((res) => {
+            .then(() => {
               if (onSuccess) {
                 onSuccess();
               }
@@ -226,7 +225,7 @@ export const useBackendRoute = () => {
             .put(`${apiBaseUrl}/users/user/updatepassword`, data, {
               headers,
             })
-            .then((res) => {
+            .then(() => {
               setError(false);
               setErrorMessage(null);
 
@@ -253,7 +252,7 @@ export const useBackendRoute = () => {
             .put(`${apiBaseUrl}/users/user`, data, {
               headers,
             })
-            .then((res) => {
+            .then(() => {
               setError(false);
               setErrorMessage(null);
               userDataObject.user.name = data.name;
@@ -304,7 +303,7 @@ export const useBackendRoute = () => {
             .delete(`${apiBaseUrl}/users/user`, {
               headers,
             })
-            .then((res) => {
+            .then(() => {
               setError(false);
               setErrorMessage(null);
               Cookies.remove("accessToken");
@@ -333,5 +332,5 @@ export const useBackendRoute = () => {
         break;
     }
   };
-  return { apiCall, responseData, error, errorMessage };
+  return { apiCall, error, errorMessage };
 };

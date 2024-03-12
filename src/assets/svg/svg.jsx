@@ -464,7 +464,7 @@ export const LittleClockSvg = ({ color }) => (
   </svg>
 );
 
-export const WarningSvg = ({ color }) => (
+export const WarningSvg = () => (
   <svg
     width="25"
     height="26"

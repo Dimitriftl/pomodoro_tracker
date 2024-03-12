@@ -6,10 +6,9 @@ import {
   useEffect,
 } from "react";
 import {
-  UserIsLoggedInContextType,
+  IsUserLoggedInTypes,
   Theme,
   ThemeContextTypes,
-  TimerContextType,
 } from "../utils/types/contextsTypes";
 
 type MyProvidersProps = {
@@ -26,9 +25,9 @@ type MyProvidersProps = {
 
 // context creation
 
-const IsUserLoggedInContext = createContext<
-  UserIsLoggedInContextType | undefined
->(undefined);
+const IsUserLoggedInContext = createContext<IsUserLoggedInTypes | undefined>(
+  undefined
+);
 
 // theme context -------------------------------------
 
