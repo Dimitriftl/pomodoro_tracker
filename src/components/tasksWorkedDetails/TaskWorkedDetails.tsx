@@ -5,7 +5,7 @@ import { RightArrowSvg } from "../../assets/svg/svg.jsx";
 import { startOfWeek, endOfWeek, getWeek } from "date-fns";
 
 import { ArrowSvg } from "../../assets/svg/svg";
-import { Theme, ThemeContextTypes } from "../../utils/types/contextsTypes.js";
+import { ThemeContextTypes } from "../../utils/types/contextsTypes.js";
 import { ThemeContext } from "../../context/MyProviders.js";
 
 type TaskWorkedDetailsPorps = {
