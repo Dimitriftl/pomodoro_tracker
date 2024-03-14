@@ -29,15 +29,8 @@ const TaskWorkedDetails: FC<TaskWorkedDetailsPorps> = ({ tasks }) => {
   const [taskId, setTaskId] = useState<string | null>(null); // used for dropdown the proper task
   const [openTask, setOpenTask] = useState<boolean>(false);
 
-  const { themeColor }: any = useContext<ThemeContextTypes | Theme>(
-    ThemeContext
-  );
-
-  // const reduceMinute = (time: number) => {
-  //   const minutes = time / 60;
-  //   const minutesReduced = minutes.toFixed(0);
-  //   return minutesReduced;
-  // };
+  const themeContext = useContext<ThemeContextTypes>(ThemeContext);
+  const { themeColor } = themeContext;
 
   const handlePrevious = () => {
     // Logique pour passer à la période précédente

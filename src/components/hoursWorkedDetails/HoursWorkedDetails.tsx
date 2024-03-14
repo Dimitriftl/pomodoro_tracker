@@ -289,6 +289,7 @@ const HoursWorkedDetails: FC<HoursWorkedDetailsProps> = ({ data }) => {
         break;
     }
 
+    // used for weeks and months
     filteredData = labels.map((date) => {
       const dataForDate =
         compressedData.length !== 0 &&
@@ -300,6 +301,7 @@ const HoursWorkedDetails: FC<HoursWorkedDetailsProps> = ({ data }) => {
       return dataForDate ? dataForDate.timeSpend : 0;
     });
 
+    // used for years
     filteredDataForYear = labels.map((date) => {
       const dataForDate =
         compressedData.length !== 0 &&
