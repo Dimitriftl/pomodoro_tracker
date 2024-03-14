@@ -136,9 +136,7 @@ export const useBackendRoute = () => {
         {
           await axios
             .post(`${apiBaseUrl}/tasks/`, data, {
-              headers: {
-                authorization: `Bearer ${Cookies.get("accessToken")}`,
-              },
+              headers,
             })
             .then((res) => {
               const data = res.data;
