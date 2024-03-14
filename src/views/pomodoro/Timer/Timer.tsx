@@ -110,6 +110,7 @@ const Timer: React.FC<TimerProps> = ({
     useContext<TimerContextType | undefined>(TimerContext);
 
   const startTimer = () => {
+    setIsTimerOver(false);
     setIsTimerRunning(true);
     countdowntimeInitialValue.current = countdownTime;
     interval = window.setInterval(() => {
@@ -122,6 +123,7 @@ const Timer: React.FC<TimerProps> = ({
   };
 
   const startTimeWorked = () => {
+    setIsTimerOver(false);
     intervalTimeFocused = window.setInterval(() => {
       setCurrentTimeWorked((currentTimeWorked) => currentTimeWorked + 1);
     }, 1000);

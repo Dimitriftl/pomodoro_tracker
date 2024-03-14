@@ -40,7 +40,7 @@ const Tasks = () => {
   const { isUserLoggedIn } = useContext<IsUserLoggedInTypes>(
     IsUserLoggedInContext
   );
-  const { isTimerOver, timeFocused } = useContext(TimerContext);
+  const { isTimerOver, timeFocused, setTimeFocused } = useContext(TimerContext);
 
   const { apiCall } = useBackendRoute();
 
@@ -141,7 +141,7 @@ const Tasks = () => {
 
     if (task === undefined || Array.isArray(task)) {
       // used to prevent ts errors
-      return null;
+      return setTimeFocused(0);
     }
 
     const data = {
@@ -194,7 +194,7 @@ const Tasks = () => {
       return task._id === id;
     });
     if (task === undefined) {
-      return;
+      return setTimeFocused(0);
     }
 
     if (Array.isArray(task)) {
@@ -226,7 +226,9 @@ const Tasks = () => {
       localStorage.setItem("userData", JSON.stringify(userDataObject));
       setEditTask(false);
     });
+    setTimeFocused(0);
   };
+
   const handleTaskDone = async (id: string | null) => {
     const task = tasksArray.find((task: taskType | []) => {
       if (Array.isArray(task)) {
