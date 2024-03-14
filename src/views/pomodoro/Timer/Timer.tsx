@@ -115,7 +115,7 @@ const Timer: React.FC<TimerProps> = ({
     countdowntimeInitialValue.current = countdownTime;
     interval = window.setInterval(() => {
       setCountdownTime((countdownTime) => countdownTime - 1);
-    }, 100);
+    }, import.meta.env.VITE_TIMER_INTERVAL);
 
     return () => {
       window.clearInterval(interval);
