@@ -40,7 +40,6 @@ const SignUp = () => {
       email: formElements.email.value,
       password: formElements.password.value,
       confirmedPassword: formElements.confirmPassword.value,
-      role: "user",
     };
     await apiCall("signUp", data, () => navigate("/signin"));
   };
