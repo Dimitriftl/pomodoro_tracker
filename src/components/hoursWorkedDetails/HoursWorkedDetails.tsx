@@ -266,6 +266,7 @@ const HoursWorkedDetails: FC<HoursWorkedDetailsProps> = ({ data }) => {
     let filteredData = [];
     let filteredDataForYear = [];
 
+    // return an array of labels based on the current date
     switch (pageSelected) {
       case "week":
         labels = eachDayOfInterval({
