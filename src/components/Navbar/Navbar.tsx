@@ -56,7 +56,7 @@ const Navbar: React.FC<NavbarProps> = ({
   }, [themeColor]);
 
   return (
-    <div
+    <nav
       className={
         navbarActive
           ? "navbarContainer navbarContainerActive"
@@ -187,7 +187,7 @@ const Navbar: React.FC<NavbarProps> = ({
           <p>Disconnect</p>
         </div>
       )}
-    </div>
+    </nav>
   );
 };
 

@@ -86,7 +86,7 @@ const Account = () => {
   };
 
   return (
-    <div id="accountContainer">
+    <main id="accountContainer">
       <ToastContainer />
       <div id="accountContent">
         <div id="accountHeader">
@@ -121,8 +121,11 @@ const Account = () => {
           {error && <p id="errorMessage">{errorMessage}</p>}
           <form onSubmit={(e) => updateUserInformations(e)}>
             <div className="inputContainer">
-              <p className="inputLabel">Name</p>
+              <label htmlFor="accountNameInput" className="inputLabel">
+                Name
+              </label>
               <input
+                id="accountNameInput"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 type="text"
@@ -130,8 +133,11 @@ const Account = () => {
               />
             </div>
             <div className="inputContainer">
-              <p className="inputLabel">Email</p>
+              <label htmlFor="accountEmailInput" className="inputLabel">
+                Email
+              </label>
               <input
+                id="accountEmailInput"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -174,7 +180,7 @@ const Account = () => {
           )}
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 

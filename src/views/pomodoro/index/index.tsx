@@ -38,7 +38,7 @@ const Pomodoro = () => {
   }, [minutesSetForFocus]);
 
   return (
-    <div className="pomodoroContainer">
+    <main className="pomodoroContainer">
       {!isUserLoggedIn && (
         <div id="logButtonsContainer">
           <button id="signInButton" onClick={() => navigate("/signin")}>
@@ -73,7 +73,7 @@ const Pomodoro = () => {
         setNumberOfPomodoroDoneGlobaly={setNumberOfPomodoroDoneGlobaly}
       />
       <Tasks />
-    </div>
+    </main>
   );
 };
 

@@ -249,7 +249,7 @@ const Timer: React.FC<TimerProps> = ({
   );
 
   return (
-    <div className="timerContainer">
+    <section className="timerContainer">
       <ToastContainer />
       <div className="circle timerBackground">
         <div className="progressBarContainer">
@@ -326,7 +326,7 @@ const Timer: React.FC<TimerProps> = ({
           countdowntimeInitialValue={countdowntimeInitialValue}
         />
       )}
-    </div>
+    </section>
   );
 };
 

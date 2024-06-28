@@ -4,10 +4,10 @@ export type taskType = {
   description: string;
   numberOfPomodoroSet: number;
   numberOfPomodoroDone: number;
-  taskDone: boolean;
   timeSpend: number;
-  status: string;
+  status: "active" | "delete" | "done" | "gaveUp";
   creationDate: string;
+  finishedDate: Date | null;
 };
 
 export type passwordType =

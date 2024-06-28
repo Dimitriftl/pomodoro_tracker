@@ -21,7 +21,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div id="dashboardContainer">
+    <main id="dashboardContainer">
       <div id="dashboardContent">
         <div id="dashboardCardsContainer">
           <div
@@ -55,7 +55,7 @@ const Dashboard = () => {
           )}
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 

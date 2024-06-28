@@ -240,9 +240,10 @@ const Tasks = () => {
     if (task === undefined) {
       return;
     }
-    const data = {
+    const data: taskType | [] = {
       ...task,
-      taskDone: true,
+      status: "done",
+      finishedDate: new Date(),
     };
 
     await apiCall("taskDone", data, () => {
@@ -263,6 +264,7 @@ const Tasks = () => {
         }
       );
       setTasksArray(newTasksArray);
+      // update local storage
       const localUserData = localStorage.getItem("userData");
       const userDataObject = JSON.parse(localUserData || "{}");
       userDataObject.tasks = newTasksArray;
@@ -324,7 +326,7 @@ const Tasks = () => {
   };
 
   return (
-    <div className="tasksContainer">
+    <section className="tasksContainer">
       <h2>Task to focus on.</h2>
       {isUserLoggedIn ? (
         <button onClick={() => setModal(!modal)} id="openModalButton">
@@ -339,7 +341,7 @@ const Tasks = () => {
         .filter(
           (task) =>
             !Array.isArray(task) &&
-            task?.taskDone !== true &&
+            task?.status !== "done" &&
             task?.status !== "gaveUp"
         )
         .map((task: taskType | [], index: number) => {
@@ -513,7 +515,7 @@ const Tasks = () => {
           setOpenTask={setOpenTask}
         />
       )}
-    </div>
+    </section>
   );
 };
 

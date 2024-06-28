@@ -241,7 +241,7 @@ const TaskWorkedDetails: FC<TaskWorkedDetailsPorps> = ({ tasks }) => {
                     ? "taskWorkedContainer taskWorkedDropDowned"
                     : "taskWorkedContainer"
                 }>
-                {task.taskDone ? (
+                {task?.status === "done" ? (
                   <div className="activePastilleWorked"></div>
                 ) : (
                   <div className="activePastilleWorked giveUpPastilleWorked"></div>
@@ -279,8 +279,19 @@ const TaskWorkedDetails: FC<TaskWorkedDetailsPorps> = ({ tasks }) => {
                       <p className="taskWorkedDesc">{task?.description}</p>
                     </div>
                     <div className="taskWorkedFooter">
-                      <p>time worked : {Math.floor(task.timeSpend / 60)} min</p>
-                      <p>{new Date(task.creationDate).toLocaleDateString()}</p>
+                      <p>
+                        time worked : {Math.floor(task?.timeSpend / 60)} min
+                      </p>
+                      <div>
+                        <p>
+                          created at{" "}
+                          {new Date(task?.creationDate).toLocaleDateString()}
+                        </p>
+                        <p>
+                          finished at{" "}
+                          {new Date(task?.finishedDate).toLocaleDateString()}
+                        </p>
+                      </div>
                     </div>
                   </>
                 </div>
