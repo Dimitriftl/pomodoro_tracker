@@ -39,7 +39,6 @@ const SignUp = () => {
       name: formElements.name.value,
       email: formElements.email.value,
       password: formElements.password.value,
-      confirmedPassword: formElements.confirmPassword.value,
     };
     await apiCall("signUp", data, () => navigate("/signin"));
   };
